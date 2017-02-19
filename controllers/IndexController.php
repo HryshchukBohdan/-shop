@@ -1,4 +1,4 @@
 <?php
 	function testAction() {
-		echo "";
+		echo "testAction ++";
 	}
