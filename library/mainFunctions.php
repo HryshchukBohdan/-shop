@@ -14,9 +14,14 @@ function loadPage($twig, $controllerName, $actionName = 'index') {
 }
 
 function loatTemplate($twig, $templateName) {
-	//echo "$templateName";
-	echo ($templateName . TemplatePostfix);
+	
 	return $twig->loadTemplate($templateName . TemplatePostfix);
-		//$smarty->display($templateName . TemplatePostfix);
-	//echo $smarty;
+}
+
+function d($value = null, $die = 1) {
+	echo "Debug: <br /><pre>";
+	print_r($value);
+	echo "</pre>";
+
+	if($die) die;
 }
