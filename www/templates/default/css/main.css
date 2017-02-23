@@ -1,0 +1,18 @@
+body {
+	padding: 0;
+	display: block;
+}
+
+.hidema {
+	display: none;
+}
+
+#header {
+	height: 70px;
+	text-align: center;
+}
+
+#leftcolomn {
+	width: 200px;
+	float: left;
+}

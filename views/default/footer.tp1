@@ -1,0 +1,11 @@
+</dir> <!--Конец центрального блока-->
+
+<dir id="Footer">
+	Funer
+</dir>
+
+{{ pageTitle }}
+{{ pp }}
+{{ templateWebPath }}
+	</body>
+</html>

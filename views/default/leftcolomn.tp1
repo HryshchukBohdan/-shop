@@ -1,0 +1,8 @@
+<div id="leftColomn">
+	<div id="leftManu">
+		<div class="manuCaption"> Menu: </div>
+			пункт один <br>
+			пункт 2 <br>
+			пункт 3 <br>
+	</div>
+</div>
