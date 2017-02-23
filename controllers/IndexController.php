@@ -7,5 +7,6 @@
 	function indexAction($twig) {
 	
       $smarty = loatTemplate($twig, 'index');
-		echo $smarty->render(array('pageTitle' =>'Главная страница сайта', 'pp' => 'пупер'));
+      $array = array('templateWebPath'=>'/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+		echo $smarty->render($array);
 	}
