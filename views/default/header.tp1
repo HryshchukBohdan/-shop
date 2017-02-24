@@ -1,14 +1,14 @@
 <html>
 	<head>
 		<title>{{ pageTitle }}</title>
-		<link rel="stylesheet" type="text/css" href="/www{{ templateWebPath }}css/main.css">
+		<link rel="stylesheet" type="text/css" href="{{ templateWebPath }}css/main.css">
 	</head>
 <body>
-	<div>
+	<div id="header">
 		<h1> my page (Названия) </h1>
 	</div>
 
 {% include 'leftcolomn.tp1' %}
 
-<dir id="centerColonum">
+<dir id="centerColumn">
 	centerColonum

@@ -12,7 +12,30 @@ body {
 	text-align: center;
 }
 
-#leftcolomn {
+#leftColomn {
 	width: 200px;
 	float: left;
+}
+
+#leftMenu, #loginBox, #registerBox {
+	padding-bottom: 20px;
+}
+
+#centerColumn {
+	width: 600px;
+	float: left;
+	padding-left: 90px;
+}
+
+#footer {
+	clear: both;
+}
+
+.menuCfption {
+	padding: 3px;
+	font-weight: bold;
+}
+
+.cartBox {
+	padding: 5px 0px 5px 0px;
 }
