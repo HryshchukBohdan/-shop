@@ -2,7 +2,17 @@
 	<div id="leftManu">
 		<div class="manuCaption"> Menu: </div>
 			{% for cat in categories %}
+			
 				<a href="#">{{ cat.name }}</a><br />
+
+			{% if cat.children is not null %}
+
+				{% for child in cat.children %}
+					--<a href="#">{{ child.name }}</a><br />
+				{% endfor %}
+
+			{% endif %}
+
 			{% endfor %}
 	</div>
 </div>
