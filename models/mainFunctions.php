@@ -38,3 +38,19 @@ function addGlobaly ($twig, $array_globaly = 0) {
 	
 	return $twig;
 }
+
+function createTwigArray ($result) {
+
+	if (! $result) { 
+		return false;
+	}
+
+    $n_rows = mysqli_num_rows($result);
+
+    for ($i=0; $i < $n_rows; $i++) {
+
+        $row = mysqli_fetch_assoc($result);
+        $twigArray[] = $row;
+        
+    } return $twigArray;
+}
