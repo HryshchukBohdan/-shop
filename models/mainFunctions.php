@@ -5,12 +5,12 @@ $controllerName названия контролера
 $actionName названия финкции обработки страницы
 */
 
-function loadPage($twig, $controllerName, $actionName = 'index') {
+function loadPage($twig, $controllerName, $actionName = 'index', $link) {
 
 	include_once PathPrefix . $controllerName . PathPostfix;
 
 	$function = $actionName . 'Action';
-	$function($twig);
+	$function($twig, $link);
 }
 
 function loatTemplate($twig, $templateName) {
@@ -24,4 +24,17 @@ function d($value = null, $die = 1) {
 	echo "</pre>";
 
 	if($die) die;
+}
+
+function addGlobaly ($twig, $array_globaly = 0) {
+
+	if ($array_globaly == 0) {
+		echo "Non globaly array";
+	}
+
+	foreach ($array_globaly as $key => $value) {
+		$twig->addGlobal($key, $value);
+	}
+	
+	return $twig;
 }

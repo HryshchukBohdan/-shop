@@ -9,4 +9,4 @@ $controllerName = isset($_GET['controler']) ? ucfirst($_GET['controler']) : 'Ind
 // определяем с какой функцией будем работать
 $actionName = isset($_GET['action']) ? ucfirst($_GET['action']) : 'Index';
 
-loadPage($twig, $controllerName, $actionName);
+loadPage($twig, $controllerName, $actionName, $link);

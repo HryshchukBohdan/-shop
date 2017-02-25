@@ -11,10 +11,3 @@ $dbpasswd = '0516';
    		if(!mysqli_set_charset($link, "utf8")){
         	printf("Error!: " . mysql_error($link)); 
     	}
-
-	if (! $link) {
-    	echo "feiLLLLL";
-    }
-   	if ($link) {
-   		echo "ok";
-   	}

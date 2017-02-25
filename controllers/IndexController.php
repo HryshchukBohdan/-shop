@@ -7,11 +7,15 @@
 		echo "testAction ++";
 	}
 
-	function indexAction($twig) {
+	function indexAction($twig, $link) {
 		
-		$rsCategories = getAllMainCatsWithChildren();
+		$TwigCategories = getAllMainCatsWithChildren($link);
+
+		$array = array('templateWebPath'=>'templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+
+		addGlobaly($twig, $array);
 
     	$smarty = loatTemplate($twig, 'index');
-    	$array = array('templateWebPath'=>'templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
-		echo $smarty->render($array);
+    	
+    	echo $smarty->render(array('categories'=> $TwigCategories));
 	}
