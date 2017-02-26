@@ -11,4 +11,3 @@
 {% include 'leftcolomn.tp1' %}
 
 <dir id="centerColumn">
-	centerColonum

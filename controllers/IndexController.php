@@ -21,5 +21,5 @@
 
     	$smarty = loatTemplate($twig, 'index');
     	
-    	echo $smarty->render(array('categories'=> $TwigCategories));
+    	echo $smarty->render(array('categories'=> $TwigCategories, 'products' => $TwigProduct));
 	}

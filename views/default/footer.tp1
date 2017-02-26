@@ -4,7 +4,6 @@
 	Funer
 </dir>
 
-
 {% for cat in categories %}
 {{ cat.name }}
 {% endfor %}
@@ -12,5 +11,6 @@
 {{ pageTitle }}
 {{ pp }}
 {{ templateWebPath }}
+
 	</body>
 </html>
