@@ -3,12 +3,12 @@
 		<div class="manuCaption"> Menu: </div>
 			{% for cat in categories %}
 			
-				<a href="#">{{ cat.name }}</a><br />
+				<a href="/www/?controller=categories&id={{ cat.id }}">{{ cat.name }}</a><br />
 
 			{% if cat.children is not null %}
 
 				{% for child in cat.children %}
-					--<a href="#">{{ child.name }}</a><br />
+					--<a href="/www/?controller=categories&id={{ child.id }}">{{ child.name }}</a><br />
 				{% endfor %}
 
 			{% endif %}

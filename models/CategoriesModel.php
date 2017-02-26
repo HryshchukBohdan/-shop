@@ -2,6 +2,7 @@
  
  // получение дочирних категорий
 function getChildrenForCat($catId, $link) {
+
     $query = 'SELECT *
                 FROM categories
                 WHERE parent_id = ' . $catId;
@@ -16,6 +17,7 @@ function getChildrenForCat($catId, $link) {
 
 // Получить главние катергории с привязками к дочирним
 function getAllMainCatsWithChildren($link) {
+    
 	$query = 'SELECT *
 				FROM categories
 				WHERE parent_id = 0';
@@ -38,4 +40,22 @@ function getAllMainCatsWithChildren($link) {
         $categoriesTwig[] = $row;
 
     } return $categoriesTwig;
+}
+
+function getCatById($catId, $link) {
+
+    $catId = intval($catId);
+
+    $query = 'SELECT *
+                FROM categories
+                WHERE id = ' . $catId;
+    
+    $result = mysqli_query($link, $query);
+           
+    if (!$result)
+        die(mysqli_error($link));
+
+    $row = mysqli_fetch_assoc($result);
+
+    return $row;
 }
