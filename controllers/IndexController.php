@@ -19,7 +19,15 @@
 
 		addGlobaly($twig, $array);
 
-    	$smarty = loatTemplate($twig, 'index');
-    	
-    	echo $smarty->render(array('categories'=> $TwigCategories, 'products' => $TwigProduct));
+		$array_rend_bulg = array(
+			'categories'=> $TwigCategories, 
+			'products' => $TwigProduct);
+
+		$smartyHeader = loatTemplate($twig, 'header');
+    	$smartyIndex = loatTemplate($twig, 'index');
+    	$smartyFooter = loatTemplate($twig, 'footer');
+
+    	echo $smartyHeader->render($array_rend_bulg);
+    	echo $smartyIndex->render($array_rend_bulg);
+    	echo $smartyFooter->render($array_rend_bulg);
 	}

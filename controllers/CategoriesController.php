@@ -11,27 +11,38 @@
 			exit();
 		}
 
+		$TwigChildCats = null;
+		$TwigProducts = null;
+
 		$TwigCategory = getCatById($catId, $link);
 
-		echo "Test cftegories  --  " . $catId;
-	}
-
-/*
-
-
-
-
-
-		$n_product = 4;
+		if ($TwigCategory['parent_id'] == 0) {
+			 $TwigChildCats = getChildrenForCat($catId, $link);
+			//print_r($TwigChildCats);
+		} else {
+			$TwigProducts = getProductsByCat($catId, $link);
+			//print_r($TwigProducts);
+		} 
 
 		$TwigCategories = getAllMainCatsWithChildren($link);
-		$TwigProduct = getLastProducts($n_product, $link);
 
-		$array = array('templateWebPath'=>'templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+		$smartyHeader = loatTemplate($twig, 'header');
+    	$smartyCategory = loatTemplate($twig, 'category');
+    	$smartyFooter = loatTemplate($twig, 'footer');
+
+    	$array = array('templateWebPath'=>'templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 
 		addGlobaly($twig, $array);
 
-    	$smarty = loatTemplate($twig, 'index');
-    	
-    	echo $smarty->render(array('categories'=> $TwigCategories, 'products' => $TwigProduct));  
+		$array_rend_bulg = array(
+    		'categories'=> $TwigCategories, 
+    		'products' => $TwigProducts, 
+    		'category' => $TwigCategory, 
+    		'childCats' => $TwigChildCats,
+    		'pageTitleCat' => 'Товары категории ' . $TwigCategory['name']
+    		);
+
+    	echo $smartyHeader->render($array_rend_bulg);
+    	echo $smartyCategory->render($array_rend_bulg);
+    	echo $smartyFooter->render($array_rend_bulg);
 	}

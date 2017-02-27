@@ -1,16 +1,19 @@
-</dir> <!--Конец центрального блока-->
+</div> <!--Конец центрального блока-->
 
-<dir id="Footer">
+<div id="Footer">
 	Funer
-</dir>
+</div>
 
 {% for cat in categories %}
 {{ cat.name }}
 {% endfor %}
 
-{{ pageTitle }}
-{{ pp }}
-{{ templateWebPath }}
+0 <br />
+
+{{ pageTitle }} 1<br />
+{{ pp }} 2<br />
+{{ templateWebPath }} 3<br />
+{{ pageTitleCat }} 4<br />
 
 	</body>
 </html>

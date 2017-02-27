@@ -1,18 +1,4 @@
 <?php // модель таблицы продуктов
- 
- /* получение дочирних категорий
-function getChildrenForCat($catId, $link) {
-    $query = 'SELECT *
-                FROM categories
-                WHERE parent_id = ' . $catId;
-    
-    $result = mysqli_query($link, $query);
-           
-    if (!$result)
-        die(mysqli_error($link));
-
-    return createTwigArray($result);
-}*/
 
 // Получить последнего количества продуктов
 function getLastProducts($limit = null, $link) {
@@ -26,6 +12,23 @@ function getLastProducts($limit = null, $link) {
     }
 
 	$result = mysqli_query($link, $query);
+           
+    if (!$result)
+        die(mysqli_error($link));
+
+    //print_r(createTwigArray($result));
+    return createTwigArray($result);
+}
+
+function getProductsByCat($catId, $link) {
+
+    $catId = intval($catId);
+
+    $query = 'SELECT *
+                FROM products
+                WHERE category_id = ' . $catId;
+
+    $result = mysqli_query($link, $query);
            
     if (!$result)
         die(mysqli_error($link));

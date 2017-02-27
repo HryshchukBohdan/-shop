@@ -8,3 +8,13 @@
 		</a></center>
 	</div>
 {% endfor %}
+
+{% for child in childCats %}
+	<h2><a href="/category/{{ child.id }}">{{ child.name }}</a></h2>
+{% endfor %}
+
+{% if products is null %}
+	{% if childCats is null %}
+		<center>Нету даных<br />Досвидулии</center>
+	{% endif %}
+{% endif %}
