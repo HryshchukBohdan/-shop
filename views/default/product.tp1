@@ -1,6 +1,7 @@
 <img src="../library/images/products/{{ products.image }}" width="575">
 
 <h3>{{ products.name }}</h3>
+Cтоимость: {{ products.price }}
 
-<a href="#" alt="добавить в корзину">Добавить в корзину</a>
+<a id="addCart_{{ products.id }}" href="#" onclick="addToCart({{ products.id }}); return false;" alt="добавить в корзину">Добавить в корзину</a>
 <p>Описание <br />{{ products.descript }}</p>
