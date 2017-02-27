@@ -16,7 +16,6 @@ function getLastProducts($limit = null, $link) {
     if (!$result)
         die(mysqli_error($link));
 
-    //print_r(createTwigArray($result));
     return createTwigArray($result);
 }
 
@@ -33,6 +32,21 @@ function getProductsByCat($catId, $link) {
     if (!$result)
         die(mysqli_error($link));
 
-    //print_r(createTwigArray($result));
     return createTwigArray($result);
+}
+
+function getProductById($productId, $link) {
+
+    $catId = intval($productId);
+
+    $query = 'SELECT *
+                FROM products
+                WHERE id = ' . $productId;
+
+    $result = mysqli_query($link, $query);
+           
+    if (!$result)
+        die(mysqli_error($link));
+
+    return mysqli_fetch_assoc($result);
 }

@@ -1,0 +1,6 @@
+<img src="../library/images/products/{{ products.image }}" width="575">
+
+<h3>{{ products.name }}</h3>
+
+<a href="#" alt="добавить в корзину">Добавить в корзину</a>
+<p>Описание <br />{{ products.descript }}</p>
