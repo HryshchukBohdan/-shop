@@ -5,7 +5,7 @@ $controllerName названия контролера
 $actionName названия финкции обработки страницы
 */
 
-function loadPage($twig, $controllerName, $actionName = 'index', $link) {
+function loadPage($twig, $controllerName, $actionName, $link) {
 
 	include_once PathPrefix . $controllerName . PathPostfix;
 

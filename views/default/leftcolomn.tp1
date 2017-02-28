@@ -1,4 +1,5 @@
 <div id="leftColomn">
+
 	<div id="leftManu">
 		<div class="manuCaption"> Menu: </div>
 			{% for cat in categories %}
@@ -15,4 +16,15 @@
 
 			{% endfor %}
 	</div>
+
+	<div class="manuCaption">Корзинка с грибочками</div>
+	<a href="/?controller=cart/" title="Перейти в корзину">В корзине</a>
+	<span id="cart_product">
+		{% if cart_product > 0 %}
+			{{ cart_product }}
+		{% else %}
+			ПУсто
+		{% endif %}
+	</span>
+
 </div>

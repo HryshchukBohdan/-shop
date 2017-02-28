@@ -1,10 +1,10 @@
 function addToCart(productId) {
-	console.log("js - addToCart()");
-	$.ajax((
+	console.log("js-addToCart()");
+	$.ajax({
 			type: 'POST',
 			async: false,
-			url: "/cart/add_product/" + productId + '/',
-			dataType: 'json',
+			url: "/www/?controller=cart&action=addtocart&id=" + productId,
+			dataType: "json",
 			success: function(data) {
 				if (data['success']) {
 					$('#cart_product').html(data['n_product']);
@@ -13,5 +13,23 @@ function addToCart(productId) {
 					$('#removeCart_'+ productId).show();
 				}
 			}
-		))
+		})
+}
+
+function removeFromCart(productId) {
+	console.log("js - removeFromCart("+productId+")");
+	$.ajax({
+		type: 'POST',
+		async: false,
+		url: "/www/?controller=cart&action=removefromcart&id=" + productId + '/',
+		dataType: 'json',
+		success: function(data) {
+			if (data['success']) {
+				$('#cart_product').html(data['n_product']);
+
+				$('#addCart_'+ productId).show();
+				$('#removeCart_'+ productId).hide();
+			}
+		}
+	})
 }

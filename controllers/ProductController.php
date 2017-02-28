@@ -13,6 +13,11 @@
 
 		$TwigProduct = getProductById($productId, $link);
 		$TwigCategories = getAllMainCatsWithChildren($link);
+		$TwigCartP = null;
+
+		if (in_array($productId, $_SESSION['cart'])) {
+			$TwigCartP = 1;
+		}
 
 		$array = array(
 			'templateWebPath'=>'templates/default/', 
@@ -21,6 +26,7 @@
 		addGlobaly($twig, $array);
 
 		$array_rend_bulg = array(
+			'cart' => $TwigCartP,
 			'categories'=> $TwigCategories, 
 			'products' => $TwigProduct);
 

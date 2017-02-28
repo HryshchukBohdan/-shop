@@ -7,6 +7,9 @@ AddDefaultcharset utf-8
 	RewriteEngine On
 	RewriteBase /
 
+
+	RewriteRule ^www/([a-z]+)/([a-z]+)/([0-9]+)/$ /?controller=$1&action=$2&id=$3&%{QUERY_STRING} [NS,L]
+	RewriteRule ^www/([a-z]+)/([a-z]+)/$ /?controller=$1&action=$2&%{QUERY_STRING} [NS,L]
 	RewriteRule ^www/([a-z]+)/([0-9]+)/$ /?controller=$1&id=$2&%{QUERY_STRING} [NS,L]
 
 	RewriteCond $1 !^(index.php)
