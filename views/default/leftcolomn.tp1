@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="manuCaption">Корзинка с грибочками</div>
-	<a href="/?controller=cart/" title="Перейти в корзину">В корзине</a>
+	<a href="/www/?controller=cart" title="Перейти в корзину">В корзине</a>
 	<span id="cart_product">
 		{% if cart_product > 0 %}
 			{{ cart_product }}

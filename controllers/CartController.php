@@ -46,3 +46,29 @@
 
 		echo json_encode($resData);
 	}
+
+	function indexAction($twig, $link) {
+
+		$productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+		
+		$TwigProducts = getProductsFromArray($productIds, $link);
+		$TwigCategories = getAllMainCatsWithChildren($link);
+		
+		$array = array(
+			'templateWebPath'=>'templates/default/', 
+			'pageTitle' =>'Корзина');
+
+		addGlobaly($twig, $array);
+
+		$array_rend_bulg = array(
+			'categories'=> $TwigCategories, 
+			'products' => $TwigProducts);
+
+		$smartyHeader = loatTemplate($twig, 'header');
+    	$smartyCart = loatTemplate($twig, 'cart');
+    	$smartyFooter = loatTemplate($twig, 'footer');
+
+    	echo $smartyHeader->render($array_rend_bulg);
+    	echo $smartyCart->render($array_rend_bulg);
+    	echo $smartyFooter->render($array_rend_bulg);
+	}

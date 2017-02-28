@@ -50,3 +50,19 @@ function getProductById($productId, $link) {
 
     return mysqli_fetch_assoc($result);
 }
+
+function getProductsFromArray($productIds, $link) {
+
+    $strIds = implode(', ', $productIds);
+
+    $query = 'SELECT *
+                FROM products
+                WHERE id in (' . $strIds . ')';
+
+    $result = mysqli_query($link, $query);
+           
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}

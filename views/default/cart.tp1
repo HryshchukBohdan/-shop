@@ -1,0 +1,30 @@
+<center><h1>Корзина</h1></center>
+
+{% if products is null %}
+	В корзине пусто
+{% else %}
+
+<table>
+	<tr>
+		<td>
+			№
+		</td>
+		<td>
+			Найменувание
+		</td>
+		<td>
+			Количестко
+		</td>
+		<td>
+			цена за единицу
+		</td>
+		<td>
+			цена
+		</td>
+		<td>
+			действия
+		</td>
+	</tr>
+</table>
+
+{% endif %}
