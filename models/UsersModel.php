@@ -1,39 +1,91 @@
-<?php // модель таблицы продуктов
+<?php // модель таблицы пользователей
 
-// Получить последнего количества продуктов
-function getLastProducts($limit = null, $link) {
+function registerNewUser ($email, $pwdMD5, $name, $phone, $adress, $link) {
 
-	$query = 'SELECT *
-				FROM products
-				ORDER BY id DESC';
+    $email = htmlspecialchars(mysql_real_escape_string($email));
+    $name = htmlspecialchars(mysql_real_escape_string($name));
+    $phone = htmlspecialchars(mysql_real_escape_string($phone));
+    $adress = htmlspecialchars(mysql_real_escape_string($adress));
 
-    if ($limit) {
-        $query .= " lIMIT " . $limit;  
-    }
+    $$query = 'INSERT INTO
+    users (email, pwd, name, phone, adress)
+    VALUES (' . $email . ', ' . $pwdMD5 . ', ' . $name . ', ' . $phone . ', ' . $adress . ')';
 
 	$result = mysqli_query($link, $query);
            
     if (!$result)
         die(mysqli_error($link));
 
-    return createTwigArray($result);
-}
+    $prov_usp = mysqli_fetch_assoc($result);
 
-function getProductsByCat($catId, $link) {
+    if ($prov_usp) {
 
-    $catId = intval($catId);
+        $query = 'SELECT *
+                FROM users
+                WHERE email = ' . $email . ' and pwd = ' . $pwdMD5 . ' limit 1';
 
-    $query = 'SELECT *
-                FROM products
-                WHERE category_id = ' . $catId;
-
-    $result = mysqli_query($link, $query);
+        $result = mysqli_query($link, $query);
            
-    if (!$result)
-        die(mysqli_error($link));
+        if (!$result)
+            die(mysqli_error($link));
 
-    return createTwigArray($result);
+        $user = createTwigArray($result);
+
+        if (isset($user[0])) {
+            $user['success'] = 1;
+        } else {
+            $user['success'] = 0;
+        }
+
+    } else {
+        $user['success'] = 0;
+    }
+
+    return $user;
 }
+
+function checkRegisterParams($email, $pwd1, $pwd2) {
+
+    $result = null;
+
+    if (! $email) {
+        $result['success'] = false;
+        $result['message'] = 'Введите емеил'
+    }
+
+    if (! $pwd1) {
+        $result['success'] = false;
+        $result['message'] = 'Введите пароль'
+    }
+
+    if (! $pwd2) {
+        $result['success'] = false;
+        $result['message'] = 'Введите повтор пароля'
+    }
+
+    if ($pwd2 != $email) {
+        $result['success'] = false;
+        $result['message'] = 'пароли не совпадают # У Вас новое достижение - РАКУШКА #'
+    }
+
+    return $result;
+}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getProductById($productId, $link) {
 
