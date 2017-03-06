@@ -1,5 +1,5 @@
 function addToCart(productId) {
-	console.log("js-addToCart()");
+	console.log("js - addToCart()");
 	$.ajax({
 			type: 'POST',
 			async: false,
@@ -32,4 +32,12 @@ function removeFromCart(productId) {
 			}
 		}
 	})
+}
+
+function conversionPrice(productId) {
+	var newCnt = $('#prodCnt_' + productId).val();
+	var prodPrice = $('#prodPrice_' + productId).attr('value');
+	var prodRealPrice = newCnt * prodPrice;
+
+	$('#prodRealPrice_' + productId).html(prodRealPrice);
 }

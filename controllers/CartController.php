@@ -51,7 +51,12 @@
 
 		$productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 		
-		$TwigProducts = getProductsFromArray($productIds, $link);
+		$TwigProducts = null;
+		
+		if ($productIds) {
+			$TwigProducts = getProductsFromArray($productIds, $link);
+		}
+				
 		$TwigCategories = getAllMainCatsWithChildren($link);
 		
 		$array = array(

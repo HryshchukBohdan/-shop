@@ -17,6 +17,25 @@
 			{% endfor %}
 	</div>
 
+<div id="regidterBox">
+	<div class="manuCaption showHidden" onclick="showRegisterBox();"> Регистрация </div>
+	<div id="regidterBoxHidden">
+		email:<br />
+		<input type="text" id="email" name="email" value=""/><br />
+		пароль:<br />
+		<input type="password" id="pwd1" name="pwd1" value=""/><br />
+		Повторить пароль:<br />
+		<input type="password" id="pwd2" name="pwd2" value=""/><br />
+		<input type="button" onclick="regidterNewUser()" value="Зарегистрируваться"/>
+	</div>
+</div>
+
+
+
+
+
+
+
 	<div class="manuCaption">Корзинка с грибочками</div>
 	<a href="/www/?controller=cart" title="Перейти в корзину">В корзине</a>
 	<span id="cart_product">
