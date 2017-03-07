@@ -9,17 +9,21 @@
 		$_GET['id'] = intval($_GET['id']);
 
 		$productId = isset($_GET['id']) ? $_GET['id'] : null;
+
 		if (! $productId) {
 			return false;
-		}var_dump($productId);
+		}
 
 		$resData = array();
 
 		if (isset($_SESSION['cart']) && array_search($productId, $_SESSION['cart']) === false) {
+
 			$_SESSION['cart'][] = $productId;
 			$resData['n_product'] = count($_SESSION['cart']);
-			$resData['success'] = 1;		
+			$resData['success'] = 1;
+
 		} else {
+
 			$resData['success'] = 0;
 		} 
 
@@ -29,6 +33,7 @@
 	function removefromcartAction() {
 
 		$productId = isset($_GET['id']) ? $_GET['id'] : null;
+
 		if (! $productId) {
 			exit();
 		}
@@ -37,10 +42,13 @@
 		$key = array_search($productId, $_SESSION['cart']);
 
 		if ($key !== false) {
+
 			unset($_SESSION['cart'][$key]);
 			$resData['success'] = 1;
-			$resData['n_product'] = count($_SESSION['cart']);		
+			$resData['n_product'] = count($_SESSION['cart']);
+
 		} else {
+
 			$resData['success'] = 0;
 		} 
 

@@ -1,34 +1,27 @@
 <?php // модель таблицы пользователей
 
-function registerNewUser ($email, $pwdMD5, $name, $phone, $adress, $link) {
+include_once '../config/db.php';
 
-    $email = htmlspecialchars(mysql_real_escape_string($email));
-    $name = htmlspecialchars(mysql_real_escape_string($name));
-    $phone = htmlspecialchars(mysql_real_escape_string($phone));
-    $adress = htmlspecialchars(mysql_real_escape_string($adress));
+function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
 
-    $$query = 'INSERT INTO
-    users (email, pwd, name, phone, adress)
-    VALUES (' . $email . ', ' . $pwdMD5 . ', ' . $name . ', ' . $phone . ', ' . $adress . ')';
+    $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
+    $name = htmlspecialchars(mysqli_real_escape_string($link, $name));
+    $phone = htmlspecialchars(mysqli_real_escape_string($link, $phone));
+    $adress = htmlspecialchars(mysqli_real_escape_string($link, $adress));
 
-	$result = mysqli_query($link, $query);
-           
-    if (!$result)
-        die(mysqli_error($link));
+    $query = 'INSERT INTO
+                        users (email, pwd, name, phone, adress)
+             VALUES ("' . $email . '", "' . $pwdMD5 . '", "' . $name . '", "' . $phone . '", "' . $adress . '")';
 
-    $prov_usp = mysqli_fetch_assoc($result);
+	 $result = mysqli_query($link, $query);
 
-    if ($prov_usp) {
+    if ($result) {
 
         $query = 'SELECT *
                 FROM users
-                WHERE email = ' . $email . ' and pwd = ' . $pwdMD5 . ' limit 1';
+                WHERE email = "' . $email . '" and pwd = "' . $pwdMD5 . '" limit 1';      
 
         $result = mysqli_query($link, $query);
-           
-        if (!$result)
-            die(mysqli_error($link));
-
         $user = createTwigArray($result);
 
         if (isset($user[0])) {
@@ -50,58 +43,54 @@ function checkRegisterParams($email, $pwd1, $pwd2) {
 
     if (! $email) {
         $result['success'] = false;
-        $result['message'] = 'Введите емеил'
+        $result['message'] = 'Введите емеил';
     }
 
     if (! $pwd1) {
         $result['success'] = false;
-        $result['message'] = 'Введите пароль'
+        $result['message'] = 'Введите пароль';              
     }
 
-    if (! $pwd2) {
-        $result['success'] = false;
-        $result['message'] = 'Введите повтор пароля'
+     if (! $pwd2) {
+         $result['success'] = false;
+         $result['message'] = 'Введите повтор пароля';        
     }
 
-    if ($pwd2 != $email) {
+    if ($pwd2 != $pwd2) {
         $result['success'] = false;
-        $result['message'] = 'пароли не совпадают # У Вас новое достижение - РАКУШКА #'
+        $result['message'] = 'пароли не совпадают # У Вас новое достижение - РАКУШКА #';
     }
 
     return $result;
 }
 
- 
+function checkUserEmail($email, $link) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function getProductById($productId, $link) {
-
-    $catId = intval($productId);
+    $email = mysqli_real_escape_string($link, $email);    
 
     $query = 'SELECT *
-                FROM products
-                WHERE id = ' . $productId;
-
+                FROM users
+                WHERE email = ' . $email;
+                
     $result = mysqli_query($link, $query);
            
     if (!$result)
         die(mysqli_error($link));
 
-    return mysqli_fetch_assoc($result);
+    return createTwigArray($result);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getProductsFromArray($productIds, $link) {
 

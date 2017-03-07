@@ -1,12 +1,14 @@
 function addToCart(productId) {
+
 	console.log("js - addToCart()");
 	$.ajax({
 			type: 'POST',
-			async: false,
+			async: true,
 			url: "/www/?controller=cart&action=addtocart&id=" + productId,
 			dataType: "json",
 			success: function(data) {
 				if (data['success']) {
+					debugger;
 					$('#cart_product').html(data['n_product']);
 
 					$('#addCart_'+ productId).hide();
@@ -17,6 +19,7 @@ function addToCart(productId) {
 }
 
 function removeFromCart(productId) {
+
 	console.log("js - removeFromCart("+productId+")");
 	$.ajax({
 		type: 'POST',
@@ -35,9 +38,52 @@ function removeFromCart(productId) {
 }
 
 function conversionPrice(productId) {
+
 	var newCnt = $('#prodCnt_' + productId).val();
 	var prodPrice = $('#prodPrice_' + productId).attr('value');
 	var prodRealPrice = newCnt * prodPrice;
 
 	$('#prodRealPrice_' + productId).html(prodRealPrice);
+}
+
+function getData(obj_form) {
+
+	var hData = {};
+	$('input, textarea, select', obj_form).each(function() {
+		if (this.name && this.name!='') {
+			hData[this.name] = this.value;
+			console.log('hData[' + this.name + '] = ' + hData[this.name]);
+		}
+	});
+
+	return hData;
+}
+
+function registerNewUser() {
+	
+	var postData = getData('#registerBox');
+
+	$.ajax({
+		type: 'POST',
+		async: true,
+		url: "/www/?controller=user&action=register",
+		data: postData,
+		dataType: 'json',
+		success: function(data) {
+			if (data['success']) {
+				alert('Регистрация прошла успешно');
+
+				// Блок левого столпца
+				$('#registerBox').hide();
+
+				//$('#userLink').attr('href', '/user/');
+				//$('#userLink').html(data['userName']);
+				//$('#userBox').show();
+
+				// Страница заказа
+			} else {
+				alert(data['message']);
+			}
+		}
+	})
 }

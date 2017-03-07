@@ -2,7 +2,7 @@
 	<head>
 		<title>{{ pageTitle }}</title>
 		<link rel="stylesheet" type="text/css" href="{{ templateWebPath }}css/main.css">
-		<script type="text/javascript" src="../library/jquery/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="../library/jquery/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="../library/jquery/main.js"></script>
 	</head>
 <body>

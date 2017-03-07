@@ -10,6 +10,7 @@ function loadPage($twig, $controllerName, $actionName, $link) {
 	include_once PathPrefix . $controllerName . PathPostfix;
 
 	$function = $actionName . 'Action';
+	
 	$function($twig, $link);
 }
 
@@ -19,6 +20,7 @@ function loatTemplate($twig, $templateName) {
 }
 
 function d($value = null, $die = 1) {
+	
 	echo "Debug: <br /><pre>";
 	print_r($value);
 	echo "</pre>";
