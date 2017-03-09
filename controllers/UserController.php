@@ -93,3 +93,29 @@
 
         echo json_encode($resData);
     }
+
+    function indexAction($twig, $link) {
+
+    if (! isset($_SESSION['user'])) {
+        redirect('/');
+    }
+
+    $TwigCategories = getAllMainCatsWithChildren($link);
+
+    $array = array(
+        'templateWebPath'=>'tmp/templates/default/',
+        'pageTitle' =>'Страница пользователя');
+
+    addGlobaly($twig, $array);
+
+    $array_rend_bulg = array(
+        'categories'=> $TwigCategories);
+
+    $smartyHeader = loadTemplate($twig, 'header');
+    $smartyUser = loadTemplate($twig, 'user');
+    $smartyFooter = loadTemplate($twig, 'footer');
+
+    echo $smartyHeader->render($array_rend_bulg);
+    echo $smartyUser->render($array_rend_bulg);
+    echo $smartyFooter->render($array_rend_bulg);
+}

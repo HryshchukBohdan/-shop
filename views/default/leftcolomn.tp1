@@ -20,7 +20,7 @@
 {% if arrayUser is not null %}
 
 	<div id="userBox">
-		<a href="/?controller=user" id="userLink"></a>{{ arrayUser.displayName }}<br />
+		<a href="/?controller=user" id="userLink">{{ arrayUser.displayName }}</a><br />
 		<a href="/?controller=user&action=logout" onclick="logout();">Выход</a>
 	</div>
 
