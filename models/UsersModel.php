@@ -80,30 +80,24 @@ function checkUserEmail($email, $link) {
     return createTwigArray($result);
 }
 
+function loginUser($email, $pwd, $link) {
 
-
-
-
-
-
-
-
-
-
-
-
-function getProductsFromArray($productIds, $link) {
-
-    $strIds = implode(', ', $productIds);
+    $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
+    $pwd = md5($pwd);
 
     $query = 'SELECT *
-                FROM products
-                WHERE id in (' . $strIds . ')';
-print_r($query);
+                FROM users
+                WHERE email = "' . $email . '" and pwd = "' . $pwd . '" limit 1';
+
     $result = mysqli_query($link, $query);
            
-    if (!$result)
-        die(mysqli_error($link));
+    $data = createTwigArray($result);
 
-    return createTwigArray($result);
+    if (isset($data[0])) {
+        $data['success'] = 1;
+    } else {
+        $data['success'] = 0;
+    }
+
+    return $data;
 }

@@ -17,15 +17,17 @@
 			{% endfor %}
 	</div>
 
-	<div id="userBox" class="hideme">
-		<a href="#" id="userLink"></a><br />
-		<a href="/?controller=user&action=logout" onclick="logout();">Выхода нет, скоро рассвет</a>
-	</div>
+<div id="userBox" class="hideme">
+	<a href="#" id="userLink"></a><br />
+	<a href="/?controller=user&action=logout" onclick="logout();">Выхода нет, скоро рассвет</a>
+</div>
 
-
-
-
-
+<div id="loginBox">
+	<div class="manuCaption">Авторизация</div>
+	<input type="text" name="loginEmail" id="loginEmail" value=""/><br />
+	<input type="password" name="loginPwd" id="loginPwd" value=""/><br />
+	<input type="button" onclick="login();" value="Войти"/><br />
+</div>
 
 <div id="registerBox">
 	<div class="manuCaption showHidden" onclick="showRegisterBox();"> Регистрация </div>
@@ -39,12 +41,6 @@
 		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
 	</div>
 </div>
-
-
-
-
-
-
 
 	<div class="manuCaption">Корзинка с грибочками</div>
 	<a href="/?controller=cart" title="Перейти в корзину">В корзине</a>
