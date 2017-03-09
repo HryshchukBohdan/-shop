@@ -4,12 +4,12 @@
 		<div class="manuCaption"> Menu: </div>
 			{% for cat in categories %}
 			
-				<a href="/www/?controller=categories&id={{ cat.id }}">{{ cat.name }}</a><br />
+				<a href="/?controller=categories&id={{ cat.id }}">{{ cat.name }}</a><br />
 
 			{% if cat.children is not null %}
 
 				{% for child in cat.children %}
-					--<a href="/www/?controller=categories&id={{ child.id }}">{{ child.name }}</a><br />
+					--<a href="/?controller=categories&id={{ child.id }}">{{ child.name }}</a><br />
 				{% endfor %}
 
 			{% endif %}
@@ -37,7 +37,7 @@
 
 
 	<div class="manuCaption">Корзинка с грибочками</div>
-	<a href="/www/?controller=cart" title="Перейти в корзину">В корзине</a>
+	<a href="/?controller=cart" title="Перейти в корзину">В корзине</a>
 	<span id="cart_product">
 		{% if cart_product > 0 %}
 			{{ cart_product }}

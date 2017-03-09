@@ -1,8 +1,8 @@
 <?php // Контролер странички категорий
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/ProductsModel.php';
+	include_once 'models/CategoriesModel.php';
+	include_once 'models/ProductsModel.php';
 
 	function indexAction($twig, $link) {
 
@@ -30,7 +30,7 @@
     	$smartyCategory = loatTemplate($twig, 'category');
     	$smartyFooter = loatTemplate($twig, 'footer');
 
-    	$array = array('templateWebPath'=>'templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+    	$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 
 		addGlobaly($twig, $array);
 

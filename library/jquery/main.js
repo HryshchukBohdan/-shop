@@ -4,7 +4,7 @@ function addToCart(productId) {
 	$.ajax({
 			type: 'POST',
 			async: true,
-			url: "/www/?controller=cart&action=addtocart&id=" + productId,
+			url: "/?controller=cart&action=addtocart&id=" + productId,
 			dataType: "json",
 			success: function(data) {
 				if (data['success']) {
@@ -24,7 +24,7 @@ function removeFromCart(productId) {
 	$.ajax({
 		type: 'POST',
 		async: false,
-		url: "/www/?controller=cart&action=removefromcart&id=" + productId + '/',
+		url: "/?controller=cart&action=removefromcart&id=" + productId + '/',
 		dataType: 'json',
 		success: function(data) {
 			if (data['success']) {
@@ -66,7 +66,7 @@ function registerNewUser() {
 	$.ajax({
 		type: 'POST',
 		async: true,
-		url: "/www/?controller=user&action=register",
+		url: "/?controller=user&action=register",
 		data: postData,
 		dataType: 'json',
 		success: function(data) {

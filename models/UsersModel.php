@@ -1,6 +1,6 @@
 <?php // модель таблицы пользователей
 
-include_once '../config/db.php';
+include_once 'config/db.php';
 
 function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
 
@@ -41,24 +41,24 @@ function checkRegisterParams($email, $pwd1, $pwd2) {
 
     $result = null;
 
-    if (! $email) {
+    if ($pwd2 != $pwd2) {
         $result['success'] = false;
-        $result['message'] = 'Введите емеил';
+        $result['message'] = 'пароли не совпадают # У Вас новое достижение - РАКУШКА #';
+    }
+
+    if (! $pwd2) {
+        $result['success'] = false;
+        $result['message'] = 'Введите повтор пароля';
     }
 
     if (! $pwd1) {
         $result['success'] = false;
-        $result['message'] = 'Введите пароль';              
+        $result['message'] = 'Введите пароль';
     }
 
-     if (! $pwd2) {
-         $result['success'] = false;
-         $result['message'] = 'Введите повтор пароля';        
-    }
-
-    if ($pwd2 != $pwd2) {
+    if (! $email) {
         $result['success'] = false;
-        $result['message'] = 'пароли не совпадают # У Вас новое достижение - РАКУШКА #';
+        $result['message'] = 'Введите емеил';
     }
 
     return $result;

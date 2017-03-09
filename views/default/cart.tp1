@@ -31,7 +31,7 @@
 			{{ loop.index }}
 		</td>
 		<td>
-			<a href="/www/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
+			<a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
 		</td>
 		<td>
 			<input type="text" name="prodCnt_{{ prod.id }}" id="prodCnt_{{ prod.id }}" value="1" onchange="conversionPrice({{ prod.id }});"/>

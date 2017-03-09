@@ -1,8 +1,8 @@
 <?php // Контролер пользователей
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/UsersModel.php';
+	include_once 'models/CategoriesModel.php';
+	include_once 'models/UsersModel.php';
 
 	function RegisterAction($twig, $link) {
 

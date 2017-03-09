@@ -1,8 +1,8 @@
 <?php // Контролер роботы с корзиной 
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/ProductsModel.php';
+	include_once 'models/CategoriesModel.php';
+	include_once 'models/ProductsModel.php';
 
 	function addtocartAction() {
 
@@ -68,7 +68,7 @@
 		$TwigCategories = getAllMainCatsWithChildren($link);
 		
 		$array = array(
-			'templateWebPath'=>'templates/default/', 
+			'templateWebPath'=>'tmp/templates/default/',
 			'pageTitle' =>'Корзина');
 
 		addGlobaly($twig, $array);

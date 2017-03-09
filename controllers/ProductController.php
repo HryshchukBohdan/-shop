@@ -1,8 +1,8 @@
 <?php // Контролер продуктов(преподов)
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/ProductsModel.php';
+	include_once 'models/CategoriesModel.php';
+	include_once 'models/ProductsModel.php';
 
 	function indexAction($twig, $link) {
 		
@@ -20,7 +20,7 @@
 		}
 
 		$array = array(
-			'templateWebPath'=>'templates/default/', 
+			'templateWebPath'=>'tmp/templates/default/',
 			'pageTitle' =>'');
 
 		addGlobaly($twig, $array);
