@@ -1,8 +1,8 @@
 <?php // Контролер роботы с корзиной 
 
 	// подключаем модели
-	include_once 'models/CategoriesModel.php';
-	include_once 'models/ProductsModel.php';
+	include_once '../models/CategoriesModel.php';
+	include_once '../models/ProductsModel.php';
 
 	function addtocartAction() {
 
@@ -77,9 +77,9 @@
 			'categories'=> $TwigCategories, 
 			'products' => $TwigProducts);
 
-		$smartyHeader = loatTemplate($twig, 'header');
-    	$smartyCart = loatTemplate($twig, 'cart');
-    	$smartyFooter = loatTemplate($twig, 'footer');
+		$smartyHeader = loadTemplate($twig, 'header');
+    	$smartyCart = loadTemplate($twig, 'cart');
+    	$smartyFooter = loadTemplate($twig, 'footer');
 
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyCart->render($array_rend_bulg);

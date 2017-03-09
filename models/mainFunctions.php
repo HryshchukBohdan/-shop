@@ -14,7 +14,7 @@ function loadPage($twig, $controllerName, $actionName, $link) {
 	$function($twig, $link);
 }
 
-function loatTemplate($twig, $templateName) {
+function loadTemplate($twig, $templateName) {
 	
 	return $twig->loadTemplate($templateName . TemplatePostfix);
 }
@@ -55,4 +55,11 @@ function createTwigArray ($result) {
         $twigArray[] = $row;
         
     } return $twigArray;
+}
+
+function redirect($url) {
+
+    if (! $url) $url = '/';
+    header("location: $url");
+    exit;
 }

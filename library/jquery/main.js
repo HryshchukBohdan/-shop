@@ -76,9 +76,9 @@ function registerNewUser() {
 				// Блок левого столпца
 				$('#registerBox').hide();
 
-				//$('#userLink').attr('href', '/user/');
-				//$('#userLink').html(data['userName']);
-				//$('#userBox').show();
+				$('#userLink').attr('href', '/?controller=user');
+				$('#userLink').html(data['userName']);
+				$('#userBox').show();
 
 				// Страница заказа
 			} else {

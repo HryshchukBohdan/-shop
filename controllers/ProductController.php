@@ -30,9 +30,9 @@
 			'categories'=> $TwigCategories, 
 			'products' => $TwigProduct);
 
-		$smartyHeader = loatTemplate($twig, 'header');
-    	$smartyProduct = loatTemplate($twig, 'product');
-    	$smartyFooter = loatTemplate($twig, 'footer');
+		$smartyHeader = loadTemplate($twig, 'header');
+    	$smartyProduct = loadTemplate($twig, 'product');
+    	$smartyFooter = loadTemplate($twig, 'footer');
 
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyProduct->render($array_rend_bulg);

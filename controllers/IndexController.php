@@ -23,9 +23,9 @@
 			'categories'=> $TwigCategories, 
 			'products' => $TwigProduct);
 
-		$smartyHeader = loatTemplate($twig, 'header');
-    	$smartyIndex = loatTemplate($twig, 'index');
-    	$smartyFooter = loatTemplate($twig, 'footer');
+		$smartyHeader = loadTemplate($twig, 'header');
+    	$smartyIndex = loadTemplate($twig, 'index');
+    	$smartyFooter = loadTemplate($twig, 'footer');
 
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyIndex->render($array_rend_bulg);

@@ -17,6 +17,16 @@
 			{% endfor %}
 	</div>
 
+	<div id="userBox" class="hideme">
+		<a href="#" id="userLink"></a><br />
+		<a href="/?controller=user&action=logout" onclick="logout();">Выхода нет, скоро рассвет</a>
+	</div>
+
+
+
+
+
+
 <div id="registerBox">
 	<div class="manuCaption showHidden" onclick="showRegisterBox();"> Регистрация </div>
 	<div id="regidterBoxHidden">

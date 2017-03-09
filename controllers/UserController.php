@@ -55,7 +55,15 @@
 		echo json_encode($resData);
 	}
 
+	function logoutAction() {
 
+	    if (isset($_SESSION['user'])) {
+	        unset($_SESSION['user']);
+            unset($_SESSION['cart']);
+        }
+
+        redirect('/');
+    }
 
 
 

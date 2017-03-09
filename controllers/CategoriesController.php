@@ -1,8 +1,8 @@
 <?php // Контролер странички категорий
 
 	// подключаем модели
-	include_once 'models/CategoriesModel.php';
-	include_once 'models/ProductsModel.php';
+	include_once '../models/CategoriesModel.php';
+	include_once '../models/ProductsModel.php';
 
 	function indexAction($twig, $link) {
 
@@ -26,9 +26,9 @@
 
 		$TwigCategories = getAllMainCatsWithChildren($link);
 
-		$smartyHeader = loatTemplate($twig, 'header');
-    	$smartyCategory = loatTemplate($twig, 'category');
-    	$smartyFooter = loatTemplate($twig, 'footer');
+		$smartyHeader = loadTemplate($twig, 'header');
+    	$smartyCategory = loadTemplate($twig, 'category');
+    	$smartyFooter = loadTemplate($twig, 'footer');
 
     	$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 

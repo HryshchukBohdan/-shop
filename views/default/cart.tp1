@@ -48,7 +48,7 @@
 		</td>
 		<td>
 			<a id="removeCart_{{ prod.id }}" href="#" onclick="removeFromCart({{ prod.id }}); return false;" title="Удалить из корзины"> удалить</a>
-			<a id="addCart_{{ prod.id }}" class="hidema" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
+			<a id="addCart_{{ prod.id }}" class="hideme" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
 		</td>
 	</tr>
 {% endfor %}

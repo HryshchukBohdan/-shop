@@ -3,6 +3,6 @@
 <h3>{{ products.name }}</h3>
 Cтоимость: {{ products.price }}
 
-<a id="removeCart_{{ products.id }}" {% if cart is null %} class="hidema" {% endif %} href="#" onclick="removeFromCart({{ products.id }}); return false;" alt="Удалить из корзины"> удалить из корзины</a>
-<a id="addCart_{{ products.id }}" {% if cart is not null %} class="hidema" {% endif %} href="#" onclick="addToCart({{ products.id }}); return false;" alt="добавить в корзину">Добавить в корзину</a>
+<a id="removeCart_{{ products.id }}" {% if cart is null %} class="hideme" {% endif %} href="#" onclick="removeFromCart({{ products.id }}); return false;" alt="Удалить из корзины"> удалить из корзины</a>
+<a id="addCart_{{ products.id }}" {% if cart is not null %} class="hideme" {% endif %} href="#" onclick="addToCart({{ products.id }}); return false;" alt="добавить в корзину">Добавить в корзину</a>
 <p>Описание <br />{{ products.descript }}</p>
