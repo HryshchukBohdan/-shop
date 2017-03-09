@@ -17,6 +17,12 @@ $controllerName = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'I
 // определяем с какой функцией будем работать
 $actionName = isset($_GET['action']) ? ucfirst($_GET['action']) : 'Index';
 
-addGlobaly($twig, array('cart_product' => count($_SESSION['cart'])));
+$arrayTwigSession['cart_product'] = count($_SESSION['cart']);
+
+if (isset($_SESSION['user'])) {
+    $arrayTwigSession['arrayUser'] = $_SESSION['user'];
+}
+
+addGlobaly($twig, $arrayTwigSession);
 //d($controllerName);
 loadPage($twig, $controllerName, $actionName, $link);

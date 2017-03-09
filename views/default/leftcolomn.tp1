@@ -17,6 +17,15 @@
 			{% endfor %}
 	</div>
 
+{% if arrayUser is not null %}
+
+	<div id="userBox">
+		<a href="/?controller=user" id="userLink"></a>{{ arrayUser.displayName }}<br />
+		<a href="/?controller=user&action=logout" onclick="logout();">Выход</a>
+	</div>
+
+{% else %}
+
 <div id="userBox" class="hideme">
 	<a href="#" id="userLink"></a><br />
 	<a href="/?controller=user&action=logout" onclick="logout();">Выхода нет, скоро рассвет</a>
@@ -31,7 +40,7 @@
 
 <div id="registerBox">
 	<div class="manuCaption showHidden" onclick="showRegisterBox();"> Регистрация </div>
-	<div id="regidterBoxHidden">
+	<div id="registerBoxHidden">
 		email:<br />
 		<input type="text" id="email" name="email" value=""/><br />
 		пароль:<br />
@@ -41,6 +50,8 @@
 		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
 	</div>
 </div>
+
+{% endif %}
 
 	<div class="manuCaption">Корзинка с грибочками</div>
 	<a href="/?controller=cart" title="Перейти в корзину">В корзине</a>
