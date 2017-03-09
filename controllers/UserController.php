@@ -1,8 +1,8 @@
 <?php // Контролер пользователей
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/UsersModel.php';
+	include_once '/models/CategoriesModel.php';
+	include_once '/models/UsersModel.php';
 
 	function RegisterAction($twig, $link) {
 
@@ -65,7 +65,7 @@
         redirect('/');
     }
 
-    function loginAction($link) {
+    function loginAction($twig,$link) {
 
 	    $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 	    $email = trim($email);

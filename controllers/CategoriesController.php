@@ -1,8 +1,8 @@
 <?php // Контролер странички категорий
 
 	// подключаем модели
-	include_once '../models/CategoriesModel.php';
-	include_once '../models/ProductsModel.php';
+	include_once '/models/CategoriesModel.php';
+	include_once '/models/ProductsModel.php';
 
 	function indexAction($twig, $link) {
 

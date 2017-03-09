@@ -1,8 +1,8 @@
 <?php // Контролер главной странички
 
 	// подключаем модели
-	include_once 'models/CategoriesModel.php';
-	include_once 'models/ProductsModel.php';
+	include_once '/models/CategoriesModel.php';
+	include_once '/models/ProductsModel.php';
 
 	function testAction() {
 		echo "testAction ++";

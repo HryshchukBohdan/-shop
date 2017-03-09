@@ -87,3 +87,36 @@ function registerNewUser() {
 		}
 	})
 }
+
+function login() {
+
+	//var email = $('#loginEmail').val();
+	//var pwd = $('#loginPwd').val();
+
+    //var postData = "email="+ email +"&pwd=" +pwd;
+
+    var postData = getData('#loginBox');
+
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=user&action=login",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+            if (data['success']) {
+
+                $('#registerBox').hide();
+                $('#loginBox').hide();
+
+                $('#userLink').attr('href', '/?controller=user');
+                $('#userLink').html(data['displayName']);
+                $('#userBox').show();
+
+            } else {
+                alert(data['message']);
+            }
+        }
+    })
+}

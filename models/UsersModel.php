@@ -1,6 +1,6 @@
 <?php // модель таблицы пользователей
 
-include_once 'config/db.php';
+include_once '/config/db.php';
 
 function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
 
@@ -82,8 +82,10 @@ function checkUserEmail($email, $link) {
 
 function loginUser($email, $pwd, $link) {
 
+    $sol = "33_rubebek_cheburec";
+
     $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
-    $pwd = md5($pwd);
+    $pwd = md5($pwd.$sol);
 
     $query = 'SELECT *
                 FROM users

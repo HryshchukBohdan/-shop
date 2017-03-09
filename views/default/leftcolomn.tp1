@@ -24,8 +24,8 @@
 
 <div id="loginBox">
 	<div class="manuCaption">Авторизация</div>
-	<input type="text" name="loginEmail" id="loginEmail" value=""/><br />
-	<input type="password" name="loginPwd" id="loginPwd" value=""/><br />
+	<input type="text" name="email" id="loginEmail" value=""/><br />
+	<input type="password" name="pwd" id="loginPwd" value=""/><br />
 	<input type="button" onclick="login();" value="Войти"/><br />
 </div>
 
