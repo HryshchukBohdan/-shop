@@ -103,3 +103,37 @@ function loginUser($email, $pwd, $link) {
 
     return $data;
 }
+
+function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
+
+    $email = htmlspecialchars(mysqli_real_escape_string($link, $_SESSION['user']['email']));
+    $name = htmlspecialchars(mysqli_real_escape_string($link, $name));
+    $phone = htmlspecialchars(mysqli_real_escape_string($link, $phone));
+    $adress = htmlspecialchars(mysqli_real_escape_string($link, $adress));
+    $pwd1 = trim($pwd1);
+    $pwd2 = trim($pwd2);
+
+    $newPwd = null;
+    $sol = "33_rubebek_cheburec";
+
+    if ($pwd1 && ($pwd1 == $pwd2)) {
+        $newPwd = md5($pwd1.$sol);
+    }
+
+    $query = 'UPDATE users SET ';
+
+    if ($newPwd) {
+        $query .= "'pws = '" . $newPwd . "', '";
+    }
+
+    $query .= " 'name' = '$name', 'phone' = '$phone', 'adress' = '$adress' 
+                WHERE 
+                    'email' = '$email' and 'pws' = '$curPwd' 
+                LIMIT 1";
+
+    echo $result;
+
+    //$result = mysqli_query($link, $query);
+
+    return $result;
+}
