@@ -90,8 +90,89 @@
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
 
+        //print_r($_SESSION);
+
         if (! $productIds) {
             redirect('/?controller=cart');
             return;
         }
+
+        $productCnt = array();
+
+        foreach ($productIds as $id) {
+        	//print_r($id);
+
+            $val_perem = 'prodCnt_' . $id;
+            //echo $val_perem;
+            //print_r($_POST['$val_perem']);
+            //echo "  ";
+            $productCnt["$id"] = isset($_POST["$val_perem"]) ? $_POST["$val_perem"] : null;
+        }
+        //print_r($productCnt);
+
+        $TwigProducts = getProductsFromArray($productIds, $link);
+
+       // print_r($TwigProducts);
+        $i = 0;
+
+        foreach ($TwigProducts as &$product) {
+
+        	$product['cnt'] = isset($productCnt[$product['id']]) ? $productCnt[$product['id']] : null;
+
+        	//print_r($productCnt[$product['id']]);
+
+        	if ($product['cnt']) {
+
+        		$product['realPrice'] = $product['cnt'] * $product['price'];
+
+        		//echo "string" . $product['id'] ;
+     
+           	} else {
+
+           		unset($TwigProducts[$i]);
+           	}
+
+           	$i++;
+        }
+//echo $i;
+       // print_r($TwigProducts);
+
+        if (! $TwigProducts) {
+
+        	echo "Корзина пуста";
+        	return;
+        	# code...
+        }
+
+        $_SESSION['selectCart'] = $TwigProducts;
+
+
+
+
+
+
+				
+		$TwigCategories = getAllMainCatsWithChildren($link);
+		
+		$array = array(
+			'templateWebPath'=>'tmp/templates/default/',
+			'pageTitle' =>'Заказ');
+
+		addGlobaly($twig, $array);
+
+		$array_rend_bulg = array(
+			'categories'=> $TwigCategories, 
+			'products' => $TwigProducts);
+
+		if (! isset($_SESSION['user'])) {
+			$array_rend_bulg['hideLoginBox'] = 1;
+		}
+
+		$smartyHeader = loadTemplate($twig, 'header');
+    	$smartyOrder = loadTemplate($twig, 'order');
+    	$smartyFooter = loadTemplate($twig, 'footer');
+
+    	echo $smartyHeader->render($array_rend_bulg);
+    	echo $smartyOrder->render($array_rend_bulg);
+    	echo $smartyFooter->render($array_rend_bulg);
     }

@@ -58,7 +58,7 @@ function getProductsFromArray($productIds, $link) {
     $query = 'SELECT *
                 FROM products
                 WHERE id in (' . $strIds . ')';
-print_r($query);
+
     $result = mysqli_query($link, $query);
            
     if (!$result)

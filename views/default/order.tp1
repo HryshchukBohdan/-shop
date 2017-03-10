@@ -1,0 +1,62 @@
+<center><h1>Корзина</h1></center>
+
+{% if products is null %}
+	В корзине пусто
+{% else %}
+	
+	<form action="/?controller=cart&action=order" method="post">
+
+<table>
+	<tr>
+		<td>
+			№
+		</td>
+		<td>
+			Найменувание
+		</td>
+		<td>
+			Количестко
+		</td>
+		<td>
+			цена за единицу
+		</td>
+		<td>
+			цена
+		</td>
+		<td>
+			действия
+		</td>
+	</tr>
+{% for prod in products %}
+	<tr>
+		<td>
+			{{ loop.index }}
+		</td>
+		<td>
+			<a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
+		</td>
+		<td>
+			<input type="text" name="prodCnt_{{ prod.id }}" id="prodCnt_{{ prod.id }}" value="1" onchange="conversionPrice({{ prod.id }});"/>
+		</td>
+		<td>
+			<span id="prodPrice_{{ prod.id }}" value="{{ prod.price }}">
+				{{ prod.price }}			
+			</span>
+		</td>
+		<td>
+			<span id="prodRealPrice_{{ prod.id }}">
+				{{ prod.price }}			
+			</span>
+		</td>
+		<td>
+			<a id="removeCart_{{ prod.id }}" href="#" onclick="removeFromCart({{ prod.id }}); return false;" title="Удалить из корзины"> удалить</a>
+			<a id="addCart_{{ prod.id }}" class="hideme" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
+		</td>
+	</tr>
+{% endfor %}
+</table>
+
+		<input type="submit" value="Оформить заказ" />
+	</form>
+
+{% endif %}
