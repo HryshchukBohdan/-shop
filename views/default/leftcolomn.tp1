@@ -31,6 +31,8 @@
 	<a href="/?controller=user&action=logout" onclick="logout();">Выхода нет, скоро рассвет</a>
 </div>
 
+{% if hideLoginBox is null %}
+
 <div id="loginBox">
 	<div class="manuCaption">Авторизация</div>
 	<input type="text" name="email" id="loginEmail" value=""/><br />
@@ -50,6 +52,8 @@
 		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
 	</div>
 </div>
+
+{% endif %}
 
 {% endif %}
 

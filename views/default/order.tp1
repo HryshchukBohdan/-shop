@@ -79,13 +79,13 @@
 			<tr>
 				<td>Логин</td>
 				<td>
-					<input type="text" name="loginEmail" id="loginEmail" value="" />
+					<input type="text" name="email" id="loginEmail" value="" />
 				</td>
 			</tr>
 			<tr>
 				<td>Пароль</td>
 				<td>
-					<input type="password" name="loginPwd" id="loginPwd" value="" />
+					<input type="password" name="pwd" id="loginPwd" value="" />
 				</td>
 			</tr>
 			<tr>

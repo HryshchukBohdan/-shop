@@ -114,6 +114,8 @@ function login() {
                 $('#userLink').html(data['displayName']);
                 $('#userBox').show();
 
+                $('#btnSaveOrder').show();
+
             } else {
                 alert(data['message']);
             }
