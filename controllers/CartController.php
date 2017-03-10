@@ -85,3 +85,13 @@
     	echo $smartyCart->render($array_rend_bulg);
     	echo $smartyFooter->render($array_rend_bulg);
 	}
+
+    function orderAction($twig, $link) {
+
+        $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
+
+        if (! $productIds) {
+            redirect('/?controller=cart');
+            return;
+        }
+    }

@@ -102,7 +102,7 @@ function loginUser($email, $pwd, $link) {
     return $data;
 }
 
-function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
+function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link) {
 
     $email = htmlspecialchars(mysqli_real_escape_string($link, $_SESSION['user']['email']));
     $name = htmlspecialchars(mysqli_real_escape_string($link, $name));
@@ -120,7 +120,7 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
     $query = 'UPDATE users SET ';
 
     if ($newPwd) {
-        $query .= "'pws = '" . $newPwd . "', '";
+        $query .= "pwd = '" . $newPwd . "', ";
     }
 
     $query .= " name = '$name', 
@@ -128,8 +128,10 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
                 adress = '$adress' 
             WHERE 
                 email = '$email' and 
-                pwd = '$curPwd' 
+                pwd = '$curPwdMD5' 
             LIMIT 1";
+
+            //echo $query;
 
     $result = mysqli_query($link, $query);
 

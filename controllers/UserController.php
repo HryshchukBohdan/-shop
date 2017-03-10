@@ -155,7 +155,14 @@ function updateAction($twig, $link) {
         $_SESSION['user']['name'] = $name;
         $_SESSION['user']['phone'] = $phone;
         $_SESSION['user']['adress'] = $adress;
-        $_SESSION['user']['pwd'] = $curPwd;
+
+        $newPwd = $_SESSION['user']['pwd'];
+
+        if ($pwd1 && ($pwd1 == $pwd2)) {
+            $newPwd = md5(trim($pwd1.sol));
+        }
+
+        $_SESSION['user']['pwd'] = $newPwd;
         $_SESSION['user']['displayName'] = $name ? $name : $_SESSION['user']['email'];
 
     } else {

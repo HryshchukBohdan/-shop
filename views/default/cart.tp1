@@ -3,6 +3,8 @@
 {% if products is null %}
 	В корзине пусто
 {% else %}
+	
+	<form action="/?controller=cart&action=order" method="post">
 
 <table>
 	<tr>
@@ -53,5 +55,8 @@
 	</tr>
 {% endfor %}
 </table>
+
+		<input type="submit" value="Оформить заказ" />
+	</form>
 
 {% endif %}
