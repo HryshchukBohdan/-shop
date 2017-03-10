@@ -82,10 +82,8 @@ function checkUserEmail($email, $link) {
 
 function loginUser($email, $pwd, $link) {
 
-    $sol = "33_rubebek_cheburec";
-
     $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
-    $pwd = md5($pwd.$sol);
+    $pwd = md5($pwd.sol);
 
     $query = 'SELECT *
                 FROM users
@@ -114,10 +112,9 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
     $pwd2 = trim($pwd2);
 
     $newPwd = null;
-    $sol = "33_rubebek_cheburec";
 
     if ($pwd1 && ($pwd1 == $pwd2)) {
-        $newPwd = md5($pwd1.$sol);
+        $newPwd = md5($pwd1.sol);
     }
 
     $query = 'UPDATE users SET ';
@@ -126,14 +123,15 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwd, $link) {
         $query .= "'pws = '" . $newPwd . "', '";
     }
 
-    $query .= " 'name' = '$name', 'phone' = '$phone', 'adress' = '$adress' 
-                WHERE 
-                    'email' = '$email' and 'pws' = '$curPwd' 
-                LIMIT 1";
+    $query .= " name = '$name', 
+                phone = '$phone', 
+                adress = '$adress' 
+            WHERE 
+                email = '$email' and 
+                pwd = '$curPwd' 
+            LIMIT 1";
 
-    echo $result;
-
-    //$result = mysqli_query($link, $query);
+    $result = mysqli_query($link, $query);
 
     return $result;
 }

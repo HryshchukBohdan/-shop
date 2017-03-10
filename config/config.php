@@ -4,6 +4,8 @@
 define('PathPrefix', 'controllers/');
 define('PathPostfix', 'Controller.php');
 
+define('sol', '33_rubebek_cheburec');
+
 //> Используемый шаблон
 $template = 'default';
 

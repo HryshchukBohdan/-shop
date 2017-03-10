@@ -1,6 +1,6 @@
 <center><h1>Ваши регистрационие данные</h1></center>
 
-<center><table border="0">
+<center><table border="0" id="userDataForm">
 	<tr>
 		<td>Логин (email)</td>
 		<td><center>{{ arrayUser.email }}</center></td>
@@ -31,6 +31,6 @@
 	</tr>
 	<tr>
 		<td>&nbsp</td>
-		<td><input type="button" value="Сохранить изменения" onclick="updateUserData():" /></td>
+		<td><input type="button" value="Сохранить изменения" onclick="updateUserData();" /></td>
 	</tr>
 </table></center>
