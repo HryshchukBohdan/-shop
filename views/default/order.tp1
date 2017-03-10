@@ -1,42 +1,24 @@
-<center><h1>Корзина</h1></center>
+<center><h2>Данные заказа</h2></center>
 
-{% if products is null %}
-	В корзине пусто
-{% else %}
-	
-	<form action="/?controller=cart&action=order" method="post">
+<form id="frmOrder" action="/?controller=cart&action=saveorder" method="post">
 
 <table>
 	<tr>
-		<td>
-			№
-		</td>
-		<td>
-			Найменувание
-		</td>
-		<td>
-			Количестко
-		</td>
-		<td>
-			цена за единицу
-		</td>
-		<td>
-			цена
-		</td>
-		<td>
-			действия
-		</td>
+		<td>№</td>
+		<td>Найменувание</td>
+		<td>Количестко</td>
+		<td>цена за единицу</td>
+		<td>Cтоимость</td>
 	</tr>
+
 {% for prod in products %}
 	<tr>
+		<td>{{ loop.index }}</td>
+		<td><a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br /></td>
 		<td>
-			{{ loop.index }}
-		</td>
-		<td>
-			<a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
-		</td>
-		<td>
-			<input type="text" name="prodCnt_{{ prod.id }}" id="prodCnt_{{ prod.id }}" value="1" onchange="conversionPrice({{ prod.id }});"/>
+			<span id="prodCnt_{{ prod.id }}">
+			<input type="hideme" name="prodCnt_{{ prod.id }}" value="{{ prod.cnt }}" />
+			</span>
 		</td>
 		<td>
 			<span id="prodPrice_{{ prod.id }}" value="{{ prod.price }}">
@@ -56,7 +38,10 @@
 {% endfor %}
 </table>
 
+
+
+
+
+
 		<input type="submit" value="Оформить заказ" />
 	</form>
-
-{% endif %}
