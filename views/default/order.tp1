@@ -17,31 +17,106 @@
 		<td><a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br /></td>
 		<td>
 			<span id="prodCnt_{{ prod.id }}">
-			<input type="hideme" name="prodCnt_{{ prod.id }}" value="{{ prod.cnt }}" />
+			<input type="hidden" name="prodCnt_{{ prod.id }}" value="{{ prod.cnt }}" />{{ prod.cnt }}
 			</span>
 		</td>
 		<td>
-			<span id="prodPrice_{{ prod.id }}" value="{{ prod.price }}">
+			<span id="prodPrice_{{ prod.id }}">
+				<input type="hidden" name="prodPrice_{{ prod.id }}" value="{{ prod.price }}" />
 				{{ prod.price }}			
 			</span>
 		</td>
 		<td>
 			<span id="prodRealPrice_{{ prod.id }}">
-				{{ prod.price }}			
+				<input type="hidden" name="prodRealPrice_{{ prod.id }}" value="{{ prod.realPrice }}" />
+				{{ prod.realPrice }}			
 			</span>
 		</td>
-		<td>
-			<a id="removeCart_{{ prod.id }}" href="#" onclick="removeFromCart({{ prod.id }}); return false;" title="Удалить из корзины"> удалить</a>
-			<a id="addCart_{{ prod.id }}" class="hideme" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
-		</td>
 	</tr>
+
 {% endfor %}
+
 </table>
 
+{% if arrayUser is not null %}
 
+	{% set buttonClass = "" %}
 
+	<h2>Данные заказчика</h2>
+	<div id="orderUserInfoBox" {{ buttonClass }}>
 
+		{% set name = arrayUser.name %}
+		{% set phone = arrayUser.phone %}
+		{% set adress = arrayUser.adress %}
+		<table>
+			<tr>
+				<td>Имя*</td>
+				<td>
+					<input type="text" name="name" id="name" value="{{ name }}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Телефон*</td>
+				<td>
+					<input type="text" name="phone" id="phone" value="{{ phone }}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Адрес*</td>
+				<td>
+					<textarea name="adress" id="adress">{{ name }}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
 
+{% else %}
 
-		<input type="submit" value="Оформить заказ" />
-	</form>
+	<div id="loginBox">
+		<div class="menuCaption">Авторизация</div>
+
+		<table>
+			<tr>
+				<td>Логин</td>
+				<td>
+					<input type="text" name="loginEmail" id="loginEmail" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td>Пароль</td>
+				<td>
+					<input type="password" name="loginPwd" id="loginPwd" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="button" onclick="login();" value="Ввойти" />
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="registerBox">или <br />
+	<div class="manuCaption"> Регистрация нового пользователя</div>
+		email* :<br />
+		<input type="text" id="email" name="email" value=""/><br />
+		пароль* :<br />
+		<input type="password" id="pwd1" name="pwd1" value=""/><br />
+		Повторить пароль* :<br />
+		<input type="password" id="pwd2" name="pwd2" value=""/><br />
+
+		Имя* :<input type="text" id="name" name="name" value=""/><br />
+		Телефон* :<input type="text" id="phone" name="phone" value=""/><br />
+		Адрес* :<textarea id="adress" name="adress"></textarea><br />
+
+		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
+	</div>
+
+	{% set buttonClass = "class='hideme'" %}
+
+{% endif %}
+
+	<input {{ buttonClass }} id="btnSaveOrder" type="submit" value="Оформить заказ" onclick="saveOrder();" />
+
+</form>
