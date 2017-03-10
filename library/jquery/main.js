@@ -114,6 +114,10 @@ function login() {
                 $('#userLink').html(data['displayName']);
                 $('#userBox').show();
 
+                $('#phone').val(data['phone']);
+                $('#adress').val(data['adress']);
+                $('#name').val(data['name']);
+
                 $('#btnSaveOrder').show();
 
             } else {
