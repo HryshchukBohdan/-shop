@@ -173,3 +173,24 @@ function updateUserData() {
         }
     })
 }
+
+function saveOrder() {
+
+    var postData = getData('#frmOrder');
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=cart&action=saveorder",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+            if (data['success']) {
+            	alert(data['message']);
+                document.location = '/'
+            } else {
+                alert(data['message']);
+            }
+        }
+    })
+}

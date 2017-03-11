@@ -3,6 +3,8 @@
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/ProductsModel.php';
+    include_once '/models/OrdersModel.php';
+    include_once '/models/PurchaseModel.php';
 
 	function addtocartAction() {
 
@@ -175,4 +177,24 @@
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyOrder->render($array_rend_bulg);
     	echo $smartyFooter->render($array_rend_bulg);
+    }
+
+    function saveorderAction() {
+
+        $cart = isset($_SESSION['selectCart']) ? $_SESSION['selectCart'] : null;
+
+        if (! $cart) {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Нет товаров для заказа';
+
+            echo json_encode($resData);
+
+            return;
+        }
+
+        $phone = $_POST['phone'];
+        $adress = $_POST['adress'];
+        $name = $_POST['name'];
+
     }
