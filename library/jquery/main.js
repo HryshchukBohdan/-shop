@@ -187,7 +187,7 @@ function saveOrder() {
         success: function(data) {
             if (data['success']) {
             	alert(data['message']);
-                document.location = '/'
+                //document.location.replace("http://shop/");
             } else {
                 alert(data['message']);
             }

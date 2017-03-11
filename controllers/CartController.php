@@ -179,10 +179,10 @@
     	echo $smartyFooter->render($array_rend_bulg);
     }
 
-    function saveorderAction() {
+    function saveorderAction($twig, $link) {
 
         $cart = isset($_SESSION['selectCart']) ? $_SESSION['selectCart'] : null;
-
+//echo '1 ';
         if (! $cart) {
 
             $resData['success'] = 0;
@@ -196,5 +196,11 @@
         $phone = $_POST['phone'];
         $adress = $_POST['adress'];
         $name = $_POST['name'];
+
+        //echo '2 ';
+
+        $orderId = makeNewOrder($name, $phone, $adress, $link);
+
+//D($orderId);
 
     }
