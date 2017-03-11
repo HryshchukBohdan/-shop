@@ -153,6 +153,7 @@
 
 
 
+
 				
 		$TwigCategories = getAllMainCatsWithChildren($link);
 		
@@ -177,13 +178,17 @@
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyOrder->render($array_rend_bulg);
     	echo $smartyFooter->render($array_rend_bulg);
+        //print_r($_SESSION);
     }
 
     function saveorderAction($twig, $link) {
 
         $cart = isset($_SESSION['selectCart']) ? $_SESSION['selectCart'] : null;
 //echo '1 ';
+//print_r($_SESSION);
         if (! $cart) {
+
+
 
             $resData['success'] = 0;
             $resData['message'] = 'Нет товаров для заказа';
@@ -196,11 +201,38 @@
         $phone = $_POST['phone'];
         $adress = $_POST['adress'];
         $name = $_POST['name'];
-
+//print_r($_POST);
         //echo '2 ';
 
         $orderId = makeNewOrder($name, $phone, $adress, $link);
 
 //D($orderId);
+        if (! $orderId) {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка сохранения заказа';
+
+            echo json_encode($resData);
+
+            return;
+        }
+
+        $res = setPurchaseForOrder($orderId, $cart, $link);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+            $resData['message'] = 'Заказ сохранен';
+
+            unset($_SESSION['selectCart']);
+            unset($_SESSION['cart']);
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка внесения данних для заказа № ' . $orderId;
+        }
+
+        echo json_encode($resData);
 
     }

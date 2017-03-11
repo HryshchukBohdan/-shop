@@ -19,6 +19,7 @@ function makeNewOrder($name, $phone, $adress, $link) {
 				VALUES ('$userId', '$dataCreated', null, '0', '$comment')";
 //echo $query;
     $result = mysqli_query($link, $query);
+    //$result = 1;
 
     if (!$result)
         die(mysqli_error($link));

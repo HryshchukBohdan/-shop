@@ -180,14 +180,14 @@ function saveOrder() {
 
     $.ajax({
         type: 'POST',
-        async: true,
+        async: false,
         url: "/?controller=cart&action=saveorder",
         data: postData,
         dataType: 'json',
         success: function(data) {
             if (data['success']) {
-            	alert(data['message']);
-                //document.location.replace("http://shop/");
+                alert(data['message']);
+                document.location = '/';
             } else {
                 alert(data['message']);
             }
