@@ -9,17 +9,17 @@ function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
     $phone = htmlspecialchars(mysqli_real_escape_string($link, $phone));
     $adress = htmlspecialchars(mysqli_real_escape_string($link, $adress));
 
-    $query = 'INSERT INTO
+    $query = "INSERT INTO
                         users (email, pwd, name, phone, adress)
-             VALUES ("' . $email . '", "' . $pwdMD5 . '", "' . $name . '", "' . $phone . '", "' . $adress . '")';
+             VALUES ('$email', '$pwdMD5', '$name', '$phone', '$adress')";
 
 	 $result = mysqli_query($link, $query);
 
     if ($result) {
 
-        $query = 'SELECT *
+        $query = "SELECT *
                 FROM users
-                WHERE email = "' . $email . '" and pwd = "' . $pwdMD5 . '" limit 1';      
+                WHERE email = '$email' and pwd = '$pwdMD5' limit 1";
 
         $result = mysqli_query($link, $query);
         $user = createTwigArray($result);
@@ -31,6 +31,7 @@ function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
         }
 
     } else {
+
         $user['success'] = 0;
     }
 
@@ -66,12 +67,12 @@ function checkRegisterParams($email, $pwd1, $pwd2) {
 
 function checkUserEmail($email, $link) {
 
-    $email = mysqli_real_escape_string($link, $email);    
+    $email = mysqli_real_escape_string($link, $email);
 
-    $query = 'SELECT *
+    $query = "SELECT *
                 FROM users
-                WHERE email = ' . $email;
-                
+                WHERE email = '$email'";
+
     $result = mysqli_query($link, $query);
            
     if (!$result)
@@ -130,8 +131,6 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link)
                 email = '$email' and 
                 pwd = '$curPwdMD5' 
             LIMIT 1";
-
-            //echo $query;
 
     $result = mysqli_query($link, $query);
 

@@ -13,13 +13,10 @@ function makeNewOrder($name, $phone, $adress, $link) {
     $dataCreated = date('Y.m.d H:i:s');
     $userIP = $_SERVER['REMOTE_ADDR'];
 
-   // echo '3 ';
-
     $query = "INSERT INTO orders (user_id, data_created, data_payment, status, comment)
 				VALUES ('$userId', '$dataCreated', null, '0', '$comment')";
-//echo $query;
+
     $result = mysqli_query($link, $query);
-    //$result = 1;
 
     if (!$result)
         die(mysqli_error($link));
@@ -43,6 +40,6 @@ function makeNewOrder($name, $phone, $adress, $link) {
             return $result[0]['id'];
         }
     }
-    return false;
 
+    return false;
 }

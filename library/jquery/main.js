@@ -81,6 +81,9 @@ function registerNewUser() {
 				$('#userBox').show();
 
 				// Страница заказа
+                $('#loginBox').hide();
+                $('#btnSaveOrder').show();
+
 			} else {
 				alert(data['message']);
 			}
@@ -90,13 +93,7 @@ function registerNewUser() {
 
 function login() {
 
-	//var email = $('#loginEmail').val();
-	//var pwd = $('#loginPwd').val();
-
-    //var postData = "email="+ email +"&pwd=" +pwd;
-
     var postData = getData('#loginBox');
-
 
     $.ajax({
         type: 'POST',
@@ -153,7 +150,6 @@ function updateUserData() {
                 pwd2: pwd2,
                 curPwd: curPwd,
                 name: name};
-
     $.ajax({
         type: 'POST',
         async: true,
@@ -186,9 +182,12 @@ function saveOrder() {
         dataType: 'json',
         success: function(data) {
             if (data['success']) {
+
                 alert(data['message']);
                 document.location = '/';
+
             } else {
+
                 alert(data['message']);
             }
         }

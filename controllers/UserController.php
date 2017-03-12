@@ -15,11 +15,10 @@
 		$phone = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
 		$adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
 		$name = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
-		$name = trim($name);
 
 		$resData = null;
 		$resData = checkRegisterParams($email, $pwd1, $pwd2);
-		
+
 		if (! $resData && checkUserEmail($email, $link)) {
 
 			$resData['success'] = false;
@@ -41,7 +40,7 @@
 				$userData['userEmail'] = $email;
 
 				$_SESSION['user'] = $userData;
-				$_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
+  				$_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
 
 			} else { 
 
