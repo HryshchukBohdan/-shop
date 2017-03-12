@@ -34,3 +34,40 @@
 		<td><input type="button" value="Сохранить изменения" onclick="updateUserData();" /></td>
 	</tr>
 </table></center>
+
+<h2>Заказы:</h2>
+
+{% if userOrders is null %}
+
+	Нет заказов
+
+{% else %}
+
+	<table border="1" cellpadding="1" cellspacing="1">
+		<tr>
+			<th>№</th>
+			<th>Действия</th>
+			<th>ID заказа</th>
+			<th>Статус</th>
+			<th>Дата создания</th>
+			<th>Дата оплаты</th>
+			<th>Дополнительная информация</th>
+		</tr>
+
+		{% for order in userOrders %}
+
+		<tr>
+			<th>{{ loop.index }}</th>
+			<th><a href="#" onclick="showProduct({{ order.id }}); return false" >Показать товар заказа</th>
+			<th>{{ order.id }}</th>
+			<th>{{ order.status }}</th>
+			<th>{{ order.data_created }}</th>
+			<th>{{ order.data_payment }}&nbsp;</th>
+			<th>{{ order.comment }}</th>
+		</tr>
+
+		{% endfor %}x
+
+	</table>
+
+{% endif %}

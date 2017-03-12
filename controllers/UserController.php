@@ -3,6 +3,8 @@
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/UsersModel.php';
+    include_once '/models/OrdersModel.php';
+    include_once '/models/PurchaseModel.php';
 
 	function RegisterAction($twig, $link) {
 
@@ -103,6 +105,8 @@
     // Получения списка заказов пользователя
     $TwigUserOrders = getCurUserOrders($link);
 
+    //d($TwigUserOrders);
+
     $array = array(
         'templateWebPath'=>'tmp/templates/default/',
         'pageTitle' =>'Страница пользователя');
@@ -110,7 +114,8 @@
     addGlobaly($twig, $array);
 
     $array_rend_bulg = array(
-        'categories'=> $TwigCategories);
+        'categories'=> $TwigCategories,
+        'userOrders'=> $TwigUserOrders);
 
     $smartyHeader = loadTemplate($twig, 'header');
     $smartyUser = loadTemplate($twig, 'user');

@@ -112,11 +112,11 @@
 
 		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
 	</div>
-
-	<!--{% set buttonClass = 'class="hideme"' %}-->
+{% set buttonClass = 'hideme' %}
+	<!---->
 
 {% endif %}
-<!--{{ buttonClass }}-->
-	<input class="hideme" id="btnSaveOrder" type="submit" value="Оформить заказ" onclick="saveOrder();" />
+<!--class="hideme"-->
+	<input class="{{ buttonClass }}" id="btnSaveOrder" type="submit" value="Оформить заказ" onclick="saveOrder(); return false;" />
 
 </form>
