@@ -24,16 +24,14 @@ function setPurchaseForOrder($orderId, $cart, $link) {
 
     return $result;
 
-    //print_r($query);
-//echo $query;
 }
 
-function getPurshaseForOrder($orderId, $link) {
+function getPurchaseForOrder($orderId, $link) {
 
     $query = "SELECT pe.*, ps.name
                 FROM purchase as pe 
                 JOIN products as ps on pe.product_id = ps.id
-                WHERE pe.order = " . $orderId;
+                WHERE pe.order_id = " . $orderId;
 
     $result = mysqli_query($link, $query);
 

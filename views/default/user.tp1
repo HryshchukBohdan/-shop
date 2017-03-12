@@ -66,7 +66,7 @@
 			<th>{{ order.comment }}</th>
 		</tr>
 
-		<tr class="hidem" id="purchasesForOrderId_{{ order.id }}">
+		<tr class="hideme" id="purchasesForOrderId_{{ order.id }}">
 			<td colspan="7">
 
 			{% if order.children is not null %}
@@ -84,8 +84,8 @@
 
 				<tr>
 					<th>{{ loop.index }}</th>
-					<th>{{ orChil.id }}</th>
-					<th><a href="/?controller=product&id={{ orChil.id }}"> {{ orChil.name }}</a></th>
+					<th>{{ orChil.product_id }}</th>
+					<th><a href="/?controller=product&id={{ orChil.product_id }}"> {{ orChil.name }}</a></th>
 					<th>{{ orChil.price }}</th>
 					<th>{{ orChil.amount }}</th>
 				</tr>

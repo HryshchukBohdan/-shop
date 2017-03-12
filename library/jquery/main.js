@@ -193,3 +193,14 @@ function saveOrder() {
         }
     })
 }
+
+function showProduct(id) {
+
+    var odjName = "#purchasesForOrderId_" + id;
+
+    if ($(odjName).css('display') != 'table-row' ) {
+        $(odjName).show();
+    } else {
+        $(odjName).hide();
+    }
+}
