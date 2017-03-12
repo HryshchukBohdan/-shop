@@ -97,7 +97,11 @@
         redirect('/');
     }
 
+    // Получение списка категорий для меню
     $TwigCategories = getAllMainCatsWithChildren($link);
+
+    // Получения списка заказов пользователя
+    $TwigUserOrders = getCurUserOrders($link);
 
     $array = array(
         'templateWebPath'=>'tmp/templates/default/',

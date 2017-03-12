@@ -43,3 +43,27 @@ function makeNewOrder($name, $phone, $adress, $link) {
 
     return false;
 }
+
+function getOrdersWithProductsByUser($userId, $link) {
+
+    $userId = intval($userId);
+
+    $query = "SELECT *
+                FROM orders
+                WHERE user_id = '" . $userId . "'
+                ORDER BY id DESC";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    $TwigArray = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        $TwigArray[] = $row;
+    }
+
+    return $TwigArray;
+}

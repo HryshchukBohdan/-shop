@@ -136,3 +136,11 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link)
 
     return $result;
 }
+
+function getCurUserOrders($link) {
+
+    $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+    $TwigArray = getOrdersWithProductsByUser($userId, $link);
+
+    return $TwigArray;
+}
