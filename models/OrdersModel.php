@@ -62,7 +62,13 @@ function getOrdersWithProductsByUser($userId, $link) {
 
     while ($row = mysqli_fetch_assoc($result)) {
 
-        $TwigArray[] = $row;
+        $TwigChildren = getPurchaseForOrder($row['id'], $link);
+
+        if ($TwigChildren) {
+
+            $row['children'] = $TwigChildren;
+            $TwigArray[] = $row;
+        }
     }
 
     return $TwigArray;

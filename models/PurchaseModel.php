@@ -27,3 +27,18 @@ function setPurchaseForOrder($orderId, $cart, $link) {
     //print_r($query);
 //echo $query;
 }
+
+function getPurshaseForOrder($orderId, $link) {
+
+    $query = "SELECT pe.*, ps.name
+                FROM purchase as pe 
+                JOIN products as ps on pe.product_id = ps.id
+                WHERE pe.order = " . $orderId;
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}

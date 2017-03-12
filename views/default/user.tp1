@@ -66,7 +66,40 @@
 			<th>{{ order.comment }}</th>
 		</tr>
 
-		{% endfor %}x
+		<tr class="hidem" id="purchasesForOrderId_{{ order.id }}">
+			<td colspan="7">
+
+			{% if order.children is not null %}
+
+			<table border="1" cellpadding="1" cellspacing="1" width="100%">
+				<tr>
+					<th>№</th>
+					<th>ID</th>
+					<th>Название</th>
+					<th>Цена</th>
+					<th>Количество</th>
+				</tr>
+
+				{% for orChil in order.children %}
+
+				<tr>
+					<th>{{ loop.index }}</th>
+					<th>{{ orChil.id }}</th>
+					<th><a href="/?controller=product&id={{ orChil.id }}"> {{ orChil.name }}</a></th>
+					<th>{{ orChil.price }}</th>
+					<th>{{ orChil.amount }}</th>
+				</tr>
+
+				{% endfor %}
+
+			</table>				
+
+			{% endif %}
+
+			</td>
+		</tr> 
+
+		{% endfor %}
 
 	</table>
 
