@@ -1,21 +1,20 @@
 <div id="leftColomn">
 
-	<div id="leftManu">
-		<div class="manuCaption"> Menu: </div>
-			{% for cat in categories %}
+<div id="leftManu">
+	<div class="manuCaption"> Menu: </div>
 			
-				<a href="/?controller=categories&id={{ cat.id }}">{{ cat.name }}</a><br />
+		<a href="/?controller=admin">Главная</a><br />
+		<a href="/?controller=admin&action=category">Категории</a><br />
+		<a href="/?controller=admin&action=products">Товар</a><br />
+		<a href="/?controller=admin&action=orders">Заказы</a><br />
 
-			{% if cat.children is not null %}
+</div>
 
-				{% for child in cat.children %}
-					--<a href="/?controller=categories&id={{ child.id }}">{{ child.name }}</a><br />
-				{% endfor %}
 
-			{% endif %}
 
-			{% endfor %}
-	</div>
+
+
+
 
 {% if arrayUser is not null %}
 

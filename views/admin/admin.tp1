@@ -1,1 +1,22 @@
-ADMIN TP1	
+<div id="blockNewCategory">
+	
+	Новая категория:
+	<input type="type" name="newCategoryName" id="newCategoryName" value="" /><br />
+
+	Является подкатегорией для
+	<select name="generalCatId">
+		<option value="0">
+		Главная категория
+
+		{% for cat in categories %}			
+
+			<option value="{{ cat.id }}">{{ cat.name }}
+
+		{% endfor %}
+
+	</select>
+	<br />
+
+	<input type="button" onclick="newCategory();" value="Добавить категорию" />
+
+</div>

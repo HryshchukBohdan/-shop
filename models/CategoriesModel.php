@@ -59,3 +59,17 @@ function getCatById($catId, $link) {
 
     return $row;
 }
+
+function getAllMainCats($link) {
+
+    $query = 'SELECT *
+                FROM categories
+                WHERE parent_id = 0';
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}

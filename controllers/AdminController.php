@@ -21,7 +21,8 @@ $twig = new Twig_Environment($loader);
         }
 
         // Получение списка категорий для меню
-        $TwigCategories = getAllMainCatsWithChildren($link);
+        $TwigCategories = getAllMainCats($link);
+       // d($TwigCategories);
 
         // Получения списка заказов пользователя
         //$TwigUserOrders = getCurUserOrders($link);

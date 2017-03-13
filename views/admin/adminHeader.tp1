@@ -1,13 +1,13 @@
 <html>
 	<head>
 		<title>{{ pageTitle }}</title>
-		<link rel="stylesheet" type="text/css" href="{{ templateWebPath }}css/main.css">
+		<link rel="stylesheet" type="text/css" href="{{ templateWebPath }}css/mainAdmin.css">
 		<script type="text/javascript" src="../library/jquery/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="../library/jquery/admin.js"></script>
 	</head>
 <body>
 	<div id="header">
-		<h1>Управления сайтом</h1>
+		<h1>{{ pageTitle }}</h1>
 	</div>
 
 {% include 'adminLeftcolomn.tp1' %}
