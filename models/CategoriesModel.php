@@ -73,3 +73,19 @@ function getAllMainCats($link) {
 
     return createTwigArray($result);
 }
+
+function insertCat($catName, $catParentId = 0, $link) {
+
+    // Готовим запрос
+    $query = "INSERT INTO 
+                      categories (parent_id, name)
+                VALUES ('" . $catParentId . "', '" . $catName . "')";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    // получаем ай ди записи
+    return mysqli_insert_id($link);
+}

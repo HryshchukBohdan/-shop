@@ -48,121 +48,45 @@ $twig = new Twig_Environment($loader);
         echo $smartyFooter->render($array_rend_bulg);
     }
 
+    function addnewcatAction($twig = null, $link) {
 
+	    $catName = $_POST['newCategoryName'];
+	    $catParentId = $_POST['generalCatId'];
 
+	    $res = insertCat($catName, $catParentId, $link);
+	    //print_r($res);
 
+        if ($res) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	function RegisterAction($twig, $link) {
-
-		$email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-		$email = trim($email);
-
-		$pwd1 = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
-		$pwd2 = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
-
-		$phone = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
-		$adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
-		$name = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
-
-		$resData = null;
-		$resData = checkRegisterParams($email, $pwd1, $pwd2);
-
-		if (! $resData && checkUserEmail($email, $link)) {
-
-			$resData['success'] = false;
-			$resData['message'] = "Пользователь с с емейлом $email уже зарегестрируван";
-		}
-
-		if (! $resData) {
-
-			$pwdMD5 = md5($pwd1.sol);
-			$userData = registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link);
-
-			if ($userData['success']) {
-
-				$resData['message'] = "Пользователь успешно зарегестрируван";
-				$resData['success'] = 1;
-
-				$userData = $userData[0];
-				$resData['userName'] = $userData['name'] ? $userData['name'] : $userData['email'];
-				$userData['userEmail'] = $email;
-
-				$_SESSION['user'] = $userData;
-  				$_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
-
-			} else { 
-
-				$_SESSION['success'] = 0;
-				$_SESSION['message'] = "Ошибка регистрации";						
-			}
-		}
-		
-		echo json_encode($resData);
-	}
-
-	function logoutAction() {
-
-	    if (isset($_SESSION['user'])) {
-	        unset($_SESSION['user']);
-            unset($_SESSION['cart']);
-        }
-
-        redirect('/');
-    }
-
-    function loginAction($twig, $link) {
-
-	    $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-	    $email = trim($email);
-
-        $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
-        $pwd = trim($pwd);
-
-        $userData = loginUser($email, $pwd, $link);
-
-        if ($userData['success']) {
-
-            $userData = $userData[0];
-
-            $_SESSION['user'] = $userData;
-            $_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
-
-            $resData = $_SESSION['user'];
             $resData['success'] = 1;
+            $resData['message'] = 'Категория добавленна';
 
         } else {
 
             $resData['success'] = 0;
-            $resData['message'] = 'Неверный логин или пароль';
+            $resData['message'] = 'Ошибка добавления категории';
         }
 
         echo json_encode($resData);
+        return;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
