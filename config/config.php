@@ -8,10 +8,11 @@ define('sol', '33_rubebek_cheburec');
 
 //> Используемый шаблон
 $template = 'default';
+$templateAdmin = 'admin';
 
 // путь к файлам шаблонов ТП1
 define('TemplatePrefix', 'views/default/');
-//define('TemplatePrefix', 'views/'.$template.'/');
+define('TemplateAdminPrefix', "views/$templateAdmin/");
 define('TemplatePostfix', '.tp1');
 
 // инициализация шаблон_класа(Шаблонизатора)
