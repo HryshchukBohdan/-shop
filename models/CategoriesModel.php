@@ -89,3 +89,17 @@ function insertCat($catName, $catParentId = 0, $link) {
     // получаем ай ди записи
     return mysqli_insert_id($link);
 }
+
+function getAllCategories($link) {
+
+    $query = "SELECT *
+                FROM categories
+                ORDER BY parent_id ASC";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}

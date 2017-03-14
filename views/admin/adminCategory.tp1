@@ -1,0 +1,125 @@
+<center><h2>Категории</h2></center>
+
+<table border="1" cellpadding="1" cellspacing="1">
+	<tr>
+		<td>№</td>
+		<td>ID</td>
+		<td>Название</td>
+		<td>Родитнльськая категория</td>
+		<td>Действия</td>
+	</tr>
+
+{% for cat in categories %}
+	<tr>
+		<td>{{ loop.index }}</td>
+		<td>{{ cat.id }}</td>
+		<td>
+			<input type="edit" id="MC_{{ cat.id }}" value="{{ cat.name }}" />
+		</td>
+		<td>
+			<select id="parentId_{{ cat.id }}">
+				<option value="0">Главная категория
+
+				{% for mc in mainCat %}
+
+				<option value="{{ mc.id }}" {% if cat.parent_id == mc.id %} selected {% endif %}>{{ mc.name }}
+
+				{% endfor %}
+			</select>
+		</td>
+		<td>
+			<input type="button" value="Сохранить" onclick="updateCat({{ cat.id }});" />
+		</td>
+	</tr>
+
+{% endfor %}
+
+</table>
+
+
+
+
+
+
+{% if arrayUser is not null %}
+
+	{% set buttonClass = "" %}
+
+	<h2>Данные заказчика</h2>
+	<div id="orderUserInfoBox" {{ buttonClass }}>
+
+		{% set name = arrayUser.name %}
+		{% set phone = arrayUser.phone %}
+		{% set adress = arrayUser.adress %}
+		<table>
+			<tr>
+				<td>Имя*</td>
+				<td>
+					<input type="text" name="name" id="name" value="{{ name }}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Телефон*</td>
+				<td>
+					<input type="text" name="phone" id="phone" value="{{ phone }}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Адрес*</td>
+				<td>
+					<textarea name="adress" id="adress">{{ name }}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+{% else %}
+
+	<div id="loginBox">
+		<div class="menuCaption">Авторизация</div>
+
+		<table>
+			<tr>
+				<td>Логин</td>
+				<td>
+					<input type="text" name="email" id="loginEmail" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td>Пароль</td>
+				<td>
+					<input type="password" name="pwd" id="loginPwd" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="button" onclick="login();" value="Ввойти" />
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="registerBox">или <br />
+	<div class="manuCaption"> Регистрация нового пользователя</div>
+		email* :<br />
+		<input type="text" id="email" name="email" value=""/><br />
+		пароль* :<br />
+		<input type="password" id="pwd1" name="pwd1" value=""/><br />
+		Повторить пароль* :<br />
+		<input type="password" id="pwd2" name="pwd2" value=""/><br />
+
+		Имя* :<input type="text" id="name" name="name" value=""/><br />
+		Телефон* :<input type="text" id="phone" name="phone" value=""/><br />
+		Адрес* :<textarea id="adress" name="adress"></textarea><br />
+
+		<input type="button" onclick="registerNewUser()" value="Зарегистрируваться"/>
+	</div>
+{% set buttonClass = 'hideme' %}
+	<!---->
+
+{% endif %}
+<!--class="hideme"-->
+	<input class="{{ buttonClass }}" id="btnSaveOrder" type="submit" value="Оформить заказ" onclick="saveOrder(); return false;" />
+
+</form>

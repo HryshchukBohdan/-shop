@@ -71,6 +71,31 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
+    function categoryAction($twig, $link) {
+
+        // Получение списка категорий
+        $TwigCategories = getAllCategories($link);
+        $TwigMainCategories = getAllMainCats($link);
+
+        $array = array(
+            'templateWebPath'=>'tmp/templates/default/',
+            'pageTitle' =>'Управления сайтом');
+
+        //d($TwigMainCategories);
+        addGlobaly($twig, $array);
+
+        $array_rend_bulg = array(
+            'categories'=> $TwigCategories,
+            'mainCat'=> $TwigMainCategories);
+
+        $smartyHeader = loadTemplate($twig, 'adminHeader');
+        $smartyCategory = loadTemplate($twig, 'adminCategory');
+        $smartyFooter = loadTemplate($twig, 'adminFooter');
+
+        echo $smartyHeader->render($array_rend_bulg);
+        echo $smartyCategory->render($array_rend_bulg);
+        echo $smartyFooter->render($array_rend_bulg);
+    }
 
 
 
