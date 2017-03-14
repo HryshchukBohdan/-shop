@@ -14,7 +14,7 @@
 		<td>{{ loop.index }}</td>
 		<td>{{ cat.id }}</td>
 		<td>
-			<input type="edit" id="MC_{{ cat.id }}" value="{{ cat.name }}" />
+			<input type="edit" id="catName_{{ cat.id }}" value="{{ cat.name }}" />
 		</td>
 		<td>
 			<select id="parentId_{{ cat.id }}">

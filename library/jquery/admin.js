@@ -34,6 +34,49 @@ function newCategory() {
     })
 }
 
+function updateCat(catId) {
+
+    console.log("js - updateCa("+catId+")");
+
+    var parentId = $('#parentId_' + catId).val();
+    var newName = $('#catName_' + catId).val();
+
+    var postData = {catId: catId,
+                parentId: parentId,
+                newName: newName};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=updatecategory",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            alert(data['message']);
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -146,42 +189,7 @@ function showRegisterBox() {
     }
 }
 
-function updateUserData() {
 
-    console.log("js - updateUserData()");
-
-    var phone = $('#newPhone').val();
-    var adress = $('#newAdress').val();
-    var pwd1 = $('#newPwd1').val();
-    var pwd2 = $('#newPwd2').val();
-    var curPwd = $('#curPwd').val();
-    var name = $('#newName').val();
-
-    var postData = {phone: phone,
-                adress: adress,
-                pwd1: pwd1,
-                pwd2: pwd2,
-                curPwd: curPwd,
-                name: name};
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/?controller=user&action=update",
-        data: postData,
-        dataType: 'json',
-        success: function(data) {
-            if (data['success']) {
-
-                $('#userLink').html(data['userName']);
-                alert(data['message']);
-
-            } else {
-
-                alert(data['message']);
-            }
-        }
-    })
-}
 
 function saveOrder() {
 

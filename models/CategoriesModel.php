@@ -103,3 +103,31 @@ function getAllCategories($link) {
 
     return createTwigArray($result);
 }
+
+function updateCategoryData($catId, $parentId = -1, $newName = '', $link) {
+
+    $set = array();
+
+    if ($newName) {
+
+        $set[] = "name = '" . $newName . "'";
+    }
+
+    if ($parentId > -1) {
+
+        $set[] = "parent_id = '" . $parentId . "'";
+    }
+
+    $setStr = implode($set, ", ");
+
+    $query = "UPDATE categories
+                SET $setStr
+                WHERE id = " . $catId;
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return $result;
+}
