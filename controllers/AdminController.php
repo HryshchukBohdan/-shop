@@ -135,7 +135,7 @@ $twig = new Twig_Environment($loader);
 
         $array_rend_bulg = array(
             'categories'=> $TwigCategories,
-            'mainCat'=> $TwigProducts);
+            'products'=> $TwigProducts);
 
         $smartyHeader = loadTemplate($twig, 'adminHeader');
         $smartyProducts = loadTemplate($twig, 'adminProducts');

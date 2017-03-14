@@ -1,9 +1,5 @@
 <center><h1>Toвар</h1>
 
-{% if products is not null %}
-	В корзине пусто
-{% else %}
-
 <table border="1" cellspacing="1" cellpadding="1">
 <caption>Добавить продукт</caption>
 	<tr>
@@ -40,38 +36,66 @@
 		</td>		
 	</tr>
 </table>
-<table>
+
+<table border="1" cellspacing="1" cellpadding="1">
+<caption>Редактирование</caption>
 	<tr>
+		<td>№</td>
+		<td>ID</td>
+		<td>Найменувание</td>
+		<td>Цена</td>
+		<td>Катeгория</td>
+		<td>Описание</td>
+		<td>Удалить</td>
+		<td>Изображение</td>
+		<td>Сохранить</td>
+	</tr>
+
+	{% for prod in products %}
+
+	<tr>
+		<td>{{ loop.index }}</td>
+		<td>{{ prod.id }}</td>
 		<td>
-			{{ loop.index }}
+			<input type="edit" id="prodName_{{ prod.id }}" value="{{ prod.name }}" />
 		</td>
 		<td>
-			<a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
+			<input type="edit" id="prodPrice_{{ prod.id }}" value="{{ prod.price }}" />
+		</td>
 		</td>
 		<td>
-			<input type="text" name="prodCnt_{{ prod.id }}" id="prodCnt_{{ prod.id }}" value="1" onchange="conversionPrice({{ prod.id }});"/>
+			<select id="productCatId">
+				<option value="0">Главная категория
+
+				{% for cat in categories %}
+
+				<option value="{{ cat.id }}">{{ cat.name }}
+
+				{% endfor %}
+			</select>
 		</td>
 		<td>
-			<span id="prodPrice_{{ prod.id }}" value="{{ prod.price }}">
-				{{ prod.price }}			
-			</span>
+			<textarea id="productDesc_{{ prod.id }}">{{ prod.descript }}</textarea>
 		</td>
 		<td>
-			<span id="prodRealPrice_{{ prod.id }}">
-				{{ prod.price }}			
-			</span>
+			<input type="checkbox" id="productStatus_{{ prod.id }}" {% if prod.status == 0 %} checked="checked" {% endif %}>
 		</td>
 		<td>
-			<a id="removeCart_{{ prod.id }}" href="#" onclick="removeFromCart({{ prod.id }}); return false;" title="Удалить из корзины"> удалить</a>
-			<a id="addCart_{{ prod.id }}" class="hideme" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
+			{% if prod.image %}
+				<img src="../library/images/products/{{ prod.image }}" width="100" /> 
+			{% endif %}
+			<form action="/?controller=admin&action=upload" method="post" enctype="multipart/form-data">
+				<input type="file" name="filename"><br />
+				<input type="hidden" name="productId" value="{{ prod.id }}">
+				<input type="submit" value="Загрузить" "><br />		
+			</form>
+		</td>
+		<td>
+			<input type="button" value="Сохранить" onclick="updateProduct({{ prod.id }});"/>
 		</td>
 	</tr>
 
+	{% endfor %} 
+	
 </table>
-
-		<input type="submit" value="Оформить заказ" />
-	</form>
-
-{% endif %}
-
 </center>
