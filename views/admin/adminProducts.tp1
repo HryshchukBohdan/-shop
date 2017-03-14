@@ -1,0 +1,77 @@
+<center><h1>Toвар</h1>
+
+{% if products is not null %}
+	В корзине пусто
+{% else %}
+
+<table border="1" cellspacing="1" cellpadding="1">
+<caption>Добавить продукт</caption>
+	<tr>
+		<td>Найменувание</td>
+		<td>Цена</td>
+		<td>Катeгория</td>
+		<td>Описание</td>
+		<td>Сохранить</td>
+	</tr>
+
+	<tr>
+		<td>
+			<input type="edit" id="newProductName" value="" />
+		</td>
+		<td>
+			<input type="edit" id="newProductPrice" value="" />
+		</td>
+		<td>
+			<select id="newProductCatId">
+				<option value="0">Главная категория
+
+				{% for cat in categories %}
+
+				<option value="{{ cat.id }}">{{ cat.name }}
+
+				{% endfor %}
+			</select>
+		</td>
+		<td>
+			<textarea id="newProductDesc"></textarea>
+		</td>
+		<td>
+			<input type="button" value="Сохранить" onclick="addProduct();"/>
+		</td>		
+	</tr>
+</table>
+<table>
+	<tr>
+		<td>
+			{{ loop.index }}
+		</td>
+		<td>
+			<a href="/?controller=product&id={{ prod.id }}"> {{ prod.name }} </a><br />
+		</td>
+		<td>
+			<input type="text" name="prodCnt_{{ prod.id }}" id="prodCnt_{{ prod.id }}" value="1" onchange="conversionPrice({{ prod.id }});"/>
+		</td>
+		<td>
+			<span id="prodPrice_{{ prod.id }}" value="{{ prod.price }}">
+				{{ prod.price }}			
+			</span>
+		</td>
+		<td>
+			<span id="prodRealPrice_{{ prod.id }}">
+				{{ prod.price }}			
+			</span>
+		</td>
+		<td>
+			<a id="removeCart_{{ prod.id }}" href="#" onclick="removeFromCart({{ prod.id }}); return false;" title="Удалить из корзины"> удалить</a>
+			<a id="addCart_{{ prod.id }}" class="hideme" href="#" onclick="addToCart({{ prod.id }}); return false;" title="Вщстановить елемент">Востановить</a>
+		</td>
+	</tr>
+
+</table>
+
+		<input type="submit" value="Оформить заказ" />
+	</form>
+
+{% endif %}
+
+</center>

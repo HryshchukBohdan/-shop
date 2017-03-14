@@ -57,171 +57,35 @@ function updateCat(catId) {
     })
 }
 
+function addProduct() {
 
+    var productName = $('#newProductName').val();
+    var productPrice = $('#newProductPrice').val();
+    var productDesc = $('#newProductDesc').val();
+    var productCat = $('#newProductCat').val();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function removeFromCart(productId) {
-
-	console.log("js - removeFromCart("+productId+")");
-	$.ajax({
-		type: 'POST',
-		async: false,
-		url: "/?controller=cart&action=removefromcart&id=" + productId + '/',
-		dataType: 'json',
-		success: function(data) {
-			if (data['success']) {
-				$('#cart_product').html(data['n_product']);
-
-				$('#addCart_'+ productId).show();
-				$('#removeCart_'+ productId).hide();
-			}
-		}
-	})
-}
-
-function conversionPrice(productId) {
-
-	var newCnt = $('#prodCnt_' + productId).val();
-	var prodPrice = $('#prodPrice_' + productId).attr('value');
-	var prodRealPrice = newCnt * prodPrice;
-
-	$('#prodRealPrice_' + productId).html(prodRealPrice);
-}
-
-
-
-function registerNewUser() {
-	
-	var postData = getData('#registerBox');
-
-	$.ajax({
-		type: 'POST',
-		async: true,
-		url: "/?controller=user&action=register",
-		data: postData,
-		dataType: 'json',
-		success: function(data) {
-			if (data['success']) {
-				alert('Регистрация прошла успешно');
-
-				// Блок левого столпца
-				$('#registerBox').hide();
-
-				$('#userLink').attr('href', '/?controller=user');
-				$('#userLink').html(data['userName']);
-				$('#userBox').show();
-
-				// Страница заказа
-                $('#loginBox').hide();
-                $('#btnSaveOrder').show();
-
-			} else {
-				alert(data['message']);
-			}
-		}
-	})
-}
-
-function login() {
-
-    var postData = getData('#loginBox');
-
+    var postData = {productName: productName,
+                    productPrice: productPrice,
+                    productDesc: productDesc,
+                    productCat: productCat};
     $.ajax({
         type: 'POST',
         async: true,
-        url: "/?controller=user&action=login",
+        url: "/?controller=admin&action=addproduct",
         data: postData,
         dataType: 'json',
         success: function(data) {
+
+            alert(data['message']);
+
             if (data['success']) {
 
-                $('#registerBox').hide();
-                $('#loginBox').hide();
+                $('#newProductName').val('');
+                $('#newProductPrice').val('');
+                $('#newProductDesc').val('');
+                $('#newProductCat').val('');
 
-                $('#userLink').attr('href', '/?controller=user');
-                $('#userLink').html(data['displayName']);
-                $('#userBox').show();
-
-                $('#phone').val(data['phone']);
-                $('#adress').val(data['adress']);
-                $('#name').val(data['name']);
-
-                $('#btnSaveOrder').show();
-
-            } else {
-                alert(data['message']);
             }
         }
     })
-}
-
-function showRegisterBox() {
-
-    if ($('#registerBoxHidden').css('display') != 'block' ) {
-        $('#registerBoxHidden').show();
-    } else {
-        $('#registerBoxHidden').hide();
-    }
-}
-
-
-
-function saveOrder() {
-
-    var postData = getData('#frmOrder');
-
-    $.ajax({
-        type: 'POST',
-        async: false,
-        url: "/?controller=cart&action=saveorder",
-        data: postData,
-        dataType: 'json',
-        success: function(data) {
-            if (data['success']) {
-
-                alert(data['message']);
-                document.location = '/';
-
-            } else {
-
-                alert(data['message']);
-            }
-        }
-    })
-}
-
-function showProduct(id) {
-
-    var odjName = "#purchasesForOrderId_" + id;
-
-    if ($(odjName).css('display') != 'table-row' ) {
-        $(odjName).show();
-    } else {
-        $(odjName).hide();
-    }
 }

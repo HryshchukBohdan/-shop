@@ -66,3 +66,34 @@ function getProductsFromArray($productIds, $link) {
 
     return createTwigArray($result);
 }
+
+function getProducts($link) {
+
+    $query = "SELECT *
+				FROM products
+				ORDER BY category_id";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}
+
+function insertProducts($productName, $productPrice, $productDesc, $productCat, $link) {
+
+    $query = "INSERT INTO products
+                SET 
+                  name = '$productName', 
+                  price = '$productPrice', 
+                  descript = '$productDesc',
+                  category_id = '$productCat'";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return $result;
+}

@@ -119,3 +119,53 @@ $twig = new Twig_Environment($loader);
         echo json_encode($resData);
         return;
     }
+
+    function productsAction($twig, $link) {
+
+        // Получение списка категорий
+        $TwigCategories = getAllCategories($link);
+        $TwigProducts = getProducts($link);
+
+        $array = array(
+            'templateWebPath'=>'tmp/templates/default/',
+            'pageTitle' =>'Управления сайтом');
+
+        //d($TwigMainCategories);
+        addGlobaly($twig, $array);
+
+        $array_rend_bulg = array(
+            'categories'=> $TwigCategories,
+            'mainCat'=> $TwigProducts);
+
+        $smartyHeader = loadTemplate($twig, 'adminHeader');
+        $smartyProducts = loadTemplate($twig, 'adminProducts');
+        $smartyFooter = loadTemplate($twig, 'adminFooter');
+
+        echo $smartyHeader->render($array_rend_bulg);
+        echo $smartyProducts->render($array_rend_bulg);
+        echo $smartyFooter->render($array_rend_bulg);
+    }
+
+    function addproductAction($twig = null, $link) {
+
+        $productName = $_POST['productName'];
+        $productPrice = $_POST['productPrice'];
+        $productDesc = $_POST['productDesc'];
+        $productCat = $_POST['productCat'];
+
+        $res = insertProducts($productName, $productPrice, $productDesc, $productCat, $link);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+            $resData['message'] = 'Изменения успешно внесены';
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка изменения данных';
+        }
+
+        echo json_encode($resData);
+        return;
+    }
