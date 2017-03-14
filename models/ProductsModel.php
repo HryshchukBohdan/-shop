@@ -97,3 +97,51 @@ function insertProducts($productName, $productPrice, $productDesc, $productCat, 
 
     return $result;
 }
+
+function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = null, $link) {
+
+    $set =array();
+
+    if ($name) {
+
+        $set[] = "name = '$name'";
+    }
+
+    if ($price > 0) {
+
+        $set[] = "price = '$price'";
+    }
+
+    if ($status !== null) {
+
+        $set[] = "status = '$status'";
+    }
+
+    if ($desc) {
+
+        $set[] = "descript = '$desc'";
+    }
+
+    if ($cat) {
+
+        $set[] = "category_id = '$cat'";
+    }
+
+    if ($fileName) {
+
+        $set[] = "image = '$fileName'";
+    }
+
+    $setStr = implode($set, ", ");
+
+    $query = "UPDATE products
+                SET $setStr
+                WHERE id = '$id'";
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return $result;
+}

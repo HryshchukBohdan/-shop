@@ -89,3 +89,39 @@ function addProduct() {
         }
     })
 }
+
+function updateProduct(id) {
+
+    var productName = $('#prodName_' + id).val();
+    var productPrice = $('#prodPrice_' + id).val();
+    var productDesc = $('#productDesc_' + id).val();
+    var productCat = $('#productCatId').val();
+    var productStatus = $('#prodStatus_' + id).attr('checked');
+
+    if (! productStatus) {
+
+        productStatus = 1
+
+    } else {
+
+        productStatus = 0
+    }
+
+    var postData = {id: id,
+                    name: productName,
+                    price: productPrice,
+                    desc: productDesc,
+                    cat: productCat,
+                    status: productStatus};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=updateproduct",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            alert(data['message']);
+        }
+    })
+}

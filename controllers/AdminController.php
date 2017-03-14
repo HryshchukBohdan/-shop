@@ -169,3 +169,29 @@ $twig = new Twig_Environment($loader);
         echo json_encode($resData);
         return;
     }
+
+    function updateproductAction($twig = null, $link) {
+
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $desc = $_POST['desc'];
+        $cat = $_POST['cat'];
+        $status = $_POST['status'];
+
+        $res = updateProduct($id, $name, $price, $status, $desc, $cat, $fileName, $link);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+            $resData['message'] = 'Изменения успешно внесены';
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка изменения данных';
+        }
+
+        echo json_encode($resData);
+        return;
+    }
