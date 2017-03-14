@@ -195,3 +195,39 @@ $twig = new Twig_Environment($loader);
         echo json_encode($resData);
         return;
     }
+
+    function uploadAction($twig = null, $link) {
+
+        $maxSize = 2 * 1024 * 1024;
+
+        $id = $_POST['productId'];
+
+        $ext = pathinfo($_FILES['filename']['name'], PATHINFO_EXTENSION);
+
+        $newFileName = $id . '.' . $ext;
+
+        if ($_FILES['filename']['size'] > $maxSize) {
+
+            echo 'Размер файла привешает два мегабайта';
+            return;
+        }
+
+        if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
+
+            $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/products/' . $newFileName);
+
+        if ($res) {
+
+            $res = updateProductImage($id, $newFileName, $link);
+
+                if ($res) {
+
+                    redirect('/?controller=admin&action=products');
+                }
+            }
+
+        } else {
+
+            echo "Oшибка загрузки файла";
+        }
+    }

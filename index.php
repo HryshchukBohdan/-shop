@@ -24,5 +24,5 @@ if (isset($_SESSION['user'])) {
 }
 
 addGlobaly($twig, $arrayTwigSession);
-//d($controllerName);
+//=d($controllerName);
 loadPage($twig, $controllerName, $actionName, $link);

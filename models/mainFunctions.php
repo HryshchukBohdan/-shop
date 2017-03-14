@@ -10,7 +10,7 @@ function loadPage($twig, $controllerName, $actionName, $link) {
 	include_once PathPrefix . $controllerName . PathPostfix;
 
 	$function = $actionName . 'Action';
-	
+
 	$function($twig, $link);
 }
 

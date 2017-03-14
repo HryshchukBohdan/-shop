@@ -145,3 +145,10 @@ function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = nul
 
     return $result;
 }
+
+function updateProductImage($id, $newFileName, $link) {
+
+    $result = updateProduct($id, NULL, NULL, NULL, NULL, NULL, $newFileName, $link);
+
+    return $result;
+}

@@ -64,7 +64,7 @@
 		</td>
 		</td>
 		<td>
-			<select id="productCatId">
+			<select id="prodCatId">
 				<option value="0">Главная категория
 
 				{% for cat in categories %}
@@ -75,10 +75,10 @@
 			</select>
 		</td>
 		<td>
-			<textarea id="productDesc_{{ prod.id }}">{{ prod.descript }}</textarea>
+			<textarea id="prodDesc_{{ prod.id }}">{{ prod.descript }}</textarea>
 		</td>
 		<td>
-			<input type="checkbox" id="productStatus_{{ prod.id }}" {% if prod.status == 0 %} checked="checked" {% endif %}>
+			<input type="checkbox" id="prodStatus_{{ prod.id }}" {% if prod.status == 0 %} checked="checked" {% endif %}>
 		</td>
 		<td>
 			{% if prod.image %}
