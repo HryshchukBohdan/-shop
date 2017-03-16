@@ -119,3 +119,33 @@ function getProductsForOrder($orderId, $link) {
 
     return createTwigArray($result);
 }
+
+function updateOrderStatus($orderId, $status, $link) {
+
+    $status = intval($status);
+
+    $query = "UPDATE orders
+                SET status = '$status' 
+                WHERE id = " . $orderId;
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return $result;
+}
+
+function updateOrderDataPayment($orderId, $dataPayment, $link) {
+
+    $query = "UPDATE orders
+                SET data_payment = '$dataPayment' 
+                WHERE id = " . $orderId;
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return $result;
+}

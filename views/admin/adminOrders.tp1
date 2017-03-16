@@ -4,7 +4,7 @@
 	В корзине пусто
 {% else %}
 
-<table border="1" cellspacing="1" cellpadding="1">
+<table border="1" cellspacing="1" cellpadding="1" width="100%">
 
 	<tr>
 		<th>№</th>
@@ -24,12 +24,12 @@
 		<td><a href="#" onclick="showProducts({{ ord.id }}); return false;" >Показать товар заказа</a></td>
 		<td>{{ ord.id }}</td>
 		<td>
-			<input type="checkbox" id="ordStatus_{{ ord.id }}" {% if ord.status == 0 %} checked="checked" {% endif %} onclick="updateOrderStatus({{ ord.id }});" />Закрыт
+			<input type="checkbox" id="ordStatus_{{ ord.id }}" {% if ord.status == 1 %} checked="checked" {% endif %} onclick="updateOrderStatus({{ ord.id }});" />Закрыт
 		</td>
 		<td>{{ ord.data_created }}</td>
 		<td>
 			<input type="text" id="dataPayment_{{ ord.id }}" value="{{ ord.data_payment }}" />
-			<input type="button" value="Сохранить" onclick="updateDatePayment({{ ord.id }});" />
+			<input type="button" value="Сохранить" onclick="updateDataPayment({{ ord.id }});" />
 		</td>
 		<td>{{ ord.comment }}</td>
 		<td>{{ ord.data_modification }}</td>

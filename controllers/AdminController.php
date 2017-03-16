@@ -257,3 +257,45 @@ $twig = new Twig_Environment($loader);
         echo $smartyOrders->render($array_rend_bulg);
         echo $smartyFooter->render($array_rend_bulg);
     }
+
+    function setorderstatusAction($twig = null, $link) {
+
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+
+        $res = updateOrderStatus($id, $status, $link);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка установки статуса';
+        }
+
+        echo json_encode($resData);
+        return;
+    }
+
+    function setorderdatapaymentAction($twig = null, $link) {
+
+        $id = $_POST['id'];
+        $date_payment = $_POST['date_payment'];
+
+        $res = updateOrderDataPayment($id, $date_payment, $link);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка установки даты оплаты';
+        }
+
+        echo json_encode($resData);
+        return;
+    }

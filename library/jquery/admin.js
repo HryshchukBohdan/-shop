@@ -125,3 +125,67 @@ function updateProduct(id) {
         }
     })
 }
+
+function showProducts(id) {
+
+    var odjName = "#purchasesForOrderId_" + id;
+
+    if ($(odjName).css('display') != 'table-row' ) {
+        $(odjName).show();
+    } else {
+        $(odjName).hide();
+    }
+}
+
+function updateOrderStatus(id) {
+
+    var status = $('#ordStatus_' + id).attr('checked');
+
+    if (! status) {
+
+        status = 0
+
+    } else {
+
+        status = 1
+    }
+
+    var postData = {id: id,
+                    status: status};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=setorderstatus",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            if (! data['success']) {
+
+                alert(data['message']);
+            }
+        }
+    })
+}
+
+function updateDataPayment(id) {
+
+    var data_pay = $('#dataPayment_' + id).val();
+
+    var postData = {id: id,
+                    date_payment: data_pay};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=setorderdatapayment",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            if (! data['success']) {
+
+                alert(data['message']);
+            }
+        }
+    })
+}
