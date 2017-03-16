@@ -241,7 +241,7 @@ $twig = new Twig_Environment($loader);
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
             'pageTitle' =>'Заказы');
-d($TwigOrders);
+//d($TwigOrders);
         //d($TwigMainCategories);
         addGlobaly($twig, $array);
 

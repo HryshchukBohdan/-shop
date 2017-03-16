@@ -1,0 +1,77 @@
+<center><h2>Toвар</h2>
+
+{% if orders is null %}
+	В корзине пусто
+{% else %}
+
+<table border="1" cellspacing="1" cellpadding="1">
+
+	<tr>
+		<th>№</th>
+		<th>Действия</th>
+		<th width="70">ID заказа</th>
+		<th width="70">Статус</th>
+		<th width="110">Дата создания</th>
+		<th>Дата оплаты</th>
+		<th>Дополнительная информация</th>
+		<th>Дата изменения заказа</th>
+	</tr>
+
+	{% for ord in orders %}
+
+	<tr>
+		<td>{{ loop.index }}</td>
+		<td><a href="#" onclick="showProducts({{ ord.id }}); return false;" >Показать товар заказа</a></td>
+		<td>{{ ord.id }}</td>
+		<td>
+			<input type="checkbox" id="ordStatus_{{ ord.id }}" {% if ord.status == 0 %} checked="checked" {% endif %} onclick="updateOrderStatus({{ ord.id }});" />Закрыт
+		</td>
+		<td>{{ ord.data_created }}</td>
+		<td>
+			<input type="text" id="dataPayment_{{ ord.id }}" value="{{ ord.data_payment }}" />
+			<input type="button" value="Сохранить" onclick="updateDatePayment({{ ord.id }});" />
+		</td>
+		<td>{{ ord.comment }}</td>
+		<td>{{ ord.data_modification }}</td>
+	</tr>
+
+	<tr class="hideme" id="purchasesForOrderId_{{ ord.id }}">
+		<td colspan="8">
+
+			{% if ord.children is not null %}
+
+			<table border="1" cellspacing="1" cellpadding="1" width="100%">
+				<tr>
+					<th>№</th>					
+					<th>ID</th>					
+					<th>Название</th>
+					<th>Цена</th>
+					<th>Количество</th>
+				</tr>
+
+				{% for chil in ord.children %}
+
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ chil.id }}</td>
+					<td>
+						<a href="/?controller=product&id={{ chil.id }}">{{ chil.name }}</a>
+					</td>
+					<td>{{ chil.price }}</td>
+					<td>{{ chil.amount }}</td>
+				</tr>
+
+				{% endfor %} 
+
+			</table>
+
+			{% endif %}
+
+		</td>
+	</tr>
+
+	{% endfor %} 
+	
+</table>
+</center>
+{% endif %}
