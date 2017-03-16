@@ -231,3 +231,29 @@ $twig = new Twig_Environment($loader);
             echo "Oшибка загрузки файла";
         }
     }
+
+    function ordersAction($twig, $link) {
+
+        // Получение списка категорий
+        $TwigOrders = getOrders($link);
+     //   $TwigProducts = getProducts($link);
+
+        $array = array(
+            'templateWebPath'=>'tmp/templates/default/',
+            'pageTitle' =>'Заказы');
+d($TwigOrders);
+        //d($TwigMainCategories);
+        addGlobaly($twig, $array);
+
+        $array_rend_bulg = array(
+            'orders'=> $TwigOrders);
+      //      'products'=> $TwigProducts);
+
+        $smartyHeader = loadTemplate($twig, 'adminHeader');
+        $smartyOrders = loadTemplate($twig, 'adminOrders');
+        $smartyFooter = loadTemplate($twig, 'adminFooter');
+
+        echo $smartyHeader->render($array_rend_bulg);
+        echo $smartyOrders->render($array_rend_bulg);
+        echo $smartyFooter->render($array_rend_bulg);
+    }

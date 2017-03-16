@@ -73,3 +73,49 @@ function getOrdersWithProductsByUser($userId, $link) {
 
     return $TwigArray;
 }
+
+function getOrders($link) {
+
+    $query = "SELECT o.*, u.name, u.email, u.phone, u.adress
+                FROM orders as o 
+                LEFT JOIN users as u ON o.user_id = u.id
+                ORDER BY id DESC";
+//d($query);
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    $TwigArray = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        $TwigChildren = getProductsForOrder($row['id'], $link);
+
+        if ($TwigChildren) {
+
+            $row['children'] = $TwigChildren;
+            $TwigArray[] = $row;
+        }
+    }
+
+    return $TwigArray;
+}
+
+function getProductsForOrder($orderId, $link) {
+
+    $orderId = intval($orderId);
+
+    $query = "SELECT *
+                FROM purchase as pe 
+                LEFT JOIN products as ps
+                ON pe.product_id = ps.id 
+                WHERE order_id = " . $orderId;
+
+    $result = mysqli_query($link, $query);
+
+    if (!$result)
+        die(mysqli_error($link));
+
+    return createTwigArray($result);
+}
