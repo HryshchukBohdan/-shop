@@ -81,16 +81,16 @@ function checkUserEmail($email, $link) {
     return createTwigArray($result);
 }
 
-function loginUser($email, $pwd, $link) {
+function loginUser($email, $pwd) {
 
-    $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
+    $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));
     $pwd = md5($pwd.sol);
 
     $query = 'SELECT *
                 FROM users
                 WHERE email = "' . $email . '" and pwd = "' . $pwd . '" limit 1';
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
            
     $data = createTwigArray($result);
 
@@ -103,12 +103,12 @@ function loginUser($email, $pwd, $link) {
     return $data;
 }
 
-function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link) {
+function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5) {
 
-    $email = htmlspecialchars(mysqli_real_escape_string($link, $_SESSION['user']['email']));
-    $name = htmlspecialchars(mysqli_real_escape_string($link, $name));
-    $phone = htmlspecialchars(mysqli_real_escape_string($link, $phone));
-    $adress = htmlspecialchars(mysqli_real_escape_string($link, $adress));
+    $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $_SESSION['user']['email']));
+    $name = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $name));
+    $phone = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $phone));
+    $adress = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $adress));
     $pwd1 = trim($pwd1);
     $pwd2 = trim($pwd2);
 
@@ -132,15 +132,15 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link)
                 pwd = '$curPwdMD5' 
             LIMIT 1";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     return $result;
 }
 
-function getCurUserOrders($link) {
+function getCurUserOrders() {
 
     $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-    $TwigArray = getOrdersWithProductsByUser($userId, $link);
+    $TwigArray = getOrdersWithProductsByUser($userId);
 
     return $TwigArray;
 }

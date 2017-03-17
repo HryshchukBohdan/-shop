@@ -1,9 +1,9 @@
 {% for prod in products %}
 	<div style="float: left; padding: 0px 30px 40px 0px;">
-		<a href="/products/{{ prod.id }}/">
+		<a href="/?controller=product&id={{ prod.id }}">
 			<img src="../library/images/products/{{ prod.image }}" width="150" height="150" />
 		</a><br />
-		<center><a href="/products/{{ prod.id }}/">		
+		<center><a href="/?controller=product&id={{ prod.id }}">
 			{{ prod.name }}
 		</a></center>
 	</div>

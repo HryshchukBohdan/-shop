@@ -2,7 +2,7 @@
 
 include_once '/config/db.php';
 
-function setPurchaseForOrder($orderId, $cart, $link) {
+function setPurchaseForOrder($orderId, $cart) {
 
     $query = "INSERT INTO purchase 
               (order_id, product_id, price, amount)
@@ -17,26 +17,26 @@ function setPurchaseForOrder($orderId, $cart, $link) {
 
     $query .= implode($value, ', ');
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return $result;
 
 }
 
-function getPurchaseForOrder($orderId, $link) {
+function getPurchaseForOrder($orderId) {
 
     $query = "SELECT pe.*, ps.name
                 FROM purchase as pe 
                 JOIN products as ps on pe.product_id = ps.id
                 WHERE pe.order_id = " . $orderId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }

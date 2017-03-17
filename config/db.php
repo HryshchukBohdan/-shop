@@ -1,13 +1,35 @@
-<?php // подключение к базе данных
+<?php
+class Db
+{
+    private static $db;
 
-$dblocation = "localhost";
-$dbname = 'my-shop_univ';
-$dbuser = 'bohdan0516';
-$dbpasswd = '0516';
+    private function __clone() {
 
-    $link = mysqli_connect($dblocation, $dbuser, $dbpasswd, $dbname)
-        or die("Error!: " . mysqli_error($link));
-   
-   		if(!mysqli_set_charset($link, "utf8")){
-        	printf("Error!: " . mysql_error($link)); 
-    	}
+        return true;
+    }
+
+    private function __wakeup() {
+
+        return true;
+    }
+
+    private function __construct($host, $db_name, $user, $pwd) {
+
+        $this->link = mysqli_connect($host, $user, $pwd, $db_name)
+
+            or die("Error!: " . mysqli_error($this->link));
+
+        if(!mysqli_set_charset($this->link, "utf8")){
+
+            printf("Error!: " . mysql_error($this->link));
+        }
+    }
+    public static function getConnect() {
+
+        if (!self::$db) {
+
+            self::$db = new Db("localhost", "my-shop_univ", "bohdan0516", "0516");
+        }
+            return self::$db->link;
+    }
+}

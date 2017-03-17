@@ -1,7 +1,7 @@
 <?php // модель таблицы продуктов
 
 // Получить последнего количества продуктов
-function getLastProducts($limit = null, $link) {
+function getLastProducts($limit = null) {
 
 	$query = 'SELECT *
 				FROM products
@@ -11,15 +11,15 @@ function getLastProducts($limit = null, $link) {
         $query .= " lIMIT " . $limit;  
     }
 
-	$result = mysqli_query($link, $query);
+	$result = mysqli_query(Db::getConnect(), $query);
            
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }
 
-function getProductsByCat($catId, $link) {
+function getProductsByCat($catId) {
 
     $catId = intval($catId);
 
@@ -27,15 +27,15 @@ function getProductsByCat($catId, $link) {
                 FROM products
                 WHERE category_id = ' . $catId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
            
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }
 
-function getProductById($productId, $link) {
+function getProductById($productId) {
 
     $catId = intval($productId);
 
@@ -43,15 +43,15 @@ function getProductById($productId, $link) {
                 FROM products
                 WHERE id = ' . $productId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
            
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return mysqli_fetch_assoc($result);
 }
 
-function getProductsFromArray($productIds, $link) {
+function getProductsFromArray($productIds) {
 
     $strIds = implode(', ', $productIds);
 
@@ -59,29 +59,29 @@ function getProductsFromArray($productIds, $link) {
                 FROM products
                 WHERE id in (' . $strIds . ')';
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
            
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }
 
-function getProducts($link) {
+function getProducts() {
 
     $query = "SELECT *
 				FROM products
 				ORDER BY category_id";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }
 
-function insertProducts($productName, $productPrice, $productDesc, $productCat, $link) {
+function insertProducts($productName, $productPrice, $productDesc, $productCat) {
 
     $query = "INSERT INTO products
                 SET 
@@ -90,15 +90,15 @@ function insertProducts($productName, $productPrice, $productDesc, $productCat, 
                   descript = '$productDesc',
                   category_id = '$productCat'";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return $result;
 }
 
-function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = null, $link) {
+function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = null) {
 
     $set =array();
 
@@ -138,17 +138,17 @@ function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = nul
                 SET $setStr
                 WHERE id = '$id'";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return $result;
 }
 
-function updateProductImage($id, $newFileName, $link) {
+function updateProductImage($id, $newFileName) {
 
-    $result = updateProduct($id, NULL, NULL, NULL, NULL, NULL, $newFileName, $link);
+    $result = updateProduct($id, NULL, NULL, NULL, NULL, NULL, $newFileName);
 
     return $result;
 }

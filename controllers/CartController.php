@@ -57,17 +57,17 @@
 		echo json_encode($resData);
 	}
 
-	function indexAction($twig, $link) {
+	function indexAction($twig) {
 
 		$productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 		
 		$TwigProducts = null;
 		
 		if ($productIds) {
-			$TwigProducts = getProductsFromArray($productIds, $link);
+			$TwigProducts = getProductsFromArray($productIds);
 		}
 				
-		$TwigCategories = getAllMainCatsWithChildren($link);
+		$TwigCategories = getAllMainCatsWithChildren();
 		
 		$array = array(
 			'templateWebPath'=>'tmp/templates/default/',
@@ -88,11 +88,9 @@
     	echo $smartyFooter->render($array_rend_bulg);
 	}
 
-    function orderAction($twig, $link) {
+    function orderAction($twig) {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
-
-        //print_r($_SESSION);
 
         if (! $productIds) {
             redirect('/?controller=cart');
@@ -102,33 +100,23 @@
         $productCnt = array();
 
         foreach ($productIds as $id) {
-        	//print_r($id);
 
             $val_perem = 'prodCnt_' . $id;
-            //echo $val_perem;
-            //print_r($_POST['$val_perem']);
-            //echo "  ";
             $productCnt["$id"] = isset($_POST["$val_perem"]) ? $_POST["$val_perem"] : null;
         }
-        //print_r($productCnt);
 
-        $TwigProducts = getProductsFromArray($productIds, $link);
+        $TwigProducts = getProductsFromArray($productIds);
 
-       // print_r($TwigProducts);
         $i = 0;
 
         foreach ($TwigProducts as &$product) {
 
         	$product['cnt'] = isset($productCnt[$product['id']]) ? $productCnt[$product['id']] : null;
 
-        	//print_r($productCnt[$product['id']]);
-
         	if ($product['cnt']) {
 
         		$product['realPrice'] = $product['cnt'] * $product['price'];
 
-        		//echo "string" . $product['id'] ;
-     
            	} else {
 
            		unset($TwigProducts[$i]);
@@ -136,26 +124,16 @@
 
            	$i++;
         }
-//echo $i;
-       // print_r($TwigProducts);
 
         if (! $TwigProducts) {
 
         	echo "Корзина пуста";
         	return;
-        	# code...
         }
 
         $_SESSION['selectCart'] = $TwigProducts;
-
-
-
-
-
-
-
 				
-		$TwigCategories = getAllMainCatsWithChildren($link);
+		$TwigCategories = getAllMainCatsWithChildren();
 		
 		$array = array(
 			'templateWebPath'=>'tmp/templates/default/',
@@ -178,17 +156,13 @@
     	echo $smartyHeader->render($array_rend_bulg);
     	echo $smartyOrder->render($array_rend_bulg);
     	echo $smartyFooter->render($array_rend_bulg);
-        //print_r($_SESSION);
     }
 
-    function saveorderAction($twig, $link) {
+    function saveorderAction() {
 
         $cart = isset($_SESSION['selectCart']) ? $_SESSION['selectCart'] : null;
-//echo '1 ';
-//print_r($_SESSION);
+
         if (! $cart) {
-
-
 
             $resData['success'] = 0;
             $resData['message'] = 'Нет товаров для заказа';
@@ -201,12 +175,9 @@
         $phone = $_POST['phone'];
         $adress = $_POST['adress'];
         $name = $_POST['name'];
-//print_r($_POST);
-        //echo '2 ';
 
-        $orderId = makeNewOrder($name, $phone, $adress, $link);
+        $orderId = makeNewOrder($name, $phone, $adress);
 
-//D($orderId);
         if (! $orderId) {
 
             $resData['success'] = 0;
@@ -217,7 +188,7 @@
             return;
         }
 
-        $res = setPurchaseForOrder($orderId, $cart, $link);
+        $res = setPurchaseForOrder($orderId, $cart);
 
         if ($res) {
 

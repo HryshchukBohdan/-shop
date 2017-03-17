@@ -2,7 +2,7 @@
 
 include_once '/config/db.php';
 
-function makeNewOrder($name, $phone, $adress, $link) {
+function makeNewOrder($name, $phone, $adress) {
 
     $userId = $_SESSION['user']['id'];
     $comment = "id пользователя: $userId <br />
@@ -16,10 +16,10 @@ function makeNewOrder($name, $phone, $adress, $link) {
     $query = "INSERT INTO orders (user_id, data_created, data_payment, status, comment)
 				VALUES ('$userId', '$dataCreated', null, '0', '$comment')";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     if ($result) {
 
@@ -28,10 +28,10 @@ function makeNewOrder($name, $phone, $adress, $link) {
                 ORDER BY id DESC 
                 LIMIT 1';
 
-        $result = mysqli_query($link, $query);
+        $result = mysqli_query(Db::getConnect(), $query);
 
         if (!$result)
-            die(mysqli_error($link));
+            die(mysqli_error(Db::getConnect()));
 
         $result = createTwigArray($result);
 
@@ -44,7 +44,7 @@ function makeNewOrder($name, $phone, $adress, $link) {
     return false;
 }
 
-function getOrdersWithProductsByUser($userId, $link) {
+function getOrdersWithProductsByUser($userId) {
 
     $userId = intval($userId);
 
@@ -53,16 +53,16 @@ function getOrdersWithProductsByUser($userId, $link) {
                 WHERE user_id = '" . $userId . "'
                 ORDER BY id DESC";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     $TwigArray = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
 
-        $TwigChildren = getPurchaseForOrder($row['id'], $link);
+        $TwigChildren = getPurchaseForOrder($row['id']);
 
         if ($TwigChildren) {
 
@@ -74,23 +74,23 @@ function getOrdersWithProductsByUser($userId, $link) {
     return $TwigArray;
 }
 
-function getOrders($link) {
+function getOrders() {
 
     $query = "SELECT o.*, u.name, u.email, u.phone, u.adress
                 FROM orders as o 
                 LEFT JOIN users as u ON o.user_id = u.id
                 ORDER BY id DESC";
 //d($query);
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     $TwigArray = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
 
-        $TwigChildren = getProductsForOrder($row['id'], $link);
+        $TwigChildren = getProductsForOrder($row['id']);
 
         if ($TwigChildren) {
 
@@ -102,7 +102,7 @@ function getOrders($link) {
     return $TwigArray;
 }
 
-function getProductsForOrder($orderId, $link) {
+function getProductsForOrder($orderId) {
 
     $orderId = intval($orderId);
 
@@ -112,15 +112,15 @@ function getProductsForOrder($orderId, $link) {
                 ON pe.product_id = ps.id 
                 WHERE order_id = " . $orderId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }
 
-function updateOrderStatus($orderId, $status, $link) {
+function updateOrderStatus($orderId, $status) {
 
     $status = intval($status);
 
@@ -128,24 +128,24 @@ function updateOrderStatus($orderId, $status, $link) {
                 SET status = '$status' 
                 WHERE id = " . $orderId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return $result;
 }
 
-function updateOrderDataPayment($orderId, $dataPayment, $link) {
+function updateOrderDataPayment($orderId, $dataPayment) {
 
     $query = "UPDATE orders
                 SET data_payment = '$dataPayment' 
                 WHERE id = " . $orderId;
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return $result;
 }

@@ -8,26 +8,17 @@
 
 // указывае где хранятся шаблоны
 $loader = new Twig_Loader_Filesystem(TemplateAdminPrefix);
-//echo TemplateAdminPrefix;
 // инициализируем Twig
 $twig = new Twig_Environment($loader);
 
-//var_dump($twig);
-
-    function indexAction($twig, $link) {
+    function indexAction($twig) {
 
         if (! isset($_SESSION['user'])) {
             redirect('/');
         }
 
         // Получение списка категорий для меню
-        $TwigCategories = getAllMainCats($link);
-       // d($TwigCategories);
-
-        // Получения списка заказов пользователя
-        //$TwigUserOrders = getCurUserOrders($link);
-
-        //d($TwigUserOrders);
+        $TwigCategories = getAllMainCats();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
@@ -37,7 +28,6 @@ $twig = new Twig_Environment($loader);
 
         $array_rend_bulg = array(
             'categories'=> $TwigCategories);
-            //'userOrders'=> $TwigUserOrders);
 
         $smartyHeader = loadTemplate($twig, 'adminHeader');
         $smartyAdmin = loadTemplate($twig, 'admin');
@@ -48,13 +38,12 @@ $twig = new Twig_Environment($loader);
         echo $smartyFooter->render($array_rend_bulg);
     }
 
-    function addnewcatAction($twig = null, $link) {
+    function addnewcatAction() {
 
 	    $catName = $_POST['newCategoryName'];
 	    $catParentId = $_POST['generalCatId'];
 
-	    $res = insertCat($catName, $catParentId, $link);
-	    //print_r($res);
+	    $res = insertCat($catName, $catParentId);
 
         if ($res) {
 
@@ -71,17 +60,16 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
-    function categoryAction($twig, $link) {
+    function categoryAction($twig) {
 
         // Получение списка категорий
-        $TwigCategories = getAllCategories($link);
-        $TwigMainCategories = getAllMainCats($link);
+        $TwigCategories = getAllCategories();
+        $TwigMainCategories = getAllMainCats();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
             'pageTitle' =>'Управления сайтом');
 
-        //d($TwigMainCategories);
         addGlobaly($twig, $array);
 
         $array_rend_bulg = array(
@@ -97,13 +85,13 @@ $twig = new Twig_Environment($loader);
         echo $smartyFooter->render($array_rend_bulg);
     }
 
-    function updatecategoryAction($twig = null, $link) {
+    function updatecategoryAction() {
 
         $catId = $_POST['catId'];
         $parentId = $_POST['parentId'];
         $newName = $_POST['newName'];
 
-        $res = updateCategoryData($catId, $parentId, $newName, $link);
+        $res = updateCategoryData($catId, $parentId, $newName);
 
         if ($res) {
 
@@ -120,17 +108,16 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
-    function productsAction($twig, $link) {
+    function productsAction($twig) {
 
         // Получение списка категорий
-        $TwigCategories = getAllCategories($link);
-        $TwigProducts = getProducts($link);
+        $TwigCategories = getAllCategories();
+        $TwigProducts = getProducts();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
             'pageTitle' =>'Управления сайтом');
 
-        //d($TwigMainCategories);
         addGlobaly($twig, $array);
 
         $array_rend_bulg = array(
@@ -153,7 +140,7 @@ $twig = new Twig_Environment($loader);
         $productDesc = $_POST['productDesc'];
         $productCat = $_POST['productCat'];
 
-        $res = insertProducts($productName, $productPrice, $productDesc, $productCat, $link);
+        $res = insertProducts($productName, $productPrice, $productDesc, $productCat);
 
         if ($res) {
 
@@ -170,7 +157,7 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
-    function updateproductAction($twig = null, $link) {
+    function updateproductAction() {
 
         $id = $_POST['id'];
         $name = $_POST['name'];
@@ -179,7 +166,7 @@ $twig = new Twig_Environment($loader);
         $cat = $_POST['cat'];
         $status = $_POST['status'];
 
-        $res = updateProduct($id, $name, $price, $status, $desc, $cat, $fileName, $link);
+        $res = updateProduct($id, $name, $price, $status, $desc, $cat);
 
         if ($res) {
 
@@ -196,7 +183,7 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
-    function uploadAction($twig = null, $link) {
+    function uploadAction() {
 
         $maxSize = 2 * 1024 * 1024;
 
@@ -218,7 +205,7 @@ $twig = new Twig_Environment($loader);
 
         if ($res) {
 
-            $res = updateProductImage($id, $newFileName, $link);
+            $res = updateProductImage($id, $newFileName);
 
                 if ($res) {
 
@@ -232,22 +219,18 @@ $twig = new Twig_Environment($loader);
         }
     }
 
-    function ordersAction($twig, $link) {
+    function ordersAction($twig) {
 
-        // Получение списка категорий
-        $TwigOrders = getOrders($link);
-     //   $TwigProducts = getProducts($link);
+        $TwigOrders = getOrders();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
             'pageTitle' =>'Заказы');
-//d($TwigOrders);
-        //d($TwigMainCategories);
+
         addGlobaly($twig, $array);
 
         $array_rend_bulg = array(
             'orders'=> $TwigOrders);
-      //      'products'=> $TwigProducts);
 
         $smartyHeader = loadTemplate($twig, 'adminHeader');
         $smartyOrders = loadTemplate($twig, 'adminOrders');
@@ -258,12 +241,12 @@ $twig = new Twig_Environment($loader);
         echo $smartyFooter->render($array_rend_bulg);
     }
 
-    function setorderstatusAction($twig = null, $link) {
+    function setorderstatusAction() {
 
         $id = $_POST['id'];
         $status = $_POST['status'];
 
-        $res = updateOrderStatus($id, $status, $link);
+        $res = updateOrderStatus($id, $status);
 
         if ($res) {
 
@@ -279,12 +262,12 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
-    function setorderdatapaymentAction($twig = null, $link) {
+    function setorderdatapaymentAction() {
 
         $id = $_POST['id'];
         $date_payment = $_POST['date_payment'];
 
-        $res = updateOrderDataPayment($id, $date_payment, $link);
+        $res = updateOrderDataPayment($id, $date_payment);
 
         if ($res) {
 

@@ -4,7 +4,7 @@
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/ProductsModel.php';
 
-	function indexAction($twig, $link) {
+	function indexAction($twig) {
 
 		$catId = isset($_GET['id']) ? $_GET['id'] : null;
 		if (! $catId) {
@@ -14,17 +14,17 @@
 		$TwigChildCats = null;
 		$TwigProducts = null;
 
-		$TwigCategory = getCatById($catId, $link);
+		$TwigCategory = getCatById($catId);
 
 		if ($TwigCategory['parent_id'] == 0) {
-			 $TwigChildCats = getChildrenForCat($catId, $link);
-			//print_r($TwigChildCats);
-		} else {
-			$TwigProducts = getProductsByCat($catId, $link);
-			//print_r($TwigProducts);
-		} 
+			 $TwigChildCats = getChildrenForCat($catId);
 
-		$TwigCategories = getAllMainCatsWithChildren($link);
+		} else {
+
+			$TwigProducts = getProductsByCat($catId);
+        }
+
+		$TwigCategories = getAllMainCatsWithChildren();
 
 		$smartyHeader = loadTemplate($twig, 'header');
     	$smartyCategory = loadTemplate($twig, 'category');

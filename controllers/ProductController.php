@@ -4,15 +4,15 @@
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/ProductsModel.php';
 
-	function indexAction($twig, $link) {
+	function indexAction($twig) {
 		
 		$productId = isset($_GET['id']) ? $_GET['id'] : null;
 		if (! $productId) {
 			exit();
 		}
 
-		$TwigProduct = getProductById($productId, $link);
-		$TwigCategories = getAllMainCatsWithChildren($link);
+		$TwigProduct = getProductById($productId);
+		$TwigCategories = getAllMainCatsWithChildren();
 		$TwigCartP = null;
 
 		if (in_array($productId, $_SESSION['cart'])) {

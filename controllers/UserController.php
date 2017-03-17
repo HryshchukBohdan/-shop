@@ -6,7 +6,7 @@
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 
-	function RegisterAction($twig, $link) {
+	function RegisterAction() {
 
 		$email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 		$email = trim($email);
@@ -21,7 +21,7 @@
 		$resData = null;
 		$resData = checkRegisterParams($email, $pwd1, $pwd2);
 
-		if (! $resData && checkUserEmail($email, $link)) {
+		if (! $resData && checkUserEmail($email)) {
 
 			$resData['success'] = false;
 			$resData['message'] = "Пользователь с с емейлом $email уже зарегестрируван";
@@ -30,7 +30,7 @@
 		if (! $resData) {
 
 			$pwdMD5 = md5($pwd1.sol);
-			$userData = registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link);
+			$userData = registerNewUsers($email, $pwdMD5, $name, $phone, $adress);
 
 			if ($userData['success']) {
 
@@ -64,7 +64,7 @@
         redirect('/');
     }
 
-    function loginAction($twig, $link) {
+    function loginAction() {
 
 	    $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 	    $email = trim($email);
@@ -72,7 +72,7 @@
         $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
         $pwd = trim($pwd);
 
-        $userData = loginUser($email, $pwd, $link);
+        $userData = loginUser($email, $pwd);
 
         if ($userData['success']) {
 
@@ -93,19 +93,17 @@
         echo json_encode($resData);
     }
 
-    function indexAction($twig, $link) {
+    function indexAction($twig) {
 
     if (! isset($_SESSION['user'])) {
         redirect('/');
     }
 
     // Получение списка категорий для меню
-    $TwigCategories = getAllMainCatsWithChildren($link);
+    $TwigCategories = getAllMainCatsWithChildren();
 
     // Получения списка заказов пользователя
-    $TwigUserOrders = getCurUserOrders($link);
-
-    //d($TwigUserOrders);
+    $TwigUserOrders = getCurUserOrders();
 
     $array = array(
         'templateWebPath'=>'tmp/templates/default/',
@@ -126,7 +124,7 @@
     echo $smartyFooter->render($array_rend_bulg);
 }
 
-function updateAction($twig, $link) {
+function updateAction() {
 
     if (! isset($_SESSION['user'])) {
         redirect('/');
@@ -152,7 +150,7 @@ function updateAction($twig, $link) {
         return false;
     }
 
-    $res = updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5, $link);
+    $res = updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5);
 
     if ($res) {
 

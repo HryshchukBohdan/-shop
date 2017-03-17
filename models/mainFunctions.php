@@ -5,13 +5,13 @@ $controllerName названия контролера
 $actionName названия финкции обработки страницы
 */
 
-function loadPage($twig, $controllerName, $actionName, $link) {
+function loadPage($twig, $controllerName, $actionName) {
 
 	include_once PathPrefix . $controllerName . PathPostfix;
 
 	$function = $actionName . 'Action';
 
-	$function($twig, $link);
+	$function($twig);
 }
 
 function loadTemplate($twig, $templateName) {

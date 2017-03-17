@@ -1,19 +1,20 @@
 <?php // Контролер главной странички
 
 	// подключаем модели
-	include_once '/models/CategoriesModel.php';
-	include_once '/models/ProductsModel.php';
+
+    require_once'/models/CategoriesModel.php';
+	include_once'/models/ProductsModel.php';
 
 	function testAction() {
 		echo "testAction ++";
 	}
 
-	function indexAction($twig, $link) {
+	function indexAction($twig) {
 		
 		$n_product = 4;
 
-		$TwigCategories = getAllMainCatsWithChildren($link);
-		$TwigProduct = getLastProducts($n_product, $link);
+		$TwigCategories = getAllMainCatsWithChildren();
+		$TwigProduct = getLastProducts($n_product);
 
 		$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 
