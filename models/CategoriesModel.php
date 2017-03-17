@@ -1,77 +1,59 @@
 <?php // модель таблицы категорий
- 
- // получение дочирних категорий
-function getChildrenForCat($catId) {
 
-    $query = 'SELECT *
-                FROM categories
-                WHERE parent_id = ' . $catId;
-    
-    $result = mysqli_query(Db::getConnect(), $query);
-           
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
 
-    return createTwigArray($result);
-}
+class categories extends model
+{
+    static public $table = "categories";
 
-// Получить главние катергории с привязками к дочирним
-function getAllMainCatsWithChildren() {
-    
-	$query = 'SELECT *
+    static function getChildrenForCat($catId) {
+
+        return static::get($catId, 'parent_id');
+    }
+
+    static function getAllMainCatsWithChildren() {
+
+        $query = 'SELECT *
 				FROM categories
 				WHERE parent_id = 0';
 
-	$result = mysqli_query(Db::getConnect(), $query);
-           
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-    
-    $n_rows = mysqli_num_rows($result);
+        $result = mysqli_query(Db::getConnect(), $query);
 
-    for ($i=0; $i < $n_rows; $i++)
-    {
-        $row = mysqli_fetch_assoc($result);
-        $categoriesChildren = getChildrenForCat($row['id']);
+        if (!$result)
+            die(mysqli_error(Db::getConnect()));
 
-        $row['children'] = $categoriesChildren;
+        $n_rows = mysqli_num_rows($result);
 
-        $categoriesTwig[] = $row;
+        for ($i=0; $i < $n_rows; $i++)
+        {
+            $row = mysqli_fetch_assoc($result);
+            $categoriesChildren = self::getChildrenForCat($row['id']);
 
-    } return $categoriesTwig;
+            $row['children'] = $categoriesChildren;
+
+            $categoriesTwig[] = $row;
+
+        } return $categoriesTwig;
+    }
+
+    static function getCatById($catId) {
+
+        $catId = intval($catId);
+
+        return static::get($catId);
+    }
+
+    static function getAllMainCats() {
+
+        return static::get("0", 'parent_id');
+    }
+
+    static function getAllCategories() {
+
+        return static::get(null, 'parent_id', ' ASC');
+    }
 }
 
-function getCatById($catId) {
-
-    $catId = intval($catId);
-
-    $query = 'SELECT *
-                FROM categories
-                WHERE id = ' . $catId;
-    
-    $result = mysqli_query(Db::getConnect(), $query);
-           
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    $row = mysqli_fetch_assoc($result);
-
-    return $row;
-}
-
-function getAllMainCats() {
-
-    $query = 'SELECT *
-                FROM categories
-                WHERE parent_id = 0';
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
+categories::readStructure();
 
 function insertCat($catName, $catParentId = 0) {
 
@@ -89,19 +71,6 @@ function insertCat($catName, $catParentId = 0) {
     return mysqli_insert_id(Db::getConnect());
 }
 
-function getAllCategories() {
-
-    $query = "SELECT *
-                FROM categories
-                ORDER BY parent_id ASC";
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
 
 function updateCategoryData($catId, $parentId = -1, $newName = '') {
 

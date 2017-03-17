@@ -2,7 +2,8 @@
 
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';
-	include_once '/models/ProductsModel.php';
+	//include_once '/models/ProductsModel.php';
+    include_once '/models/InstructorsModel.php';
 
 	function indexAction($twig) {
 
@@ -14,17 +15,17 @@
 		$TwigChildCats = null;
 		$TwigProducts = null;
 
-		$TwigCategory = getCatById($catId);
+		$TwigCategory = categories::getCatById($catId);
 
 		if ($TwigCategory['parent_id'] == 0) {
-			 $TwigChildCats = getChildrenForCat($catId);
+			 $TwigChildCats = categories::getChildrenForCat($catId);
 
 		} else {
 
-			$TwigProducts = getProductsByCat($catId);
+			$TwigInts = instructors::getIntsByCat($catId);
         }
 
-		$TwigCategories = getAllMainCatsWithChildren();
+		$TwigCategories = categories::getAllMainCatsWithChildren();
 
 		$smartyHeader = loadTemplate($twig, 'header');
     	$smartyCategory = loadTemplate($twig, 'category');
@@ -33,10 +34,10 @@
     	$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 
 		addGlobaly($twig, $array);
-
+//print_r($TwigInts);
 		$array_rend_bulg = array(
     		'categories'=> $TwigCategories, 
-    		'products' => $TwigProducts, 
+    		'instructors' => $TwigInts,
     		'category' => $TwigCategory, 
     		'childCats' => $TwigChildCats,
     		'pageTitleCat' => 'Товары категории ' . $TwigCategory['name']

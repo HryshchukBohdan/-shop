@@ -1,0 +1,84 @@
+<center><h1>Toвар</h1>
+
+<table border="1" cellspacing="1" cellpadding="1">
+<caption>Добавить продукт</caption>
+	<tr>
+		<td>Имя</td>
+		<td>Фамилия</td>
+		<td>Очество</td>
+		<td>Описание</td>
+		<td>Сохранить</td>
+	</tr>
+
+	<tr>
+		<td>
+			<input type="edit" id="newIntName" value="" />
+		</td>
+		<td>
+			<input type="edit" id="newIntSName" value="" />
+		</td>
+		<td>
+			<input type="edit" id="newIntTName" value="" />
+		</td>
+		<td>
+			<textarea id="newIntDesc"></textarea>
+		</td>
+		<td>
+			<input type="button" value="Сохранить" onclick="addIst();"/>
+		</td>		
+	</tr>
+</table>
+
+<table border="1" cellspacing="1" cellpadding="1">
+<caption>Редактирование</caption>
+	<tr>
+		<td>№</td>
+		<td>ID</td>
+		<<td>Имя</td>
+		<td>Фамилия</td>
+		<td>Очество</td>
+		<td>Описание</td>
+		<td>Удалить</td>
+		<td>Изображение</td>
+		<td>Сохранить</td>
+	</tr>
+
+	{% for ins in instructors %}
+
+	<tr>
+		<td>{{ loop.index }}</td>
+		<td>{{ ins.id }}</td>
+		<td>
+			<input type="edit" id="IntName_{{ ins.id }}" value="{{ ins.name }}" />
+		</td>
+		<td>
+			<input type="edit" id="IntSName_{{ ins.id }}" value="{{ ins.second_name }}" />
+		</td>
+		<td>
+			<input type="edit" id="IntTName_{{ ins.id }}" value="{{ ins.thee_name }}" />
+		</td>
+		<td>
+			<textarea id="intDesc_{{ ins.id }}">{{ ins.descript }}</textarea>
+		</td>
+		<td>
+			<input type="checkbox" id="intStatus_{{ ins.id }}" {% if ins.status == 0 %} checked="checked" {% endif %}>
+		</td>
+		<td>
+			{% if ins.image %}
+				<img src="../library/images/products/{{ ins.image }}" width="100" /> 
+			{% endif %}
+			<form action="/?controller=admin&action=uploadins" method="post" enctype="multipart/form-data">
+				<input type="file" name="filename"><br />
+				<input type="hidden" name="intId" value="{{ ins.id }}">
+				<input type="submit" value="Загрузить" "><br />		
+			</form>
+		</td>
+		<td>
+			<input type="button" value="Сохранить" onclick="updateIns({{ ins.id }});"/>
+		</td>
+	</tr>
+
+	{% endfor %} 
+	
+</table>
+</center>

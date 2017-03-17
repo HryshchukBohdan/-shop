@@ -1,13 +1,13 @@
 <?php // модель таблицы продуктов
 
-class products extends model
+class instructors extends model
 {
-    static public $table = "products";
+    static public $table = "instructor";
 // Получить последнего количества продуктов
-    static function getLastProducts($limit = null) {
+    static function getLastInts($limit = null) {
 
         $query = 'SELECT *
-                    FROM products
+                    FROM instructor
                     ORDER BY id DESC';
 
         if ($limit) {
@@ -22,33 +22,47 @@ class products extends model
         return createTwigArray($result);
     }
 
-    static function getProductByIntId($insId) {
+    static function getIntsByCat($catId) {
 
-        $insId = intval($insId);
+        $catId = intval($catId);
 
-        return static::get($insId, 'ins_id');
+        $query = "SELECT ins.*
+                FROM categories as cat 
+                LEFT JOIN cat_to_in on cat.id = cat_to_in.cat_id
+                LEFT JOIN instructor as ins on cat_to_in.int_id = ins.id
+                WHERE cat.id = " . $catId;
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        if (!$result)
+            die(mysqli_error(Db::getConnect()));
+
+        return createTwigArray($result);
+
+
+
     }
 
-    static function getProductById($productId) {
+    static function getIntsById($intId) {
 
-        $productId = intval($productId);
+        $intId = intval($intId);
 
-        return static::get($productId);
+        return static::get($intId);
     }
 }
 
-products::readStructure();
+instructors::readStructure();
 
 
 
-
+/*
 
 function getProductsFromArray($productIds) {
 
     $strIds = implode(', ', $productIds);
 
     $query = 'SELECT *
-                FROM products
+                FROM instructor
                 WHERE id in (' . $strIds . ')';
 
     $result = mysqli_query(Db::getConnect(), $query);
@@ -58,12 +72,12 @@ function getProductsFromArray($productIds) {
 
     return createTwigArray($result);
 }
-
-function getProducts() {
+*/
+function getInts() {
 
     $query = "SELECT *
-				FROM products
-				ORDER BY category_id";
+				FROM instructor
+				ORDER BY id";
 
     $result = mysqli_query(Db::getConnect(), $query);
 
@@ -73,14 +87,14 @@ function getProducts() {
     return createTwigArray($result);
 }
 
-function insertProducts($productName, $productPrice, $productDesc, $productCat) {
+function insertIns($name, $second_name, $thee_name, $desc) {
 
-    $query = "INSERT INTO products
+    $query = "INSERT INTO instructor
                 SET 
-                  name = '$productName', 
-                  price = '$productPrice', 
-                  descript = '$productDesc',
-                  category_id = '$productCat'";
+                  name = '$name', 
+                  second_name = '$second_name', 
+                  descript = '$desc',
+                  thee_name = '$thee_name'";
 
     $result = mysqli_query(Db::getConnect(), $query);
 
@@ -90,18 +104,19 @@ function insertProducts($productName, $productPrice, $productDesc, $productCat) 
     return $result;
 }
 
-function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = null) {
+function updateIns($id, $name, $second_name, $thee_name, $status, $desc, $fileName = null) {
 
     $set =array();
+    //echo $status;
 
     if ($name) {
 
         $set[] = "name = '$name'";
     }
 
-    if ($price > 0) {
+    if ($second_name) {
 
-        $set[] = "price = '$price'";
+        $set[] = "second_name = '$second_name'";
     }
 
     if ($status !== null) {
@@ -114,9 +129,9 @@ function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = nul
         $set[] = "descript = '$desc'";
     }
 
-    if ($cat) {
+    if ($thee_name) {
 
-        $set[] = "category_id = '$cat'";
+        $set[] = "thee_name = '$thee_name'";
     }
 
     if ($fileName) {
@@ -126,10 +141,10 @@ function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = nul
 
     $setStr = implode($set, ", ");
 
-    $query = "UPDATE products
+    $query = "UPDATE instructor
                 SET $setStr
                 WHERE id = '$id'";
-
+//echo $query;
     $result = mysqli_query(Db::getConnect(), $query);
 
     if (!$result)
@@ -138,9 +153,9 @@ function updateProduct($id, $name, $price, $status, $desc, $cat, $fileName = nul
     return $result;
 }
 
-function updateProductImage($id, $newFileName) {
+function updateInsImage($id, $newFileName) {
 
-    $result = updateProduct($id, NULL, NULL, NULL, NULL, NULL, $newFileName);
+    $result = updateIns($id, NULL, NULL, NULL, NULL, NULL, $newFileName);
 
     return $result;
 }

@@ -5,6 +5,7 @@
 	include_once '/models/ProductsModel.php';
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
+    include_once '/models/InstructorsModel.php';
 
 // указывае где хранятся шаблоны
 $loader = new Twig_Loader_Filesystem(TemplateAdminPrefix);
@@ -18,7 +19,7 @@ $twig = new Twig_Environment($loader);
         }
 
         // Получение списка категорий для меню
-        $TwigCategories = getAllMainCats();
+        $TwigCategories = categories::getAllMainCats();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
@@ -63,8 +64,8 @@ $twig = new Twig_Environment($loader);
     function categoryAction($twig) {
 
         // Получение списка категорий
-        $TwigCategories = getAllCategories();
-        $TwigMainCategories = getAllMainCats();
+        $TwigCategories = categories::getAllCategories();
+        $TwigMainCategories = categories::getAllMainCats();
 
         $array = array(
             'templateWebPath'=>'tmp/templates/default/',
@@ -108,10 +109,136 @@ $twig = new Twig_Environment($loader);
         return;
     }
 
+function instructorsAction($twig) {
+
+    // Получение списка категорий
+    $TwigCategories = categories::getAllCategories();
+    $TwigInts = getInts();
+
+    $array = array(
+        'templateWebPath'=>'tmp/templates/default/',
+        'pageTitle' =>'Управления сайтом');
+
+    addGlobaly($twig, $array);
+
+    $array_rend_bulg = array(
+        'categories'=> $TwigCategories,
+        'instructors'=> $TwigInts);
+
+    $smartyHeader = loadTemplate($twig, 'adminHeader');
+    $smartyInstructors = loadTemplate($twig, 'adminInstructors');
+    $smartyFooter = loadTemplate($twig, 'adminFooter');
+
+    echo $smartyHeader->render($array_rend_bulg);
+    echo $smartyInstructors->render($array_rend_bulg);
+    echo $smartyFooter->render($array_rend_bulg);
+}
+
+function addinstructorAction() {
+
+    $name = $_POST['name'];
+    $second_name = $_POST['name2'];
+    $desc = $_POST['name3'];
+    $thee_name = $_POST['desc'];
+
+    $res = insertIns($name, $second_name, $thee_name, $desc);
+
+    if ($res) {
+
+        $resData['success'] = 1;
+        $resData['message'] = 'Изменения успешно внесены';
+
+    } else {
+
+        $resData['success'] = 0;
+        $resData['message'] = 'Ошибка изменения данных';
+    }
+
+    echo json_encode($resData);
+    return;
+}
+
+function updateinstructorAction() {
+
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $second_name = $_POST['name2'];
+    $desc = $_POST['desc'];
+    $thee_name = $_POST['name3'];
+    $status = $_POST['status'];
+//echo $status;
+    $res = updateIns($id, $name, $second_name, $thee_name, $status, $desc);
+
+    if ($res) {
+
+        $resData['success'] = 1;
+        $resData['message'] = 'Изменения успешно внесены';
+
+    } else {
+
+        $resData['success'] = 0;
+        $resData['message'] = 'Ошибка изменения данных';
+    }
+
+    echo json_encode($resData);
+    return;
+}
+
+function uploadinsAction() {
+
+    $maxSize = 2 * 1024 * 1024;
+
+    $id = $_POST['intId'];
+    //echo $id;
+
+    $ext = pathinfo($_FILES['filename']['name'], PATHINFO_EXTENSION);
+
+    $newFileName = $id . '.' . $ext;
+
+    if ($_FILES['filename']['size'] > $maxSize) {
+
+        echo 'Размер файла привешает два мегабайта';
+        return;
+    }
+
+    if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
+
+        $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/products/' . $newFileName);
+
+        if ($res) {
+
+            $res = updateInsImage($id, $newFileName);
+
+            if ($res) {
+
+                redirect('/?controller=admin&action=instructors');
+            }
+        }
+
+    } else {
+
+        echo "Oшибка загрузки файла";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function productsAction($twig) {
 
         // Получение списка категорий
-        $TwigCategories = getAllCategories();
+        $TwigCategories = categories::getAllCategories();
         $TwigProducts = getProducts();
 
         $array = array(
@@ -133,7 +260,7 @@ $twig = new Twig_Environment($loader);
         echo $smartyFooter->render($array_rend_bulg);
     }
 
-    function addproductAction($twig = null, $link) {
+    function addproductAction() {
 
         $productName = $_POST['productName'];
         $productPrice = $_POST['productPrice'];

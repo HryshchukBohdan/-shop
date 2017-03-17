@@ -1,0 +1,11 @@
+<img src="../library/images/products/{{ instructors.image }}" width="575">
+
+<h2>{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</h2>
+
+{% for prod in products %}
+
+<h2><a href="/?controller=product&id={{ prod.id }}">{{ prod.name }}</a></h2>
+	
+{% endfor %}
+
+<p>Описание <br />{{ instructors.descript }}</p>

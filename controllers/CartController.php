@@ -67,7 +67,7 @@
 			$TwigProducts = getProductsFromArray($productIds);
 		}
 				
-		$TwigCategories = getAllMainCatsWithChildren();
+		$TwigCategories = categories::getAllMainCatsWithChildren();
 		
 		$array = array(
 			'templateWebPath'=>'tmp/templates/default/',
@@ -133,7 +133,7 @@
 
         $_SESSION['selectCart'] = $TwigProducts;
 				
-		$TwigCategories = getAllMainCatsWithChildren();
+		$TwigCategories = categories::getAllMainCatsWithChildren();
 		
 		$array = array(
 			'templateWebPath'=>'tmp/templates/default/',

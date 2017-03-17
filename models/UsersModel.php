@@ -65,18 +65,18 @@ function checkRegisterParams($email, $pwd1, $pwd2) {
     return $result;
 }
 
-function checkUserEmail($email, $link) {
+function checkUserEmail($email) {
 
-    $email = mysqli_real_escape_string($link, $email);
+    $email = mysqli_real_escape_string(Db::getConnect(), $email);
 
     $query = "SELECT *
                 FROM users
                 WHERE email = '$email'";
 
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query(Db::getConnect(), $query);
            
     if (!$result)
-        die(mysqli_error($link));
+        die(mysqli_error(Db::getConnect()));
 
     return createTwigArray($result);
 }

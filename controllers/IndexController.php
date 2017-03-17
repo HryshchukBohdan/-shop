@@ -3,7 +3,8 @@
 	// подключаем модели
 
     require_once'/models/CategoriesModel.php';
-	include_once'/models/ProductsModel.php';
+	//include_once'/models/Model.php';
+    include_once'/models/InstructorsModel.php';
 
 	function testAction() {
 		echo "testAction ++";
@@ -13,8 +14,8 @@
 		
 		$n_product = 4;
 
-		$TwigCategories = getAllMainCatsWithChildren();
-		$TwigProduct = getLastProducts($n_product);
+		$TwigCategories = categories::getAllMainCatsWithChildren();
+		$TwigInstruct = instructors::getLastInts($n_product);
 
 		$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
 
@@ -22,7 +23,7 @@
 
 		$array_rend_bulg = array(
 			'categories'=> $TwigCategories, 
-			'products' => $TwigProduct);
+			'instructors' => $TwigInstruct);
 
 		$smartyHeader = loadTemplate($twig, 'header');
     	$smartyIndex = loadTemplate($twig, 'index');

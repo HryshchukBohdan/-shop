@@ -5,6 +5,7 @@
 			
 		<a href="/?controller=admin">Главная</a><br />
 		<a href="/?controller=admin&action=category">Категории</a><br />
+		<a href="/?controller=admin&action=instructors">Преподы</a><br />
 		<a href="/?controller=admin&action=products">Товар</a><br />
 		<a href="/?controller=admin&action=orders">Заказы</a><br />
 

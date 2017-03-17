@@ -189,3 +189,73 @@ function updateDataPayment(id) {
         }
     })
 }
+
+function addIst() {
+
+    var name = $('#newIntName').val();
+    var name2 = $('#newIntSName').val();
+    var name3 = $('#newIntTName').val();
+    var desc = $('#newIntDesc').val();
+
+    var postData = {name: name,
+        name2: name2,
+        name3: name3,
+        desc: desc};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=addinstructor",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            alert(data['message']);
+
+            if (data['success']) {
+
+                $('#newIntName').val('');
+                $('#newIntSName').val('');
+                $('#newIntTName').val('');
+                $('#newIntDesc').val('');
+
+            }
+        }
+    })
+}
+
+function updateIns(id) {
+
+    var name = $('#IntName_' + id).val();
+    var name2 = $('#IntSName_' + id).val();
+    var name3 = $('#IntTName_' + id).val();
+    var desc = $('#intDesc_' + id).val();
+    var status = $('#intStatus_' + id).attr('checked');
+
+    if (! status) {
+
+       status = 0
+
+    } else {
+
+        status = 1
+    }
+
+    var postData = {id: id,
+        name: name,
+        name2: name2,
+        name3: name3,
+        desc: desc,
+        status: status};
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/?controller=admin&action=updateinstructor",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+
+            alert(data['message']);
+        }
+    })
+}
+

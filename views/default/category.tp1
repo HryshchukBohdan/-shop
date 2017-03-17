@@ -1,19 +1,21 @@
-{% for prod in products %}
+{% if instructors.0.id is not null %}
+{% for int in instructors %}
 	<div style="float: left; padding: 0px 30px 40px 0px;">
-		<a href="/?controller=product&id={{ prod.id }}">
-			<img src="../library/images/products/{{ prod.image }}" width="150" height="150" />
+		<a href="/?controller=instructor&id={{ int.id }}">
+			<img src="../library/images/products/{{ int.image }}" width="150" height="150" />
 		</a><br />
-		<center><a href="/?controller=product&id={{ prod.id }}">
-			{{ prod.name }}
+		<center><a href="/?controller=instructor&id={{ int.id }}">
+			{{ int.name }} {{ int.second_name }} {{ int.thee_name }}
 		</a></center>
 	</div>
 {% endfor %}
+{% endif %}
 
 {% for child in childCats %}
-	<h2><a href="/category/{{ child.id }}">{{ child.name }}</a></h2>
+	<h2><a href="/?controller=categories&id={{ child.id }}">{{ child.name }}</a></h2>
 {% endfor %}
 
-{% if products is null %}
+{% if instructors.0.id is null %}
 	{% if childCats is null %}
 		<center>Нету даных<br />Досвидулии</center>
 	{% endif %}
