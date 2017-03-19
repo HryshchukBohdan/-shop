@@ -184,12 +184,11 @@ function updateinstructorAction() {
     return;
 }
 
-function uploadinsAction() {
+function uploadinstAction() {
 
     $maxSize = 2 * 1024 * 1024;
 
     $id = $_POST['intId'];
-    //echo $id;
 
     $ext = pathinfo($_FILES['filename']['name'], PATHINFO_EXTENSION);
 
@@ -203,7 +202,7 @@ function uploadinsAction() {
 
     if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
 
-        $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/products/' . $newFileName);
+        $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/instructors/' . $newFileName);
 
         if ($res) {
 
@@ -220,6 +219,8 @@ function uploadinsAction() {
         echo "Oшибка загрузки файла";
     }
 }
+
+
 
 
 

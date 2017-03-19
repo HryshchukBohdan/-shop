@@ -63,11 +63,13 @@
 		<td>
 			<input type="checkbox" id="intStatus_{{ ins.id }}" {% if ins.status == 0 %} checked="checked" {% endif %}>
 		</td>
+
+
 		<td>
 			{% if ins.image %}
-				<img src="../library/images/products/{{ ins.image }}" width="100" /> 
+				<img src="../library/images/instructors/{{ ins.image }}" width="100" /> 
 			{% endif %}
-			<form action="/?controller=admin&action=uploadins" method="post" enctype="multipart/form-data">
+			<form action="/?controller=admin&action=uploadinst" method="post" enctype="multipart/form-data">
 				<input type="file" name="filename"><br />
 				<input type="hidden" name="intId" value="{{ ins.id }}">
 				<input type="submit" value="Загрузить" "><br />		

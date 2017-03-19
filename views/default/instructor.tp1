@@ -1,4 +1,4 @@
-<img src="../library/images/products/{{ instructors.image }}" width="575">
+<img src="../library/images/instructors/{{ instructors.image }}" width="575">
 
 <h2>{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</h2>
 

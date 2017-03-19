@@ -233,11 +233,11 @@ function updateIns(id) {
 
     if (! status) {
 
-       status = 0
+       status = 1
 
     } else {
 
-        status = 1
+        status = 0
     }
 
     var postData = {id: id,
