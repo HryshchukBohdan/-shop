@@ -5,45 +5,37 @@
 	//include_once '/models/ProductsModel.php';
     include_once '/models/InstructorsModel.php';
 
-	function indexAction($twig) {
+class CategoriesController extends controller {
 
-		$catId = isset($_GET['id']) ? $_GET['id'] : null;
-		if (! $catId) {
-			exit();
-		}
+    public function indexAction($twig) {
 
-		$TwigChildCats = null;
-		$TwigProducts = null;
+        $catId = isset($_GET['id']) ? $_GET['id'] : null;
 
-		$TwigCategory = categories::getCatById($catId);
+        if (! $catId) {
 
-		if ($TwigCategory['parent_id'] == 0) {
-			 $TwigChildCats = categories::getChildrenForCat($catId);
-
-		} else {
-
-			$TwigInts = instructors::getIntsByCat($catId);
+            exit();
         }
 
-		$TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigChildCats = null;
+        $TwigInstruct = null;
 
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyCategory = loadTemplate($twig, 'category');
-    	$smartyFooter = loadTemplate($twig, 'footer');
+        $TwigCategory = categories::getCatById($catId);
+        $TwigCategories = categories::getAllMainCatsWithChildren();
 
-    	$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+        if ($TwigCategory['parent_id'] == 0) {
 
-		addGlobaly($twig, $array);
-//print_r($TwigInts);
-		$array_rend_bulg = array(
-    		'categories'=> $TwigCategories, 
-    		'instructors' => $TwigInts,
-    		'category' => $TwigCategory, 
-    		'childCats' => $TwigChildCats,
-    		'pageTitleCat' => 'Товары категории ' . $TwigCategory['name']
-    		);
+            $TwigChildCats = categories::getChildrenForCat($catId);
 
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyCategory->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
-	}
+        } else {
+
+            $TwigInstruct = instructors::getIntsByCat($catId);
+        }
+
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors', 'category', 'childCats', 'pageTitleCat'];
+        $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct, $TwigCategory, $TwigChildCats, 'Товары категории ' . $TwigCategory['name']];
+
+        $this->array_build($key, $array);
+
+        $this->render('category', $twig);
+    }
+}

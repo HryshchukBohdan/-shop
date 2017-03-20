@@ -21,7 +21,7 @@ class controller {
 
     }
 
-    public function render($centre, $twig, $adm = 0) {
+    public function render($centre, $twig, $adm = 69) {
 
         if ($adm == 'admin') {
 

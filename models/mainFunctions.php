@@ -14,8 +14,6 @@ function loadPage($twig, $controllerName, $actionName) {
 	//$function($twig);
     $controllerName .= Controller;
     $controller = new $controllerName;
-    var_dump($controller);
-    print_r($function);
     $controller->$function($twig);
 }
 

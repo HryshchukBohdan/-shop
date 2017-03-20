@@ -6,68 +6,146 @@
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 
-	function RegisterAction() {
+class UserController extends controller {
 
-		$email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-		$email = trim($email);
+    public function indexAction($twig) {
 
-		$pwd1 = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
-		$pwd2 = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
 
-		$phone = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
-		$adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
-		$name = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
+        if (! isset($_SESSION['user'])) {
+            redirect('/');
+        }
 
-		$resData = null;
-		$resData = checkRegisterParams($email, $pwd1, $pwd2);
+        // Получение списка категорий для меню
+        $TwigCategories = categories::getAllMainCatsWithChildren();
 
-		if (! $resData && checkUserEmail($email)) {
+        // Получения списка заказов пользователя
+        $TwigUserOrders = getCurUserOrders();
 
-			$resData['success'] = false;
-			$resData['message'] = "Пользователь с с емейлом $email уже зарегестрируван";
-		}
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'userOrders'];
+        $array = ['tmp/templates/default/', 'Страница пользователя', $TwigCategories, $TwigUserOrders];
 
-		if (! $resData) {
+        $this->array_build($key, $array);
 
-			$pwdMD5 = md5($pwd1.sol);
-			$userData = registerNewUsers($email, $pwdMD5, $name, $phone, $adress);
+        $this->render('user', $twig);
+    }
 
-			if ($userData['success']) {
+    public function updateAction() {
 
-				$resData['message'] = "Пользователь успешно зарегестрируван";
-				$resData['success'] = 1;
+        if (! isset($_SESSION['user'])) {
+            redirect('/');
+        }
 
-				$userData = $userData[0];
-				$resData['userName'] = $userData['name'] ? $userData['name'] : $userData['email'];
-				$userData['userEmail'] = $email;
+        $resData = array();
 
-				$_SESSION['user'] = $userData;
-  				$_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
+        $name   = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
+        $phone  = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
+        $adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
+        $pwd1   = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
+        $pwd2   = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
+        $curPwd = isset($_REQUEST['curPwd']) ? $_REQUEST['curPwd'] : null;
 
-			} else { 
+        $curPwdMD5 = md5($curPwd.sol);
 
-				$_SESSION['success'] = 0;
-				$_SESSION['message'] = "Ошибка регистрации";						
-			}
-		}
-		
-		echo json_encode($resData);
-	}
+        if (! $curPwdMD5 || ($_SESSION['user']['pwd'] != $curPwdMD5)) {
 
-	function logoutAction() {
+            $resData['success'] = 0;
+            $resData['message'] = 'Текущий пароль неверен';
+            print_r($resData);
+            echo json_encode($resData);
+            return false;
+        }
 
-	    if (isset($_SESSION['user'])) {
-	        unset($_SESSION['user']);
+        $res = updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+            $resData['message'] = 'Данные сохранены';
+            $resData['name'] = $name;
+
+            $_SESSION['user']['name'] = $name;
+            $_SESSION['user']['phone'] = $phone;
+            $_SESSION['user']['adress'] = $adress;
+
+            $newPwd = $_SESSION['user']['pwd'];
+
+            if ($pwd1 && ($pwd1 == $pwd2)) {
+                $newPwd = md5(trim($pwd1.sol));
+            }
+
+            $_SESSION['user']['pwd'] = $newPwd;
+            $_SESSION['user']['displayName'] = $name ? $name : $_SESSION['user']['email'];
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка сохранения данных';
+
+        } echo json_encode($resData);
+    }
+
+    function RegisterAction() {
+
+        $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+        $email = trim($email);
+
+        $pwd1 = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
+        $pwd2 = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
+
+        $phone = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
+        $adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
+        $name = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
+
+        $resData = null;
+        $resData = checkRegisterParams($email, $pwd1, $pwd2);
+
+        if (! $resData && checkUserEmail($email)) {
+
+            $resData['success'] = false;
+            $resData['message'] = "Пользователь с с емейлом $email уже зарегестрируван";
+        }
+
+        if (! $resData) {
+
+            $pwdMD5 = md5($pwd1.sol);
+            $userData = registerNewUsers($email, $pwdMD5, $name, $phone, $adress);
+
+            if ($userData['success']) {
+
+                $resData['message'] = "Пользователь успешно зарегестрируван";
+                $resData['success'] = 1;
+
+                $userData = $userData[0];
+                $resData['userName'] = $userData['name'] ? $userData['name'] : $userData['email'];
+                $userData['userEmail'] = $email;
+
+                $_SESSION['user'] = $userData;
+                $_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
+
+            } else {
+
+                $_SESSION['success'] = 0;
+                $_SESSION['message'] = "Ошибка регистрации";
+            }
+        }
+
+        echo json_encode($resData);
+    }
+
+    public function logoutAction() {
+
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
             unset($_SESSION['cart']);
         }
 
         redirect('/');
     }
 
-    function loginAction() {
+    public function loginAction() {
 
-	    $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-	    $email = trim($email);
+        $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+        $email = trim($email);
 
         $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
         $pwd = trim($pwd);
@@ -92,89 +170,6 @@
 
         echo json_encode($resData);
     }
-
-    function indexAction($twig) {
-
-    if (! isset($_SESSION['user'])) {
-        redirect('/');
-    }
-
-    // Получение списка категорий для меню
-    $TwigCategories = getAllMainCatsWithChildren();
-
-    // Получения списка заказов пользователя
-    $TwigUserOrders = getCurUserOrders();
-
-    $array = array(
-        'templateWebPath'=>'tmp/templates/default/',
-        'pageTitle' =>'Страница пользователя');
-
-    addGlobaly($twig, $array);
-
-    $array_rend_bulg = array(
-        'categories'=> $TwigCategories,
-        'userOrders'=> $TwigUserOrders);
-
-    $smartyHeader = loadTemplate($twig, 'header');
-    $smartyUser = loadTemplate($twig, 'user');
-    $smartyFooter = loadTemplate($twig, 'footer');
-
-    echo $smartyHeader->render($array_rend_bulg);
-    echo $smartyUser->render($array_rend_bulg);
-    echo $smartyFooter->render($array_rend_bulg);
 }
 
-function updateAction() {
 
-    if (! isset($_SESSION['user'])) {
-        redirect('/');
-    }
-
-    $resData = array();
-
-    $name   = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
-    $phone  = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
-    $adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
-    $pwd1   = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
-    $pwd2   = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
-    $curPwd = isset($_REQUEST['curPwd']) ? $_REQUEST['curPwd'] : null;
-
-    $curPwdMD5 = md5($curPwd.sol);
-
-    if (! $curPwdMD5 || ($_SESSION['user']['pwd'] != $curPwdMD5)) {
-
-        $resData['success'] = 0;
-        $resData['message'] = 'Текущий пароль неверен';
-        print_r($resData);
-        echo json_encode($resData);
-        return false;
-    }
-
-    $res = updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5);
-
-    if ($res) {
-
-        $resData['success'] = 1;
-        $resData['message'] = 'Данные сохранены';
-        $resData['name'] = $name;
-
-        $_SESSION['user']['name'] = $name;
-        $_SESSION['user']['phone'] = $phone;
-        $_SESSION['user']['adress'] = $adress;
-
-        $newPwd = $_SESSION['user']['pwd'];
-
-        if ($pwd1 && ($pwd1 == $pwd2)) {
-            $newPwd = md5(trim($pwd1.sol));
-        }
-
-        $_SESSION['user']['pwd'] = $newPwd;
-        $_SESSION['user']['displayName'] = $name ? $name : $_SESSION['user']['email'];
-
-    } else {
-
-        $resData['success'] = 0;
-        $resData['message'] = 'Ошибка сохранения данных';
-
-    } echo json_encode($resData);
-}

@@ -111,7 +111,7 @@ class model
 }
 
 
-class user extends model {
+class users extends model {
     static public $table = "categories";
 
 }

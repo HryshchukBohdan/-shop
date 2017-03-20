@@ -2,18 +2,18 @@
 
 include_once '/config/db.php';
 
-function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
+function registerNewUsers($email, $pwdMD5, $name, $phone, $adress) {
 
-    $email = htmlspecialchars(mysqli_real_escape_string($link, $email));
-    $name = htmlspecialchars(mysqli_real_escape_string($link, $name));
-    $phone = htmlspecialchars(mysqli_real_escape_string($link, $phone));
-    $adress = htmlspecialchars(mysqli_real_escape_string($link, $adress));
+    $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));
+    $name = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $name));
+    $phone = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $phone));
+    $adress = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $adress));
 
     $query = "INSERT INTO
                         users (email, pwd, name, phone, adress)
              VALUES ('$email', '$pwdMD5', '$name', '$phone', '$adress')";
 
-	 $result = mysqli_query($link, $query);
+	 $result = mysqli_query(Db::getConnect(), $query);
 
     if ($result) {
 
@@ -21,7 +21,7 @@ function registerNewUsers($email, $pwdMD5, $name, $phone, $adress, $link) {
                 FROM users
                 WHERE email = '$email' and pwd = '$pwdMD5' limit 1";
 
-        $result = mysqli_query($link, $query);
+        $result = mysqli_query(Db::getConnect(), $query);
         $user = createTwigArray($result);
 
         if (isset($user[0])) {

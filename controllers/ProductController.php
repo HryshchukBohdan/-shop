@@ -4,37 +4,31 @@
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/ProductsModel.php';
 
-	function indexAction($twig) {
-		
-		$productId = isset($_GET['id']) ? $_GET['id'] : null;
-		if (! $productId) {
-			exit();
-		}
+class ProductController extends controller {
 
-		$TwigProduct = products::getProductById($productId);
-		$TwigCategories = categories::getAllMainCatsWithChildren();
-		$TwigCartP = null;
+    public function indexAction($twig) {
 
-		if (in_array($productId, $_SESSION['cart'])) {
-			$TwigCartP = 1;
-		}
+        $productId = isset($_GET['id']) ? $_GET['id'] : null;
 
-		$array = array(
-			'templateWebPath'=>'tmp/templates/default/',
-			'pageTitle' =>'');
+        if (! $productId) {
 
-		addGlobaly($twig, $array);
+            exit();
+        }
 
-		$array_rend_bulg = array(
-			'cart' => $TwigCartP,
-			'categories'=> $TwigCategories, 
-			'products' => $TwigProduct);
+        $TwigProduct = products::getProductById($productId);
+        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigCartP = null;
 
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyProduct = loadTemplate($twig, 'product');
-    	$smartyFooter = loadTemplate($twig, 'footer');
+        if (in_array($productId, $_SESSION['cart'])) {
 
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyProduct->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
-	}
+            $TwigCartP = 1;
+        }
+
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'products', 'cart'];
+        $array = ['tmp/templates/default/', '', $TwigCategories, $TwigProduct, $TwigCartP];
+
+        $this->array_build($key, $array);
+
+        $this->render('product', $twig);
+    }
+}

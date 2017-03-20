@@ -26,44 +26,15 @@ class AdminController extends controller {
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories];
 
         $this->array_build($key, $array);
-
         $this->render('admin', $twig, 'admin');
     }
-}
 
-//    function indexAction($twig) {
-//
-//        if (! isset($_SESSION['user'])) {
-//            redirect('/');
-//        }
-//
-//        // Получение списка категорий для меню
-//        $TwigCategories = categories::getAllMainCats();
-//
-//        $array = array(
-//            'templateWebPath'=>'tmp/templates/default/',
-//            'pageTitle' =>'Управления сайтом');
-//
-//        addGlobaly($twig, $array);
-//
-//        $array_rend_bulg = array(
-//            'categories'=> $TwigCategories);
-//
-//        $smartyHeader = loadTemplate($twig, 'adminHeader');
-//        $smartyAdmin = loadTemplate($twig, 'admin');
-//        $smartyFooter = loadTemplate($twig, 'adminFooter');
-//
-//        echo $smartyHeader->render($array_rend_bulg);
-//        echo $smartyAdmin->render($array_rend_bulg);
-//        echo $smartyFooter->render($array_rend_bulg);
-//    }
+    public function addnewcatAction() {
 
-    function addnewcatAction() {
+        $catName = $_POST['newCategoryName'];
+        $catParentId = $_POST['generalCatId'];
 
-	    $catName = $_POST['newCategoryName'];
-	    $catParentId = $_POST['generalCatId'];
-
-	    $res = insertCat($catName, $catParentId);
+        $res = insertCat($catName, $catParentId);
 
         if ($res) {
 
@@ -86,26 +57,14 @@ class AdminController extends controller {
         $TwigCategories = categories::getAllCategories();
         $TwigMainCategories = categories::getAllMainCats();
 
-        $array = array(
-            'templateWebPath'=>'tmp/templates/default/',
-            'pageTitle' =>'Управления сайтом');
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'mainCat'];
+        $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigMainCategories];
 
-        addGlobaly($twig, $array);
-
-        $array_rend_bulg = array(
-            'categories'=> $TwigCategories,
-            'mainCat'=> $TwigMainCategories);
-
-        $smartyHeader = loadTemplate($twig, 'adminHeader');
-        $smartyCategory = loadTemplate($twig, 'adminCategory');
-        $smartyFooter = loadTemplate($twig, 'adminFooter');
-
-        echo $smartyHeader->render($array_rend_bulg);
-        echo $smartyCategory->render($array_rend_bulg);
-        echo $smartyFooter->render($array_rend_bulg);
+        $this->array_build($key, $array);
+        $this->render('adminCategory', $twig, 'admin');
     }
 
-    function updatecategoryAction() {
+    public function updatecategoryAction() {
 
         $catId = $_POST['catId'];
         $parentId = $_POST['parentId'];
@@ -128,156 +87,116 @@ class AdminController extends controller {
         return;
     }
 
-function instructorsAction($twig) {
+    public function instructorsAction($twig) {
 
-    // Получение списка категорий
-    $TwigCategories = categories::getAllCategories();
-    $TwigInts = getInts();
+        // Получение списка категорий
+        $TwigCategories = categories::getAllCategories();
+        $TwigInts = getInts();
 
-    $array = array(
-        'templateWebPath'=>'tmp/templates/default/',
-        'pageTitle' =>'Управления сайтом');
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
+        $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigInts];
 
-    addGlobaly($twig, $array);
-
-    $array_rend_bulg = array(
-        'categories'=> $TwigCategories,
-        'instructors'=> $TwigInts);
-
-    $smartyHeader = loadTemplate($twig, 'adminHeader');
-    $smartyInstructors = loadTemplate($twig, 'adminInstructors');
-    $smartyFooter = loadTemplate($twig, 'adminFooter');
-
-    echo $smartyHeader->render($array_rend_bulg);
-    echo $smartyInstructors->render($array_rend_bulg);
-    echo $smartyFooter->render($array_rend_bulg);
-}
-
-function addinstructorAction() {
-
-    $name = $_POST['name'];
-    $second_name = $_POST['name2'];
-    $desc = $_POST['name3'];
-    $thee_name = $_POST['desc'];
-
-    $res = insertIns($name, $second_name, $thee_name, $desc);
-
-    if ($res) {
-
-        $resData['success'] = 1;
-        $resData['message'] = 'Изменения успешно внесены';
-
-    } else {
-
-        $resData['success'] = 0;
-        $resData['message'] = 'Ошибка изменения данных';
+        $this->array_build($key, $array);
+        $this->render('adminInstructors', $twig, 'admin');
     }
 
-    echo json_encode($resData);
-    return;
-}
+    public function addinstructorAction() {
 
-function updateinstructorAction() {
+        $name = $_POST['name'];
+        $second_name = $_POST['name2'];
+        $desc = $_POST['name3'];
+        $thee_name = $_POST['desc'];
 
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $second_name = $_POST['name2'];
-    $desc = $_POST['desc'];
-    $thee_name = $_POST['name3'];
-    $status = $_POST['status'];
-//echo $status;
-    $res = updateIns($id, $name, $second_name, $thee_name, $status, $desc);
-
-    if ($res) {
-
-        $resData['success'] = 1;
-        $resData['message'] = 'Изменения успешно внесены';
-
-    } else {
-
-        $resData['success'] = 0;
-        $resData['message'] = 'Ошибка изменения данных';
-    }
-
-    echo json_encode($resData);
-    return;
-}
-
-function uploadinstAction() {
-
-    $maxSize = 2 * 1024 * 1024;
-
-    $id = $_POST['intId'];
-
-    $ext = pathinfo($_FILES['filename']['name'], PATHINFO_EXTENSION);
-
-    $newFileName = $id . '.' . $ext;
-
-    if ($_FILES['filename']['size'] > $maxSize) {
-
-        echo 'Размер файла привешает два мегабайта';
-        return;
-    }
-
-    if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
-
-        $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/instructors/' . $newFileName);
+        $res = insertIns($name, $second_name, $thee_name, $desc);
 
         if ($res) {
 
-            $res = updateInsImage($id, $newFileName);
+            $resData['success'] = 1;
+            $resData['message'] = 'Изменения успешно внесены';
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка изменения данных';
+        }
+
+        echo json_encode($resData);
+        return;
+    }
+
+    public function updateinstructorAction() {
+
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $second_name = $_POST['name2'];
+        $desc = $_POST['desc'];
+        $thee_name = $_POST['name3'];
+        $status = $_POST['status'];
+
+        $res = updateIns($id, $name, $second_name, $thee_name, $status, $desc);
+
+        if ($res) {
+
+            $resData['success'] = 1;
+            $resData['message'] = 'Изменения успешно внесены';
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Ошибка изменения данных';
+        }
+
+        echo json_encode($resData);
+        return;
+    }
+
+    public function uploadinstAction() {
+
+        $maxSize = 2 * 1024 * 1024;
+        $id = $_POST['intId'];
+
+        $ext = pathinfo($_FILES['filename']['name'], PATHINFO_EXTENSION);
+        $newFileName = $id . '.' . $ext;
+
+        if ($_FILES['filename']['size'] > $maxSize) {
+
+            echo 'Размер файла привешает два мегабайта';
+            return;
+        }
+
+        if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
+
+            $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/instructors/' . $newFileName);
 
             if ($res) {
 
-                redirect('/?controller=admin&action=instructors');
+                $res = updateInsImage($id, $newFileName);
+
+                if ($res) {
+
+                    redirect('/?controller=admin&action=instructors');
+                }
             }
+
+        } else {
+
+            echo "Oшибка загрузки файла";
         }
-
-    } else {
-
-        echo "Oшибка загрузки файла";
     }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function productsAction($twig) {
+    public function productsAction($twig)
+    {
 
         // Получение списка категорий
         $TwigCategories = categories::getAllCategories();
         $TwigProducts = getProducts();
 
-        $array = array(
-            'templateWebPath'=>'tmp/templates/default/',
-            'pageTitle' =>'Управления сайтом');
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
+        $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigProducts];
 
-        addGlobaly($twig, $array);
+        $this->array_build($key, $array);
+        $this->render('adminProducts', $twig, 'admin');
 
-        $array_rend_bulg = array(
-            'categories'=> $TwigCategories,
-            'products'=> $TwigProducts);
-
-        $smartyHeader = loadTemplate($twig, 'adminHeader');
-        $smartyProducts = loadTemplate($twig, 'adminProducts');
-        $smartyFooter = loadTemplate($twig, 'adminFooter');
-
-        echo $smartyHeader->render($array_rend_bulg);
-        echo $smartyProducts->render($array_rend_bulg);
-        echo $smartyFooter->render($array_rend_bulg);
     }
 
     function addproductAction() {
@@ -350,9 +269,9 @@ function uploadinstAction() {
 
             $res = move_uploaded_file($_FILES['filename']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/library/images/products/' . $newFileName);
 
-        if ($res) {
+            if ($res) {
 
-            $res = updateProductImage($id, $newFileName);
+                $res = updateProductImage($id, $newFileName);
 
                 if ($res) {
 
@@ -370,22 +289,11 @@ function uploadinstAction() {
 
         $TwigOrders = getOrders();
 
-        $array = array(
-            'templateWebPath'=>'tmp/templates/default/',
-            'pageTitle' =>'Заказы');
+        $key = ['templateWebPath', 'pageTitle', 'orders'];
+        $array = ['tmp/templates/default/', 'Заказы', $TwigOrders];
 
-        addGlobaly($twig, $array);
-
-        $array_rend_bulg = array(
-            'orders'=> $TwigOrders);
-
-        $smartyHeader = loadTemplate($twig, 'adminHeader');
-        $smartyOrders = loadTemplate($twig, 'adminOrders');
-        $smartyFooter = loadTemplate($twig, 'adminFooter');
-
-        echo $smartyHeader->render($array_rend_bulg);
-        echo $smartyOrders->render($array_rend_bulg);
-        echo $smartyFooter->render($array_rend_bulg);
+        $this->array_build($key, $array);
+        $this->render('adminOrders', $twig, 'admin');
     }
 
     function setorderstatusAction() {
@@ -429,3 +337,22 @@ function uploadinstAction() {
         echo json_encode($resData);
         return;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,111 +6,33 @@
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 
-	function addtocartAction() {
-
-		$_GET['id'] = intval($_GET['id']);
-
-		$productId = isset($_GET['id']) ? $_GET['id'] : null;
-
-		if (! $productId) {
-			return false;
-		}
-
-		$resData = array();
-
-		if (isset($_SESSION['cart']) && array_search($productId, $_SESSION['cart']) === false) {
-
-			$_SESSION['cart'][] = $productId;
-			$resData['n_product'] = count($_SESSION['cart']);
-			$resData['success'] = 1;
-
-		} else {
-
-			$resData['success'] = 0;
-		} 
-
-		echo json_encode($resData);
-	}
-
-	function removefromcartAction() {
-
-		$productId = isset($_GET['id']) ? $_GET['id'] : null;
-
-		if (! $productId) {
-			exit();
-		}
-
-		$resData = array();
-		$key = array_search($productId, $_SESSION['cart']);
-
-		if ($key !== false) {
-
-			unset($_SESSION['cart'][$key]);
-			$resData['success'] = 1;
-			$resData['n_product'] = count($_SESSION['cart']);
-
-		} else {
-
-			$resData['success'] = 0;
-		} 
-
-		echo json_encode($resData);
-	}
-
 class CartController extends controller {
 
     public function indexAction($twig) {
 
-        $n_product = 4;
+        $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+
+        $TwigProducts = null;
+
+        if ($productIds) {
+
+            $TwigProducts = getProductsFromArray($productIds);
+        }
 
         $TwigCategories = categories::getAllMainCatsWithChildren();
-        $TwigInstruct = instructors::getLastInts($n_product);
 
-        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
-        $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
+        $array = ['tmp/templates/default/', 'Корзина', $TwigCategories, $TwigProducts];
 
         $this->array_build($key, $array);
-
-        $this->render('index', $twig);
+        $this->render('cart', $twig);
     }
-}
 
-	function indexAction($twig) {
-
-		$productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
-		
-		$TwigProducts = null;
-		
-		if ($productIds) {
-			$TwigProducts = getProductsFromArray($productIds);
-		}
-				
-		$TwigCategories = categories::getAllMainCatsWithChildren();
-		
-		$array = array(
-			'templateWebPath'=>'tmp/templates/default/',
-			'pageTitle' =>'Корзина');
-
-		addGlobaly($twig, $array);
-
-		$array_rend_bulg = array(
-			'categories'=> $TwigCategories, 
-			'products' => $TwigProducts);
-
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyCart = loadTemplate($twig, 'cart');
-    	$smartyFooter = loadTemplate($twig, 'footer');
-
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyCart->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
-	}
-
-    function orderAction($twig) {
+    public function orderAction($twig) {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
 
-        if (! $productIds) {
+        if (!$productIds) {
             redirect('/?controller=cart');
             return;
         }
@@ -129,54 +51,95 @@ class CartController extends controller {
 
         foreach ($TwigProducts as &$product) {
 
-        	$product['cnt'] = isset($productCnt[$product['id']]) ? $productCnt[$product['id']] : null;
+            $product['cnt'] = isset($productCnt[$product['id']]) ? $productCnt[$product['id']] : null;
 
-        	if ($product['cnt']) {
+            if ($product['cnt']) {
 
-        		$product['realPrice'] = $product['cnt'] * $product['price'];
+                $product['realPrice'] = $product['cnt'] * $product['price'];
 
-           	} else {
+            } else {
 
-           		unset($TwigProducts[$i]);
-           	}
+                unset($TwigProducts[$i]);
+            }
 
-           	$i++;
+            $i++;
         }
 
-        if (! $TwigProducts) {
+        if (!$TwigProducts) {
 
-        	echo "Корзина пуста";
-        	return;
+            echo "Корзина пуста";
+            return;
         }
 
         $_SESSION['selectCart'] = $TwigProducts;
-				
-		$TwigCategories = categories::getAllMainCatsWithChildren();
-		
-		$array = array(
-			'templateWebPath'=>'tmp/templates/default/',
-			'pageTitle' =>'Заказ');
 
-		addGlobaly($twig, $array);
+        $TwigCategories = categories::getAllMainCatsWithChildren();
 
-		$array_rend_bulg = array(
-			'categories'=> $TwigCategories, 
-			'products' => $TwigProducts);
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
+        $array = ['tmp/templates/default/', 'Заказ', $TwigCategories, $TwigProducts];
 
-		if (! isset($_SESSION['user'])) {
-			$array_rend_bulg['hideLoginBox'] = 1;
-		}
+        if (!isset($_SESSION['user'])) {
 
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyOrder = loadTemplate($twig, 'order');
-    	$smartyFooter = loadTemplate($twig, 'footer');
+            $key[] = 'hideLoginBox';
+            $array[] = 1;
+        }
 
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyOrder->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
+        $this->array_build($key, $array);
+        $this->render('order', $twig);
     }
 
-    function saveorderAction() {
+    public function addtocartAction() {
+
+        $_GET['id'] = intval($_GET['id']);
+        $productId = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if (! $productId) {
+
+            return false;
+        }
+
+        $resData = array();
+
+        if (isset($_SESSION['cart']) && array_search($productId, $_SESSION['cart']) === false) {
+
+            $_SESSION['cart'][] = $productId;
+            $resData['n_product'] = count($_SESSION['cart']);
+            $resData['success'] = 1;
+
+        } else {
+
+            $resData['success'] = 0;
+        }
+
+        echo json_encode($resData);
+    }
+
+    public function removefromcartAction() {
+
+        $productId = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if (! $productId) {
+            exit();
+        }
+
+        $resData = array();
+        $key = array_search($productId, $_SESSION['cart']);
+
+        if ($key !== false) {
+
+            unset($_SESSION['cart'][$key]);
+            $resData['success'] = 1;
+            $resData['n_product'] = count($_SESSION['cart']);
+
+        } else {
+
+            $resData['success'] = 0;
+        }
+
+        echo json_encode($resData);
+    }
+
+    public function saveorderAction() {
 
         $cart = isset($_SESSION['selectCart']) ? $_SESSION['selectCart'] : null;
 
@@ -186,7 +149,6 @@ class CartController extends controller {
             $resData['message'] = 'Нет товаров для заказа';
 
             echo json_encode($resData);
-
             return;
         }
 
@@ -202,7 +164,6 @@ class CartController extends controller {
             $resData['message'] = 'Ошибка сохранения заказа';
 
             echo json_encode($resData);
-
             return;
         }
 
@@ -223,5 +184,5 @@ class CartController extends controller {
         }
 
         echo json_encode($resData);
-
     }
+}
