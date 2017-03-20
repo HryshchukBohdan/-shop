@@ -61,7 +61,7 @@
 			<textarea id="intDesc_{{ ins.id }}">{{ ins.descript }}</textarea>
 		</td>
 		<td>
-			<input type="checkbox" id="intStatus_{{ ins.id }}" {% if ins.status == 0 %} checked="checked" {% endif %}>
+			<input type="checkbox" id="intStatus_{{ ins.id }}" {% if ins.status == 0 %} checked {% endif %}/>
 		</td>
 
 

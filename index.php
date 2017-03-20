@@ -12,6 +12,8 @@ include_once 'config/config.php'; // Инициализация настроек
 include_once 'config/db.php'; // подключение к базе данных
 include_once 'models/mainFunctions.php'; // Основние финкции
 include_once 'models/Model.php';
+include_once 'controllers/Controller.php';
+
 // определяем с каким контролером будем работать
 $controllerName = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'Index';
 // определяем с какой функцией будем работать
@@ -27,3 +29,5 @@ addGlobaly($twig, $arrayTwigSession);
 //=d($controllerName);
 
 loadPage($twig, $controllerName, $actionName);
+//echo $controllerName;
+//echo $actionName;

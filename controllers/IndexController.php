@@ -1,35 +1,23 @@
 <?php // Контролер главной странички
 
-	// подключаем модели
+require_once'/models/CategoriesModel.php';
+//include_once'/models/Model.php';
+include_once'/models/InstructorsModel.php';
 
-    require_once'/models/CategoriesModel.php';
-	//include_once'/models/Model.php';
-    include_once'/models/InstructorsModel.php';
+class IndexController extends controller {
 
-	function testAction() {
-		echo "testAction ++";
-	}
+    public function indexAction($twig) {
 
-	function indexAction($twig) {
-		
-		$n_product = 4;
+        $n_product = 4;
 
-		$TwigCategories = categories::getAllMainCatsWithChildren();
-		$TwigInstruct = instructors::getLastInts($n_product);
+        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigInstruct = instructors::getLastInts($n_product);
 
-		$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
+        $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
 
-		addGlobaly($twig, $array);
+        $this->array_build($key, $array);
 
-		$array_rend_bulg = array(
-			'categories'=> $TwigCategories, 
-			'instructors' => $TwigInstruct);
-
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyIndex = loadTemplate($twig, 'index');
-    	$smartyFooter = loadTemplate($twig, 'footer');
-
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyIndex->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
-	}
+        $this->render('index', $twig);
+    }
+}

@@ -57,6 +57,24 @@
 		echo json_encode($resData);
 	}
 
+class CartController extends controller {
+
+    public function indexAction($twig) {
+
+        $n_product = 4;
+
+        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigInstruct = instructors::getLastInts($n_product);
+
+        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
+        $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
+
+        $this->array_build($key, $array);
+
+        $this->render('index', $twig);
+    }
+}
+
 	function indexAction($twig) {
 
 		$productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();

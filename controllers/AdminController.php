@@ -12,32 +12,51 @@ $loader = new Twig_Loader_Filesystem(TemplateAdminPrefix);
 // инициализируем Twig
 $twig = new Twig_Environment($loader);
 
-    function indexAction($twig) {
+class AdminController extends controller {
+
+    public function indexAction($twig) {
 
         if (! isset($_SESSION['user'])) {
             redirect('/');
         }
 
-        // Получение списка категорий для меню
         $TwigCategories = categories::getAllMainCats();
 
-        $array = array(
-            'templateWebPath'=>'tmp/templates/default/',
-            'pageTitle' =>'Управления сайтом');
+        $key = ['templateWebPath', 'pageTitle', 'categories'];
+        $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories];
 
-        addGlobaly($twig, $array);
+        $this->array_build($key, $array);
 
-        $array_rend_bulg = array(
-            'categories'=> $TwigCategories);
-
-        $smartyHeader = loadTemplate($twig, 'adminHeader');
-        $smartyAdmin = loadTemplate($twig, 'admin');
-        $smartyFooter = loadTemplate($twig, 'adminFooter');
-
-        echo $smartyHeader->render($array_rend_bulg);
-        echo $smartyAdmin->render($array_rend_bulg);
-        echo $smartyFooter->render($array_rend_bulg);
+        $this->render('admin', $twig, 'admin');
     }
+}
+
+//    function indexAction($twig) {
+//
+//        if (! isset($_SESSION['user'])) {
+//            redirect('/');
+//        }
+//
+//        // Получение списка категорий для меню
+//        $TwigCategories = categories::getAllMainCats();
+//
+//        $array = array(
+//            'templateWebPath'=>'tmp/templates/default/',
+//            'pageTitle' =>'Управления сайтом');
+//
+//        addGlobaly($twig, $array);
+//
+//        $array_rend_bulg = array(
+//            'categories'=> $TwigCategories);
+//
+//        $smartyHeader = loadTemplate($twig, 'adminHeader');
+//        $smartyAdmin = loadTemplate($twig, 'admin');
+//        $smartyFooter = loadTemplate($twig, 'adminFooter');
+//
+//        echo $smartyHeader->render($array_rend_bulg);
+//        echo $smartyAdmin->render($array_rend_bulg);
+//        echo $smartyFooter->render($array_rend_bulg);
+//    }
 
     function addnewcatAction() {
 
