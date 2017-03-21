@@ -91,7 +91,7 @@ class AdminController extends controller {
 
         // Получение списка категорий
         $TwigCategories = categories::getAllCategories();
-        $TwigInts = getInts();
+        $TwigInts = instructors::getInts();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigInts];
@@ -184,22 +184,20 @@ class AdminController extends controller {
         }
     }
 
-    public function productsAction($twig)
-    {
+    public function productsAction($twig) {
 
         // Получение списка категорий
         $TwigCategories = categories::getAllCategories();
-        $TwigProducts = getProducts();
+        $TwigProducts = products::getProducts();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigProducts];
 
         $this->array_build($key, $array);
         $this->render('adminProducts', $twig, 'admin');
-
     }
 
-    function addproductAction() {
+    public function addproductAction() {
 
         $productName = $_POST['productName'];
         $productPrice = $_POST['productPrice'];
@@ -223,7 +221,7 @@ class AdminController extends controller {
         return;
     }
 
-    function updateproductAction() {
+    public function updateproductAction() {
 
         $id = $_POST['id'];
         $name = $_POST['name'];
@@ -249,7 +247,7 @@ class AdminController extends controller {
         return;
     }
 
-    function uploadAction() {
+    public function uploadAction() {
 
         $maxSize = 2 * 1024 * 1024;
 
@@ -285,7 +283,7 @@ class AdminController extends controller {
         }
     }
 
-    function ordersAction($twig) {
+    public function ordersAction($twig) {
 
         $TwigOrders = getOrders();
 
@@ -296,7 +294,7 @@ class AdminController extends controller {
         $this->render('adminOrders', $twig, 'admin');
     }
 
-    function setorderstatusAction() {
+    public function setorderstatusAction() {
 
         $id = $_POST['id'];
         $status = $_POST['status'];
@@ -317,7 +315,7 @@ class AdminController extends controller {
         return;
     }
 
-    function setorderdatapaymentAction() {
+    public function setorderdatapaymentAction() {
 
         $id = $_POST['id'];
         $date_payment = $_POST['date_payment'];
@@ -338,21 +336,3 @@ class AdminController extends controller {
         return;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

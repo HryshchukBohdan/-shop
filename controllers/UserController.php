@@ -10,8 +10,8 @@ class UserController extends controller {
 
     public function indexAction($twig) {
 
-
         if (! isset($_SESSION['user'])) {
+
             redirect('/');
         }
 
@@ -25,13 +25,13 @@ class UserController extends controller {
         $array = ['tmp/templates/default/', 'Страница пользователя', $TwigCategories, $TwigUserOrders];
 
         $this->array_build($key, $array);
-
         $this->render('user', $twig);
     }
 
     public function updateAction() {
 
         if (! isset($_SESSION['user'])) {
+
             redirect('/');
         }
 
@@ -50,7 +50,7 @@ class UserController extends controller {
 
             $resData['success'] = 0;
             $resData['message'] = 'Текущий пароль неверен';
-            print_r($resData);
+           
             echo json_encode($resData);
             return false;
         }
@@ -171,5 +171,3 @@ class UserController extends controller {
         echo json_encode($resData);
     }
 }
-
-

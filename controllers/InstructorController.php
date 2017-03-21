@@ -24,7 +24,6 @@ class InstructorController extends controller {
         $array = ['tmp/templates/default/', '', $TwigCategories, $TwigInstruct, $TwigProduct];
 
         $this->array_build($key, $array);
-
         $this->render('instructor', $twig);
     }
 }

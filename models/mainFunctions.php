@@ -46,7 +46,7 @@ function addGlobaly ($twig, $array_globaly = 0) {
 
 function createTwigArray ($result) {
 
-	if (! $result) { 
+	if (! $result) {
 		return false;
 	}
 
@@ -56,7 +56,7 @@ function createTwigArray ($result) {
 
         $row = mysqli_fetch_assoc($result);
         $twigArray[] = $row;
-        
+
     } return $twigArray;
 }
 

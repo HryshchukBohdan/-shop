@@ -1,9 +1,6 @@
 <?php
 
-//require_once '../config/db.php';
-
-class model
-{
+class model {
 
     static public $table;
     static private $columns = [];
@@ -50,11 +47,27 @@ class model
         return self::$columns;
     }
 
-    static public function get($value = null, $fieldName = null, $sort = null) {
+    static public function get($value = null, $fieldName = null, $sort = null, $limit = null, $in = null) {
 
-        if ($sort) {
+        if ($in) {
 
-            $query = "SELECT * FROM " . static::$table . " ORDER BY " . $fieldName. $sort;
+            $query = "SELECT * FROM " . static::$table . " WHERE " . self::$pk_name . " in (" . $in . ")";
+
+            self::$result = mysqli_query(Db::getConnect(), $query);
+
+            return self::createTwigArray(self::$result);
+
+        } elseif ($limit) {
+
+            $query = "SELECT * FROM " . static::$table . " ORDER BY " . $fieldName ." ". $sort . " LIMIT " . $limit;
+
+            self::$result = mysqli_query(Db::getConnect(), $query);
+
+            return self::createTwigArray(self::$result);
+
+        } elseif ($sort) {
+
+            $query = "SELECT * FROM " . static::$table . " ORDER BY " . $fieldName ." ". $sort;
 
             self::$result = mysqli_query(Db::getConnect(), $query);
 
@@ -63,7 +76,7 @@ class model
         } elseif ($fieldName) {
 
             $query = "SELECT * FROM " . static::$table . " WHERE " . $fieldName . " = " . $value;
-//echo $query;
+
             self::$result = mysqli_query(Db::getConnect(), $query);
 
             return self::createTwigArray(self::$result);
@@ -108,12 +121,6 @@ class model
             $this->values[$fieldName] = $value;
         }
     }
-}
-
-
-class users extends model {
-    static public $table = "categories";
-
 }
 
 

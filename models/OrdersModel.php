@@ -2,6 +2,19 @@
 
 include_once '/config/db.php';
 
+class orders extends model {
+
+    static public $table = "orders";
+
+    static function NewOrderLim() {
+
+        return static::get(null, 'id', "DESC", 1);
+    }
+}
+
+$orders = new orders();
+orders::readStructure();
+
 function makeNewOrder($name, $phone, $adress) {
 
     $userId = $_SESSION['user']['id'];
@@ -23,17 +36,7 @@ function makeNewOrder($name, $phone, $adress) {
 
     if ($result) {
 
-        $query = 'SELECT id
-                FROM orders
-                ORDER BY id DESC 
-                LIMIT 1';
-
-        $result = mysqli_query(Db::getConnect(), $query);
-
-        if (!$result)
-            die(mysqli_error(Db::getConnect()));
-
-        $result = createTwigArray($result);
+        $result = orders::NewOrderLim();
 
         if (isset($result[0])) {
 

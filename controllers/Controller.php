@@ -4,16 +4,16 @@ class controller {
 
     private $array_rend_bulg;
 
-    public function includ($models = []) {
-
-        foreach ($models as $model) {
-
-            $model .= 'Model';
-
-            require_once"/models/.$model.Model.php";
-            //echo "/models/$model.php;";
-        }
-    }
+//    public function includ($models = []) {
+//
+//        foreach ($models as $model) {
+//
+//            $model .= 'Model';
+//
+//            require_once"/models/.$model.Model.php";
+//            //echo "/models/$model.php;";
+//        }
+//    }
 
     public function array_build($key, $array) {
 
@@ -47,40 +47,3 @@ class controller {
 //$controller->render(1,1,1);
 //$zv = [rrr,sfdf];
 //$controller->array_build(['com', 'int'],[$zv, '88']);
-
-
-
- /*
-	// подключаем модели
-
-    require_once'../models/CategoriesModel.php';
-	//include_once'/models/Model.php';
-    include_once'../models/InstructorsModel.php';
-
-	function testAction() {
-		echo "testAction ++";
-	}
-
-	function indexAction($twig) {
-		
-		$n_product = 4;
-
-		$TwigCategories = categories::getAllMainCatsWithChildren();
-		$TwigInstruct = instructors::getLastInts($n_product);
-
-		$array = array('templateWebPath'=>'tmp/templates/default/', 'pageTitle' =>'Главная страница сайта', 'pp' => 'пупер');
-
-		addGlobaly($twig, $array);
-
-		$array_rend_bulg = array(
-			'categories'=> $TwigCategories, 
-			'instructors' => $TwigInstruct);
-
-		$smartyHeader = loadTemplate($twig, 'header');
-    	$smartyIndex = loadTemplate($twig, 'index');
-    	$smartyFooter = loadTemplate($twig, 'footer');
-
-    	echo $smartyHeader->render($array_rend_bulg);
-    	echo $smartyIndex->render($array_rend_bulg);
-    	echo $smartyFooter->render($array_rend_bulg);
-	}*/

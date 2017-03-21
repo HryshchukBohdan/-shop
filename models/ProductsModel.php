@@ -3,24 +3,6 @@
 class products extends model
 {
     static public $table = "products";
-// Получить последнего количества продуктов
-    static function getLastProducts($limit = null) {
-
-        $query = 'SELECT *
-                    FROM products
-                    ORDER BY id DESC';
-
-        if ($limit) {
-            $query .= " lIMIT " . $limit;
-        }
-
-        $result = mysqli_query(Db::getConnect(), $query);
-
-        if (!$result)
-            die(mysqli_error(Db::getConnect()));
-
-        return createTwigArray($result);
-    }
 
     static function getProductByIntId($insId) {
 
@@ -35,6 +17,40 @@ class products extends model
 
         return static::get($productId);
     }
+
+    static function getProducts() {
+
+        return static::get(null, "category_id", "ASC");
+
+        $query = "SELECT *
+				FROM products
+				ORDER BY category_id";
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        if (!$result)
+            die(mysqli_error(Db::getConnect()));
+
+        return createTwigArray($result);
+    }
+
+    static function getProductsFromArray($productIds) {
+
+        $strIds = implode(', ', $productIds);
+
+        return static::get(null, null, null, null, $strIds);
+
+        $query = 'SELECT *
+                FROM products
+                WHERE id in (' . $strIds . ')';
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        if (!$result)
+            die(mysqli_error(Db::getConnect()));
+
+        return createTwigArray($result);
+    }
 }
 
 products::readStructure();
@@ -43,35 +59,9 @@ products::readStructure();
 
 
 
-function getProductsFromArray($productIds) {
 
-    $strIds = implode(', ', $productIds);
 
-    $query = 'SELECT *
-                FROM products
-                WHERE id in (' . $strIds . ')';
 
-    $result = mysqli_query(Db::getConnect(), $query);
-           
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
-
-function getProducts() {
-
-    $query = "SELECT *
-				FROM products
-				ORDER BY category_id";
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
 
 function insertProducts($productName, $productPrice, $productDesc, $productCat) {
 

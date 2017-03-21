@@ -16,7 +16,7 @@ class CartController extends controller {
 
         if ($productIds) {
 
-            $TwigProducts = getProductsFromArray($productIds);
+            $TwigProducts = products::getProductsFromArray($productIds);
         }
 
         $TwigCategories = categories::getAllMainCatsWithChildren();
@@ -45,7 +45,7 @@ class CartController extends controller {
             $productCnt["$id"] = isset($_POST["$val_perem"]) ? $_POST["$val_perem"] : null;
         }
 
-        $TwigProducts = getProductsFromArray($productIds);
+        $TwigProducts = products::getProductsFromArray($productIds);
 
         $i = 0;
 
@@ -119,6 +119,7 @@ class CartController extends controller {
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
 
         if (! $productId) {
+
             exit();
         }
 

@@ -1,8 +1,8 @@
 <?php // модель таблицы категорий
 
 
-class categories extends model
-{
+class categories extends model {
+
     static public $table = "categories";
 
     static function getChildrenForCat($catId) {
@@ -12,9 +12,9 @@ class categories extends model
 
     static function getAllMainCatsWithChildren() {
 
-        $query = 'SELECT *
+        $query = "SELECT *
 				FROM categories
-				WHERE parent_id = 0';
+				WHERE parent_id = 0";
 
         $result = mysqli_query(Db::getConnect(), $query);
 
@@ -49,11 +49,17 @@ class categories extends model
 
     static function getAllCategories() {
 
-        return static::get(null, 'parent_id', ' ASC');
+        return static::get(null, 'parent_id', 'ASC');
     }
 }
 
 categories::readStructure();
+
+
+
+
+
+
 
 function insertCat($catName, $catParentId = 0) {
 

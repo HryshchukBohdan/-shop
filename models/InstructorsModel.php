@@ -1,25 +1,20 @@
-<?php // модель таблицы продуктов
+<?php // модель таблицы преподов
 
-class instructors extends model
-{
+class instructors extends model {
+
     static public $table = "instructor";
-// Получить последнего количества продуктов
+
+    // Получить последнего количества продуктов
     static function getLastInts($limit = null) {
 
-        $query = 'SELECT *
-                    FROM instructor
-                    ORDER BY id DESC';
-
         if ($limit) {
-            $query .= " lIMIT " . $limit;
+
+            return static::get(null, "id", "DESC", $limit);
+
+        } else {
+
+            return static::get(null, "id", "DESC");
         }
-
-        $result = mysqli_query(Db::getConnect(), $query);
-
-        if (!$result)
-            die(mysqli_error(Db::getConnect()));
-
-        return createTwigArray($result);
     }
 
     static function getIntsByCat($catId) {
@@ -37,10 +32,7 @@ class instructors extends model
         if (!$result)
             die(mysqli_error(Db::getConnect()));
 
-        return createTwigArray($result);
-
-
-
+        return static::createTwigArray($result);
     }
 
     static function getIntsById($intId) {
@@ -49,43 +41,16 @@ class instructors extends model
 
         return static::get($intId);
     }
+
+    static function getInts() {
+
+        return static::get(null, "id", "DESC");
+    }
 }
 
 instructors::readStructure();
 
 
-
-/*
-
-function getProductsFromArray($productIds) {
-
-    $strIds = implode(', ', $productIds);
-
-    $query = 'SELECT *
-                FROM instructor
-                WHERE id in (' . $strIds . ')';
-
-    $result = mysqli_query(Db::getConnect(), $query);
-           
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
-*/
-function getInts() {
-
-    $query = "SELECT *
-				FROM instructor
-				ORDER BY id";
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    return createTwigArray($result);
-}
 
 function insertIns($name, $second_name, $thee_name, $desc) {
 

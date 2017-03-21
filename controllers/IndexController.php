@@ -1,8 +1,8 @@
 <?php // Контролер главной странички
 
-require_once'/models/CategoriesModel.php';
-//include_once'/models/Model.php';
-include_once'/models/InstructorsModel.php';
+    // подключаем модели
+    include_once'/models/CategoriesModel.php';
+    include_once'/models/InstructorsModel.php';
 
 class IndexController extends controller {
 
@@ -17,7 +17,6 @@ class IndexController extends controller {
         $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
 
         $this->array_build($key, $array);
-
         $this->render('index', $twig);
     }
 }
