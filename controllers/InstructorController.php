@@ -11,14 +11,18 @@ class InstructorController extends controller {
 
         $insId = isset($_GET['id']) ? $_GET['id'] : null;
 
+        $categories = new categories();
+        $products = new products();
+        $instructors = new instructors();
+
         if (! $insId) {
 
             exit();
         }
 
-        $TwigInstruct = instructors::getIntsById($insId);
-        $TwigProduct = products::getProductByIntId($insId);
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigInstruct = $instructors->getIntsById($insId);
+        $TwigProduct = $products->getProductByIntId($insId);
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors', 'products'];
         $array = ['tmp/templates/default/', '', $TwigCategories, $TwigInstruct, $TwigProduct];

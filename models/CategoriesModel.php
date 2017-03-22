@@ -5,12 +5,12 @@ class categories extends model {
 
     static public $table = "categories";
 
-    static function getChildrenForCat($catId) {
+    function getChildrenForCat($catId) {
 
-        return static::get($catId, 'parent_id');
+        return $this->get($catId, 'parent_id');
     }
 
-    static function getAllMainCatsWithChildren() {
+    function getAllMainCatsWithChildren() {
 
         $query = "SELECT *
 				FROM categories
@@ -35,21 +35,21 @@ class categories extends model {
         } return $categoriesTwig;
     }
 
-    static function getCatById($catId) {
+    function getCatById($catId) {
 
         $catId = intval($catId);
 
-        return static::get($catId);
+        return $this->get($catId);
     }
 
-    static function getAllMainCats() {
+    function getAllMainCats() {
 
-        return static::get("0", 'parent_id');
+        return $this->get("0", 'parent_id');
     }
 
-    static function getAllCategories() {
+    function getAllCategories() {
 
-        return static::get(null, 'parent_id', 'ASC');
+        return $this->get(null, 'parent_id', 'ASC');
     }
 }
 

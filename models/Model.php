@@ -47,7 +47,7 @@ class model {
         return self::$columns;
     }
 
-    static public function get($value = null, $fieldName = null, $sort = null, $limit = null, $in = null) {
+    public function get($value = null, $fieldName = null, $sort = null, $limit = null, $in = null) {
 
         if ($in) {
 

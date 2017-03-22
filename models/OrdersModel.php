@@ -6,9 +6,9 @@ class orders extends model {
 
     static public $table = "orders";
 
-    static function NewOrderLim() {
+    function NewOrderLim() {
 
-        return static::get(null, 'id', "DESC", 1);
+        return $this->get(null, 'id', "DESC", 1);
     }
 }
 

@@ -10,13 +10,15 @@ class UserController extends controller {
 
     public function indexAction($twig) {
 
+        $categories = new categories();
+
         if (! isset($_SESSION['user'])) {
 
             redirect('/');
         }
 
         // Получение списка категорий для меню
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
 
         // Получения списка заказов пользователя
         $TwigUserOrders = getCurUserOrders();
@@ -50,7 +52,7 @@ class UserController extends controller {
 
             $resData['success'] = 0;
             $resData['message'] = 'Текущий пароль неверен';
-           
+
             echo json_encode($resData);
             return false;
         }

@@ -12,14 +12,17 @@ class CartController extends controller {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 
+        $categories = new categories();
+        $products = new products();
+
         $TwigProducts = null;
 
         if ($productIds) {
 
-            $TwigProducts = products::getProductsFromArray($productIds);
+            $TwigProducts = $products->getProductsFromArray($productIds);
         }
 
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
         $array = ['tmp/templates/default/', 'Корзина', $TwigCategories, $TwigProducts];
@@ -32,7 +35,11 @@ class CartController extends controller {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
 
+        $categories = new categories();
+        $products = new products();
+
         if (!$productIds) {
+
             redirect('/?controller=cart');
             return;
         }
@@ -45,7 +52,7 @@ class CartController extends controller {
             $productCnt["$id"] = isset($_POST["$val_perem"]) ? $_POST["$val_perem"] : null;
         }
 
-        $TwigProducts = products::getProductsFromArray($productIds);
+        $TwigProducts = $products->getProductsFromArray($productIds);
 
         $i = 0;
 
@@ -73,7 +80,7 @@ class CartController extends controller {
 
         $_SESSION['selectCart'] = $TwigProducts;
 
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
         $array = ['tmp/templates/default/', 'Заказ', $TwigCategories, $TwigProducts];

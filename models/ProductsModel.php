@@ -4,23 +4,23 @@ class products extends model
 {
     static public $table = "products";
 
-    static function getProductByIntId($insId) {
+    function getProductByIntId($insId) {
 
         $insId = intval($insId);
 
-        return static::get($insId, 'ins_id');
+        return $this->get($insId, 'ins_id');
     }
 
-    static function getProductById($productId) {
+    function getProductById($productId) {
 
         $productId = intval($productId);
 
-        return static::get($productId);
+        return $this->get($productId);
     }
 
-    static function getProducts() {
+    function getProducts() {
 
-        return static::get(null, "category_id", "ASC");
+        return $this->get(null, "category_id", "ASC");
 
         $query = "SELECT *
 				FROM products
@@ -34,11 +34,11 @@ class products extends model
         return createTwigArray($result);
     }
 
-    static function getProductsFromArray($productIds) {
+    function getProductsFromArray($productIds) {
 
         $strIds = implode(', ', $productIds);
 
-        return static::get(null, null, null, null, $strIds);
+        return $this->get(null, null, null, null, $strIds);
 
         $query = 'SELECT *
                 FROM products

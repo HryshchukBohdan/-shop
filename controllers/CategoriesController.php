@@ -2,7 +2,6 @@
 
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';
-	//include_once '/models/ProductsModel.php';
     include_once '/models/InstructorsModel.php';
 
 class CategoriesController extends controller {
@@ -10,6 +9,9 @@ class CategoriesController extends controller {
     public function indexAction($twig) {
 
         $catId = isset($_GET['id']) ? $_GET['id'] : null;
+
+        $categories = new categories();
+        $instructors = new instructors();
 
         if (! $catId) {
 
@@ -19,16 +21,16 @@ class CategoriesController extends controller {
         $TwigChildCats = null;
         $TwigInstruct = null;
 
-        $TwigCategory = categories::getCatById($catId);
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigCategory = $categories->getCatById($catId);
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
 
         if ($TwigCategory['parent_id'] == 0) {
 
-            $TwigChildCats = categories::getChildrenForCat($catId);
+            $TwigChildCats = $categories->getChildrenForCat($catId);
 
         } else {
 
-            $TwigInstruct = instructors::getIntsByCat($catId);
+            $TwigInstruct = $instructors->getIntsByCat($catId);
         }
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors', 'category', 'childCats', 'pageTitleCat'];

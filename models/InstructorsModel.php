@@ -5,19 +5,19 @@ class instructors extends model {
     static public $table = "instructor";
 
     // Получить последнего количества продуктов
-    static function getLastInts($limit = null) {
+    function getLastInts($limit = null) {
 
         if ($limit) {
 
-            return static::get(null, "id", "DESC", $limit);
+            return $this->get(null, "id", "DESC", $limit);
 
         } else {
 
-            return static::get(null, "id", "DESC");
+            return $this->get(null, "id", "DESC");
         }
     }
 
-    static function getIntsByCat($catId) {
+    function getIntsByCat($catId) {
 
         $catId = intval($catId);
 
@@ -32,19 +32,19 @@ class instructors extends model {
         if (!$result)
             die(mysqli_error(Db::getConnect()));
 
-        return static::createTwigArray($result);
+        return $this->createTwigArray($result);
     }
 
-    static function getIntsById($intId) {
+    function getIntsById($intId) {
 
         $intId = intval($intId);
 
-        return static::get($intId);
+        return $this->get($intId);
     }
 
-    static function getInts() {
+    function getInts() {
 
-        return static::get(null, "id", "DESC");
+        return $this->get(null, "id", "DESC");
     }
 }
 

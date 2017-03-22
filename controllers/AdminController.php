@@ -17,10 +17,13 @@ class AdminController extends controller {
     public function indexAction($twig) {
 
         if (! isset($_SESSION['user'])) {
+
             redirect('/');
         }
 
-        $TwigCategories = categories::getAllMainCats();
+        $categories = new categories();
+
+        $TwigCategories = $categories->getAllMainCats();
 
         $key = ['templateWebPath', 'pageTitle', 'categories'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories];
@@ -53,9 +56,11 @@ class AdminController extends controller {
 
     function categoryAction($twig) {
 
+        $categories = new categories();
+
         // Получение списка категорий
-        $TwigCategories = categories::getAllCategories();
-        $TwigMainCategories = categories::getAllMainCats();
+        $TwigCategories = $categories->getAllCategories();
+        $TwigMainCategories = $categories->getAllMainCats();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'mainCat'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigMainCategories];
@@ -89,9 +94,12 @@ class AdminController extends controller {
 
     public function instructorsAction($twig) {
 
+        $categories = new categories();
+        $instructors = new instructors();
+
         // Получение списка категорий
-        $TwigCategories = categories::getAllCategories();
-        $TwigInts = instructors::getInts();
+        $TwigCategories = $categories->getAllCategories();
+        $TwigInts = $instructors->getInts();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigInts];
@@ -186,9 +194,12 @@ class AdminController extends controller {
 
     public function productsAction($twig) {
 
+        $categories = new categories();
+        $products = new products();
+
         // Получение списка категорий
-        $TwigCategories = categories::getAllCategories();
-        $TwigProducts = products::getProducts();
+        $TwigCategories = $categories->getAllCategories();
+        $TwigProducts = $products->getProducts();
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'products'];
         $array = ['tmp/templates/default/', 'Управления сайтом', $TwigCategories, $TwigProducts];

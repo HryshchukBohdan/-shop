@@ -10,13 +10,16 @@ class ProductController extends controller {
 
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
 
+        $categories = new categories();
+        $products = new products();
+
         if (! $productId) {
 
             exit();
         }
 
-        $TwigProduct = products::getProductById($productId);
-        $TwigCategories = categories::getAllMainCatsWithChildren();
+        $TwigProduct = $products->getProductById($productId);
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
         $TwigCartP = null;
 
         if (in_array($productId, $_SESSION['cart'])) {

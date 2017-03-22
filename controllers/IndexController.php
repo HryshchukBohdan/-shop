@@ -10,8 +10,11 @@ class IndexController extends controller {
 
         $n_product = 4;
 
-        $TwigCategories = categories::getAllMainCatsWithChildren();
-        $TwigInstruct = instructors::getLastInts($n_product);
+        $categories = new categories();
+        $instructors = new instructors();
+
+        $TwigCategories = $categories->getAllMainCatsWithChildren();
+        $TwigInstruct = $instructors->getLastInts($n_product);
 
         $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
         $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
