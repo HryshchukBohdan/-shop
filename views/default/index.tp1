@@ -8,7 +8,7 @@
 							</header>
 							<section class="tiles">
 {% for cat in categories %}
-								<article class="style5">
+								<article class="style{{ random(5) }}">
 									<span class="image">
 										<img src="{{ templateWebPath }}images/category/{{ cat.image }}" alt="" />
 									</span>

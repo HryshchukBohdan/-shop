@@ -1,6 +1,5 @@
 <?php // Контролер главной странички
 namespace controllers;
-
 use models\CategoriesModel;
 
 class IndexController extends controller {
@@ -8,7 +7,6 @@ class IndexController extends controller {
     public function indexAction($twig) {
 
         $categories = new CategoriesModel();
-
         $TwigCategories = $categories->getAllMainCats();
 
         $key = ['templateWebPath', 'pageTitle', 'categories'];

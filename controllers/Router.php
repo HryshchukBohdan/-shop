@@ -8,6 +8,8 @@ class router
     public function start($twig) {
 
         $route = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+        var_dump($route);
+        exit();
 
         $routing = [
             "/" => ['controller' => 'Index', 'action' => 'IndexAction'],

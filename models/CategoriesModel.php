@@ -2,8 +2,6 @@
 namespace models;
 use config\Db;
 
-
-
 class CategoriesModel extends model {
 
     static public $table = "categories";
