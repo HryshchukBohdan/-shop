@@ -1,0 +1,10 @@
+{% for int in instructors %}
+	<div style="float: left; padding: 0px 30px 40px 0px;">
+		<a href="/?controller=instructors&id={{ int.id }}">
+			<img src="../library/images/instructors/{{ int.image }}" width="150" height="150" />
+		</a><br />
+		<center><a href="/?controller=instructor&id={{ int.id }}">
+			{{ int.name }} {{ int.second_name }} {{ int.thee_name }}
+		</a></center>
+	</div>
+{% endfor %}
