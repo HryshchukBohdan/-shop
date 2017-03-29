@@ -1,9 +1,13 @@
 <?php // Контролер странички категорий
 namespace controllers;
+// подключаем модели
 
-	// подключаем модели
-	include_once '/models/CategoriesModel.php';
-    include_once '/models/InstructorsModel.php';
+use models\CategoriesModel;
+use models\InstructorsModel;
+
+
+	//include_once '/models/CategoriesModel.php';
+    //include_once '/models/InstructorsModel.php';
 
 class CategoriesController extends controller {
 
@@ -11,8 +15,8 @@ class CategoriesController extends controller {
 
         $catId = isset($_GET['id']) ? $_GET['id'] : null;
 
-        $categories = new categories();
-        $instructors = new instructors();
+        $categories = new CategoriesModel();
+        $instructors = new InstructorsModel();
 
         if (! $catId) {
 

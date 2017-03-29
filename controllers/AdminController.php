@@ -1,6 +1,8 @@
 <?php // Контролер Администирувания
 namespace controllers;
-	// подключаем модели
+
+// подключаем модели
+
 	include_once '/models/CategoriesModel.php';
 	include_once '/models/ProductsModel.php';
     include_once '/models/OrdersModel.php';
@@ -8,9 +10,9 @@ namespace controllers;
     include_once '/models/InstructorsModel.php';
 
 // указывае где хранятся шаблоны
-$loader = new Twig_Loader_Filesystem(TemplateAdminPrefix);
+$loader = new \Twig_Loader_Filesystem(TemplateAdminPrefix);
 // инициализируем Twig
-$twig = new Twig_Environment($loader);
+$twig = new \Twig_Environment($loader);
 
 class AdminController extends controller {
 

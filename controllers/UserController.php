@@ -1,10 +1,11 @@
 <?php // Контролер пользователей
 namespace controllers;
-use models\categories;
+// подключаем модели
+use models\CategoriesModel;
 
 
-	// подключаем модели
-	include_once '/models/CategoriesModel.php';
+
+	//include_once '/models/CategoriesModel.php';
 	include_once '/models/UsersModel.php';
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
@@ -13,7 +14,7 @@ class UserController extends controller {
 
     public function indexAction($twig) {
 
-        $categories = new categories();
+        $categories = new CategoriesModel();
 
         if (! isset($_SESSION['user'])) {
 

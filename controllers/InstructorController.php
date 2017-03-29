@@ -1,9 +1,10 @@
 <?php // Контролер продуктов(преподов)
 namespace controllers;
-	// подключаем модели
-	include_once '/models/CategoriesModel.php';
-	include_once '/models/ProductsModel.php';
-    include_once '/models/InstructorsModel.php';
+
+// подключаем модели
+use models\CategoriesModel;
+use models\ProductsModel;
+use models\InstructorsModel;
 
 class InstructorController extends controller {
 
@@ -11,9 +12,9 @@ class InstructorController extends controller {
 
         $insId = isset($_GET['id']) ? $_GET['id'] : null;
 
-        $categories = new categories();
-        $products = new products();
-        $instructors = new instructors();
+        $categories = new CategoriesModel();
+        $products = new ProductsModel();
+        $instructors = new InstructorsModel();
 
         if (! $insId) {
 

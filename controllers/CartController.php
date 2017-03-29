@@ -1,9 +1,14 @@
 <?php // Контролер роботы с корзиной
 namespace controllers;
-use models\categories;
-use models\products;
 
-	// подключаем модели
+// подключаем модели
+use models\CategoriesModel;
+use models\ProductsModel;
+
+
+
+
+
 	//include_once '/models/CategoriesModel.php';
 	//include_once '/models/ProductsModel.php';
     include_once '/models/OrdersModel.php';
@@ -15,8 +20,8 @@ class CartController extends controller {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 
-        $categories = new categories();
-        $products = new products();
+        $categories = new CategoriesModel();
+        $products = new ProductsModel();
 
         $TwigProducts = null;
 
@@ -38,8 +43,8 @@ class CartController extends controller {
 
         $productIds = isset($_SESSION['cart']) ? $_SESSION['cart'] : null;
 
-        $categories = new categories();
-        $products = new products();
+        $categories = new CategoriesModel();
+        $products = new ProductsModel();
 
         if (!$productIds) {
 

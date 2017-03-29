@@ -1,9 +1,11 @@
 <?php // Контролер продуктов(преподов)
 namespace controllers;
+// подключаем модели
+use models\CategoriesModel;
+use models\ProductsModel;
 
-	// подключаем модели
-	include_once '/models/CategoriesModel.php';
-	include_once '/models/ProductsModel.php';
+	//include_once '/models/CategoriesModel.php';
+	//include_once '/models/ProductsModel.php';
 
 class ProductController extends controller {
 
@@ -11,8 +13,8 @@ class ProductController extends controller {
 
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
 
-        $categories = new categories();
-        $products = new products();
+        $categories = new CategoriesModel();
+        $products = new ProductsModel();
 
         if (! $productId) {
 
