@@ -1,7 +1,10 @@
 <?php // модель таблицы категорий
+namespace models;
+use config\Db;
 
 
-class categories extends model {
+
+class CategoriesModel extends model {
 
     static public $table = "categories";
 
@@ -53,7 +56,7 @@ class categories extends model {
     }
 }
 
-categories::readStructure();
+CategoriesModel::readStructure();
 
 
 

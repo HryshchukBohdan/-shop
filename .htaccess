@@ -3,4 +3,4 @@ AddDefaultcharset utf-8
     RewriteEngine on
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule !\.(gif|jpg|png)$ /index.php
+    RewriteRule ^(.*)$ index.php [L,QSA]

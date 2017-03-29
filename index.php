@@ -1,23 +1,22 @@
 <?php
 
+require_once 'controllers/Loader.php';
+include_once 'models/mainFunctions.php'; // Основние финкции
+include_once 'config/config.php'; // Инициализация настроек
+//include_once 'models/Model.php';
+//include_once 'controllers/Controller.php';
+use controllers\loader;
+use controllers\router;
+
 session_start(); // Старт сесии
 
 // если в сесии нет масива корзины то создаю його
 if (! isset($_SESSION['cart'])) {
-	$_SESSION['cart'] = array();
+    $_SESSION['cart'] = array();
 }
 
-
-include_once 'config/config.php'; // Инициализация настроек
-include_once 'config/db.php'; // подключение к базе данных
-include_once 'models/mainFunctions.php'; // Основние финкции
-include_once 'models/Model.php';
-include_once 'controllers/Controller.php';
-
-// определяем с каким контролером будем работать
-$controllerName = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'Index';
-// определяем с какой функцией будем работать
-$actionName = isset($_GET['action']) ? ucfirst($_GET['action']) : 'Index';
+$loader = new loader();
+spl_autoload_register([$loader, 'loadClass']);
 
 $arrayTwigSession['cart_product'] = count($_SESSION['cart']);
 
@@ -26,8 +25,6 @@ if (isset($_SESSION['user'])) {
 }
 
 addGlobaly($twig, $arrayTwigSession);
-//=d($controllerName);
 
-loadPage($twig, $controllerName, $actionName);
-//echo $controllerName;
-//echo $actionName;
+$router = new router();
+$router->start($twig);

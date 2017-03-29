@@ -17,9 +17,10 @@ define('TemplatePostfix', '.tp1');
 
 // инициализация шаблон_класа(Шаблонизатора)
 require_once 'library/Twig/Autoloader.php';
-Twig_Autoloader::register();
+\Twig_Autoloader::register();
 // указывае где хранятся шаблоны
-$loader = new Twig_Loader_Filesystem(TemplatePrefix);
+$loader = new \Twig_Loader_Filesystem(TemplatePrefix);
 // инициализируем Twig
-$twig = new Twig_Environment($loader);
+$twig = new \Twig_Environment($loader);
 //<
+

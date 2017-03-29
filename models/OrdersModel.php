@@ -1,8 +1,10 @@
 <?php // модель таблицы orders
+namespace models;
+use config\Db;
 
 include_once '/config/db.php';
 
-class orders extends model {
+class OrdersModel extends model {
 
     static public $table = "orders";
 

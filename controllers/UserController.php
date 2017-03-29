@@ -1,4 +1,7 @@
 <?php // Контролер пользователей
+namespace controllers;
+use models\categories;
+
 
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';

@@ -1,4 +1,5 @@
 <?php // Контролер странички категорий
+namespace controllers;
 
 	// подключаем модели
 	include_once '/models/CategoriesModel.php';

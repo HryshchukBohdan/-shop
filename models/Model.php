@@ -1,16 +1,19 @@
 <?php
+namespace models;
+use config\Db;
+
+include_once 'config/db.php';
 
 class model {
 
-    static public $table;
+    static public $table = 'model';
     static private $columns = [];
     static private $pk_name;
     static private $result;
 
     public $values = [];
 
-    static function createTwigArray($result)
-    {
+    public function createTwigArray($result) {
 
         if (!$result) {
             return false;
@@ -27,9 +30,9 @@ class model {
         return $twigArray;
     }
 
-    static function readStructure() {
+    public function readStructure() {
 
-        self::$result = mysqli_query(Db::getConnect(), "DESC " . static::$table);
+        self::$result = mysqli_query(Db::getConnect(), "DESC " . self::$table);
         $res = self::createTwigArray(self::$result);
         $k = 1;
 
@@ -44,7 +47,7 @@ class model {
 
         }
         self::$pk_name = self::$columns[0];
-        return self::$columns;
+        //return self::$columns;
     }
 
     public function get($value = null, $fieldName = null, $sort = null, $limit = null, $in = null) {
@@ -104,24 +107,63 @@ class model {
 
     public function __construct($values = [])
     {
-        $this->values = $values;
+        //$this->values = $values;
         self::readStructure();
         //self::$identityMap[$this->values[self::$pk_name]] = $this;
     }
 
-    public function __get($fieldName)
-    {
-        return $this->values[$fieldName];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function map($values) {
+        if (is_array($values)) {
+            $ror = implode(",", $values);
+        }
+        return $ror;
     }
 
-    public function __set($fieldName, $value)
-    {
-        if ($this->values[$fieldName] !== $value) {
-            $this->dirty = true;
-            $this->values[$fieldName] = $value;
-        }
+    public function create($fields = [], $values = []) {
+
+        $query = "INSERT INTO " . self::$table .
+            " (" . implode(", ", $fields) . ") values (" . implode(", ", $values) . ")";
+//        $ror = array_map(array($this, map), $values);
+//        $ror1 = implode("),(", $ror);
+//        $query .= $ror1;
+//        $query .= ")";
+        return $query;
+        return  DbConnect::getConnect()->query($query);
+
     }
+
+
+//    public function delete($where = "", $param = []) {
+//        $query = "DELETE FROM " . $this->table . " ";
+//        if ($where) {
+//            $query .= $where;
+//        }
+//        $delete = DbConnect::getConnect()->prepare($query);
+//
+//        return $delete->execute($param);
+//
+//    }
+//
+//    public function update() {}
 }
+
+$model = new model();
+//print_r($model->create([22,33], [88,99]));
 
 
 //$user = new user();

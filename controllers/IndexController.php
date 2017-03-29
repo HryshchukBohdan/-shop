@@ -1,8 +1,12 @@
 <?php // Контролер главной странички
+namespace controllers;
 
+
+use models\CategoriesModel;
+use models\InstructorsModel;
     // подключаем модели
-    include_once'/models/CategoriesModel.php';
-    include_once'/models/InstructorsModel.php';
+    //include_once'/models/CategoriesModel.php';
+    //include_once'/models/InstructorsModel.php';
 
 class IndexController extends controller {
 
@@ -10,8 +14,8 @@ class IndexController extends controller {
 
         $n_product = 4;
 
-        $categories = new categories();
-        $instructors = new instructors();
+        $categories = new CategoriesModel();
+        $instructors = new InstructorsModel();
 
         $TwigCategories = $categories->getAllMainCatsWithChildren();
         $TwigInstruct = $instructors->getLastInts($n_product);

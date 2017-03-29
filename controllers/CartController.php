@@ -1,8 +1,11 @@
-<?php // Контролер роботы с корзиной 
+<?php // Контролер роботы с корзиной
+namespace controllers;
+use models\categories;
+use models\products;
 
 	// подключаем модели
-	include_once '/models/CategoriesModel.php';
-	include_once '/models/ProductsModel.php';
+	//include_once '/models/CategoriesModel.php';
+	//include_once '/models/ProductsModel.php';
     include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 

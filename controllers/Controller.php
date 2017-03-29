@@ -1,4 +1,5 @@
 <?php // Контролер главной странички
+namespace controllers;
 
 class controller {
 
@@ -33,6 +34,8 @@ class controller {
             $smartyHeader = loadTemplate($twig, 'header');
             $smartyFooter = loadTemplate($twig, 'footer');
         }
+
+
 
         $smarty = loadTemplate($twig, "$centre");
 

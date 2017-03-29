@@ -1,4 +1,6 @@
 <?php // модель таблицы пользователей
+namespace models;
+use config\Db;
 
 include_once '/config/db.php';
 

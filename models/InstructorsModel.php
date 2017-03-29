@@ -1,6 +1,7 @@
 <?php // модель таблицы преподов
-
-class instructors extends model {
+namespace models;
+use config\Db;
+class InstructorsModel extends model {
 
     static public $table = "instructor";
 
@@ -48,7 +49,7 @@ class instructors extends model {
     }
 }
 
-instructors::readStructure();
+InstructorsModel::readStructure();
 
 
 

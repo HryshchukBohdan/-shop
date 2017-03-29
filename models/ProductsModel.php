@@ -1,6 +1,8 @@
 <?php // модель таблицы продуктов
+namespace models;
+use config\Db;
 
-class products extends model
+class ProductsModel extends model
 {
     static public $table = "products";
 

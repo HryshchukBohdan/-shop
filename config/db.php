@@ -1,4 +1,5 @@
 <?php
+namespace config;
 class Db
 {
     private static $db;
@@ -24,6 +25,7 @@ class Db
             printf("Error!: " . mysql_error($this->link));
         }
     }
+
     public static function getConnect() {
 
         if (!self::$db) {
