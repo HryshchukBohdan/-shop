@@ -6,17 +6,17 @@ class InstructorsModel extends model {
     static public $table = "instructor";
 
     // Получить последнего количества продуктов
-    function getLastInts($limit = null) {
-
-        if ($limit) {
-
-            return $this->get(null, "id", "DESC", $limit);
-
-        } else {
-
-            return $this->get(null, "id", "DESC");
-        }
-    }
+//    function getLastInts($limit = null) {
+//
+//        if ($limit) {
+//
+//            return $this->get(null, "id", "DESC", $limit);
+//
+//        } else {
+//
+//            return $this->get(null, "id", "DESC");
+//        }
+//    }
 
     function getIntsByCat($catId) {
 

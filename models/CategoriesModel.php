@@ -13,30 +13,30 @@ class CategoriesModel extends model {
         return $this->get($catId, 'parent_id');
     }
 
-    function getAllMainCatsWithChildren() {
-
-        $query = "SELECT *
-				FROM categories
-				WHERE parent_id = 0";
-
-        $result = mysqli_query(Db::getConnect(), $query);
-
-        if (!$result)
-            die(mysqli_error(Db::getConnect()));
-
-        $n_rows = mysqli_num_rows($result);
-
-        for ($i=0; $i < $n_rows; $i++)
-        {
-            $row = mysqli_fetch_assoc($result);
-            $categoriesChildren = self::getChildrenForCat($row['id']);
-
-            $row['children'] = $categoriesChildren;
-
-            $categoriesTwig[] = $row;
-
-        } return $categoriesTwig;
-    }
+//    function getAllMainCatsWithChildren() {
+//
+//        $query = "SELECT *
+//				FROM categories
+//				WHERE parent_id = 0";
+//
+//        $result = mysqli_query(Db::getConnect(), $query);
+//
+//        if (!$result)
+//            die(mysqli_error(Db::getConnect()));
+//
+//        $n_rows = mysqli_num_rows($result);
+//
+//        for ($i=0; $i < $n_rows; $i++)
+//        {
+//            $row = mysqli_fetch_assoc($result);
+//            $categoriesChildren = self::getChildrenForCat($row['id']);
+//
+//            $row['children'] = $categoriesChildren;
+//
+//            $categoriesTwig[] = $row;
+//
+//        } return $categoriesTwig;
+//    }
 
     function getCatById($catId) {
 
@@ -45,7 +45,7 @@ class CategoriesModel extends model {
         return $this->get($catId);
     }
 
-    function getAllMainCats() {
+    public function getAllMainCats() {
 
         return $this->get("0", 'parent_id');
     }

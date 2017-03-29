@@ -2,22 +2,17 @@
 namespace controllers;
 
 use models\CategoriesModel;
-use models\InstructorsModel;
 
 class IndexController extends controller {
 
     public function indexAction($twig) {
 
-        $n_product = 4;
-
         $categories = new CategoriesModel();
-        $instructors = new InstructorsModel();
 
-        $TwigCategories = $categories->getAllMainCatsWithChildren();
-        $TwigInstruct = $instructors->getLastInts($n_product);
+        $TwigCategories = $categories->getAllMainCats();
 
-        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors'];
-        $array = ['tmp/templates/default/', 'Главная страница сайта', $TwigCategories, $TwigInstruct];
+        $key = ['templateWebPath', 'pageTitle', 'categories'];
+        $array = ['library/', 'Главная страница сайта', $TwigCategories];
 
         $this->array_build($key, $array);
         $this->render('index', $twig);
