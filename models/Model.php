@@ -13,7 +13,7 @@ class model {
 
     public $values = [];
 
-    public function createTwigArray($result) {
+    static function createTwigArray($result) {
 
         if (!$result) {
             return false;
@@ -30,9 +30,9 @@ class model {
         return $twigArray;
     }
 
-    public function readStructure() {
+    static function readStructure() {
 
-        self::$result = mysqli_query(Db::getConnect(), "DESC " . self::$table);
+        self::$result = mysqli_query(Db::getConnect(), "DESC " . static::$table);
         $res = self::createTwigArray(self::$result);
         $k = 1;
 
@@ -47,7 +47,6 @@ class model {
 
         }
         self::$pk_name = self::$columns[0];
-        //return self::$columns;
     }
 
     public function get($value = null, $fieldName = null, $sort = null, $limit = null, $in = null) {

@@ -11,6 +11,37 @@ use models\InstructorsModel;
 
 class CategoriesController extends controller {
 
+    public function univAction($twig, $id) {
+
+        $categories = new CategoriesModel();
+        $TwigFaculty = $categories->getChildrenForCat($id);
+        $TwigCategory = $categories->getCatById($id);
+
+        $key = ['templateWebPath', 'pageTitle', 'faculty', 'category'];
+        $array = ['../library/', 'University ', $TwigFaculty, $TwigCategory];
+
+        $this->array_build($key, $array);
+        $this->render('univ', $twig);
+    }
+
+    public function facultyAction($twig, $id) {
+
+        $categories = new CategoriesModel();
+        $TwigFaculty = $categories->getChildrenForCat($id);
+        $TwigCategory = $categories->getCatById($id);
+
+        $key = ['templateWebPath', 'pageTitle', 'faculty', 'category'];
+        $array = ['../library/', 'Faculty', $TwigFaculty, $TwigCategory];
+
+        $this->array_build($key, $array);
+        $this->render('faculty', $twig);
+
+    }
+
+
+
+
+
     public function indexAction($twig) {
 
         $catId = isset($_GET['id']) ? $_GET['id'] : null;

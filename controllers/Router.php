@@ -11,7 +11,8 @@ class router
 
         $routing = [
             "/" => ['IndexController', 'IndexAction'],
-            "/faculty/(\d+)" => ['IndexController', 'facultyAction']
+            "/univ/(\d+)" => ['CategoriesController', 'univAction'],
+            "/faculty/(\d+)" => ['CategoriesController', 'facultyAction']
             // "/ab" => ['controller' => 'Cart', 'action' => 'index'],
         ];
             $is404 = true;

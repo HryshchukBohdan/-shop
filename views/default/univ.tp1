@@ -1,0 +1,28 @@
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<center><h1><a href="#">{{ category.name }}</a><br /></h1>
+								<h2>{{ category.name_p }}</h2></center>
+								<p>{{ category.desc }}</p>
+								<!--<span class="image">
+										<img src="{{ templateWebPath }}images/category/{{ category.image }}" alt="" />
+								</span>-->
+							</header>
+							<section class="tiles">
+{% for fac in faculty %}
+								<article class="style{{ random(5) }}">
+									<span class="image">
+										<img src="{{ templateWebPath }}images/category/{{ fac.image }}" alt="" />
+									</span>
+									<a href="/faculty/{{ fac.id }}">
+										<h2>{{ fac.name }}</h2>
+										<div class="content">
+											<p>{{ fac.name_p }}</p>
+										</div>
+									</a>
+								</article>
+{% endfor %}
+							</section>
+						</div>
+					</div>

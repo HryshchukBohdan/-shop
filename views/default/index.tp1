@@ -12,7 +12,7 @@
 									<span class="image">
 										<img src="{{ templateWebPath }}images/category/{{ cat.image }}" alt="" />
 									</span>
-									<a href="/faculty/{{ cat.id }}">
+									<a href="/univ/{{ cat.id }}">
 										<h2>{{ cat.name }}</h2>
 										<div class="content">
 											<p>{{ cat.name_p }}</p>

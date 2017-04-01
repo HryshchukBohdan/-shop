@@ -15,10 +15,4 @@ class IndexController extends controller {
         $this->array_build($key, $array);
         $this->render('index', $twig);
     }
-    public function facultyAction($twig, $ch) {
-        echo $ch;
-
-        echo 222;
-
-    }
 }

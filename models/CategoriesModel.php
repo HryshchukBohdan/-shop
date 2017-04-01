@@ -6,7 +6,7 @@ class CategoriesModel extends model {
 
     static public $table = "categories";
 
-    function getChildrenForCat($catId) {
+    public function getChildrenForCat($catId) {
 
         return $this->get($catId, 'parent_id');
     }
@@ -36,7 +36,7 @@ class CategoriesModel extends model {
 //        } return $categoriesTwig;
 //    }
 
-    function getCatById($catId) {
+    public function getCatById($catId) {
 
         $catId = intval($catId);
 
@@ -54,7 +54,7 @@ class CategoriesModel extends model {
     }
 }
 
-CategoriesModel::readStructure();
+//CategoriesModel->readStructure();
 
 
 
