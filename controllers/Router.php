@@ -5,26 +5,36 @@ namespace controllers;
 
 class router
 {
-    public function start($twig) {
-
+    public function start($twig)
+    {
         $route = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        var_dump($route);
-        exit();
 
         $routing = [
-            "/" => ['controller' => 'Index', 'action' => 'IndexAction'],
-            "/ab" => ['controller' => 'Cart', 'action' => 'index']
+            "/" => ['IndexController', 'IndexAction'],
+            "/faculty/(\d+)" => ['IndexController', 'facultyAction']
+            // "/ab" => ['controller' => 'Cart', 'action' => 'index'],
         ];
+            $is404 = true;
 
-        if ($routing[$route]) {
-            $controller = "controllers\\" . $routing[$route]['controller'] . 'Controller';
-            //$action = ucfirst();
+            foreach ($routing as $urlTemlate => $code) {
+                $regexp = "/^" . str_replace("/", "\\/", $urlTemlate) . "$/";
+                if (preg_match($regexp, $route, $matches)) {
+                    if (is_array($code)) {
 
-            $controller_obj = new $controller();
-            $controller_obj->$routing[$route]['action']($twig);
+                        $controller = 'controllers\\' . $code[0];
+                        $controller_obj = new $controller();
 
-        } else {
-           echo 'net putiny';
+                        if ($matches[1]) {
+                            $controller_obj->$code[1]($twig, $matches[1]);
+                        } else {
+                            $controller_obj->$code[1]($twig);
+                        }
+                    }
+                 $is404 = false;
+                }
+            }
+        if ($is404) {
+            echo 'net putinu';
         }
     }
 }
