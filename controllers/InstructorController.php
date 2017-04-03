@@ -1,32 +1,21 @@
 <?php // Контролер продуктов(преподов)
 namespace controllers;
 
-// подключаем модели
-use models\CategoriesModel;
 use models\ProductsModel;
 use models\InstructorsModel;
 
 class InstructorController extends controller {
 
-    public function indexAction($twig) {
+    public function indexAction($twig, $id) {
 
-        $insId = isset($_GET['id']) ? $_GET['id'] : null;
-
-        $categories = new CategoriesModel();
         $products = new ProductsModel();
         $instructors = new InstructorsModel();
 
-        if (! $insId) {
+        $TwigInstruct = $instructors->getInsById($id);
+        $TwigProduct = $products->getProductByInsId($id);
 
-            exit();
-        }
-
-        $TwigInstruct = $instructors->getIntsById($insId);
-        $TwigProduct = $products->getProductByIntId($insId);
-        $TwigCategories = $categories->getAllMainCatsWithChildren();
-
-        $key = ['templateWebPath', 'pageTitle', 'categories', 'instructors', 'products'];
-        $array = ['tmp/templates/default/', '', $TwigCategories, $TwigInstruct, $TwigProduct];
+        $key = ['templateWebPath', 'pageTitle', 'instructors', 'products'];
+        $array = ['../library/', 'Instructor', $TwigInstruct, $TwigProduct];
 
         $this->array_build($key, $array);
         $this->render('instructor', $twig);

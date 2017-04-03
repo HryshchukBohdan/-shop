@@ -2,24 +2,24 @@
 					<div id="main">
 						<div class="inner">
 							<header>
-								<center><h1><a href="#">{{ category.name }}</a><br /></h1>
-								<h2>{{ category.name_p }}</h2></center>
-								<p>{{ category.desc }}</p>
+								<center><h1><a href="#">{{ faculty.name }}</a><br /></h1>
+								<h2>{{ faculty.name_p }}</h2></center>
+								<p>{{ faculty.desc }}</p>
 								<!--<span class="image">
 										<img src="{{ templateWebPath }}images/category/{{ category.image }}" alt="" />
 								</span>-->
 							</header>
 							<section class="tiles">
-{% for fac in faculty %}
+{% for ins in inst %}
 								<article class="style{{ random(5) }}">
 									<span class="image">
-										<img src="{{ templateWebPath }}images/category/{{ fac.image }}" alt="" />
+										<img src="{{ templateWebPath }}images/instructors/{{ ins.image }}" alt="" />
 									</span>
-									<a href="/faculty/{{ fac.id }}">
-										<h2>{{ fac.name }}</h2>
-										<div class="content">
-											<p>{{ fac.name_p }}</p>
-										</div>
+									<a href="/instructor/{{ ins.id }}">
+										<h2>{{ ins.second_name }} {{ ins.name }} {{ ins.thee_name }}</h2>
+										<!--<div class="content">
+											<p>{{ ins.name_p }}</p>
+										</div>-->
 									</a>
 								</article>
 {% endfor %}

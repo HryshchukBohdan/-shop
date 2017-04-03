@@ -1,24 +1,12 @@
 <?php // модель таблицы преподов
 namespace models;
 use config\Db;
+
 class InstructorsModel extends model {
 
     static public $table = "instructor";
 
-    // Получить последнего количества продуктов
-//    function getLastInts($limit = null) {
-//
-//        if ($limit) {
-//
-//            return $this->get(null, "id", "DESC", $limit);
-//
-//        } else {
-//
-//            return $this->get(null, "id", "DESC");
-//        }
-//    }
-
-    function getIntsByCat($catId) {
+    public function getInsByCat($catId) {
 
         $catId = intval($catId);
 
@@ -36,7 +24,7 @@ class InstructorsModel extends model {
         return $this->createTwigArray($result);
     }
 
-    function getIntsById($intId) {
+    public function getInsById($intId) {
 
         $intId = intval($intId);
 
@@ -49,7 +37,7 @@ class InstructorsModel extends model {
     }
 }
 
-InstructorsModel::readStructure();
+//InstructorsModel::readStructure();
 
 
 

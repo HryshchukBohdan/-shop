@@ -6,12 +6,28 @@ class ProductsModel extends model
 {
     static public $table = "products";
 
-    function getProductByIntId($insId) {
+    public function getProductByInsId($insId) {
 
         $insId = intval($insId);
 
         return $this->get($insId, 'ins_id');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function getProductById($productId) {
 
@@ -55,7 +71,7 @@ class ProductsModel extends model
     }
 }
 
-products::readStructure();
+//ProductsModel::readStructure();
 
 
 

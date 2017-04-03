@@ -1,19 +1,15 @@
 <?php // Контролер странички категорий
 namespace controllers;
-// подключаем модели
 
 use models\CategoriesModel;
 use models\InstructorsModel;
-
-
-	//include_once '/models/CategoriesModel.php';
-    //include_once '/models/InstructorsModel.php';
 
 class CategoriesController extends controller {
 
     public function univAction($twig, $id) {
 
         $categories = new CategoriesModel();
+
         $TwigFaculty = $categories->getChildrenForCat($id);
         $TwigCategory = $categories->getCatById($id);
 
@@ -27,16 +23,31 @@ class CategoriesController extends controller {
     public function facultyAction($twig, $id) {
 
         $categories = new CategoriesModel();
-        $TwigFaculty = $categories->getChildrenForCat($id);
-        $TwigCategory = $categories->getCatById($id);
+        $instructors = new InstructorsModel();
 
-        $key = ['templateWebPath', 'pageTitle', 'faculty', 'category'];
-        $array = ['../library/', 'Faculty', $TwigFaculty, $TwigCategory];
+        $TwigFaculty = $categories->getCatById($id);
+        $TwigIst = $instructors->getInsByCat($id);
+
+        $key = ['templateWebPath', 'pageTitle', 'faculty', 'inst'];
+        $array = ['../library/', 'Faculty', $TwigFaculty, $TwigIst];
 
         $this->array_build($key, $array);
         $this->render('faculty', $twig);
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
