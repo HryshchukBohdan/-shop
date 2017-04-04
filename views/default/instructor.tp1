@@ -4,18 +4,18 @@
 							<center><img src="../library/images/instructors/{{ instructors.image }}" width="90%">
 							<h1><a href="#">{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</a><br /></h1></center>
 							<h2>{{ instructors.descript }}</h2>
-					<table border="0">
+					<h2><table border="0">
 {% for prod in products %}
 						<tr>
 							<td>
-								<h2><a href="/product/{{ prod.id }}">    {{ prod.name }}</a></h2>
+								<a href="/product/{{ prod.id }}">    {{ prod.name }}</a>
 							</td>
 							<td>
-								<h2>{{ prod.price }}</h2>
+								{{ prod.price }}
 							</td>
 						</tr>				
 {% endfor %}
-					</table>
+					</table></h2>
 							
 						</div>
 					</div>

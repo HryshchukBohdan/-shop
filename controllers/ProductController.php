@@ -13,7 +13,6 @@ class ProductController extends controller {
         $TwigCartP = null;
 
         if (in_array($id, $_SESSION['cart'])) {
-
             $TwigCartP = 1;
         }
 
@@ -21,7 +20,6 @@ class ProductController extends controller {
         $array = ['../library/', 'Product', $TwigProduct, $TwigCartP];
 
         $this->array_build($key, $array);
-
         $this->render('product', $twig);
     }
 }
