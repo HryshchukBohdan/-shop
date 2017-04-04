@@ -14,8 +14,8 @@ class OrdersModel extends model {
     }
 }
 
-$orders = new orders();
-orders::readStructure();
+//$orders = new orders();
+//orders::readStructure();
 
 function makeNewOrder($name, $phone, $adress) {
 

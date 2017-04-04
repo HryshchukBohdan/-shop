@@ -4,7 +4,7 @@ function addToCart(productId) {
 	$.ajax({
 			type: 'POST',
 			async: true,
-			url: "/?controller=cart&action=addtocart&id=" + productId,
+			url: "/cart/addtocart/" + productId,
 			dataType: "json",
 			success: function(data) {
 				if (data['success']) {
@@ -24,7 +24,7 @@ function removeFromCart(productId) {
 	$.ajax({
 		type: 'POST',
 		async: false,
-		url: "/?controller=cart&action=removefromcart&id=" + productId + '/',
+		url: "/cart/removefromcart/" + productId,
 		dataType: 'json',
 		success: function(data) {
 			if (data['success']) {
@@ -36,6 +36,13 @@ function removeFromCart(productId) {
 		}
 	})
 }
+
+
+
+
+
+
+
 
 function conversionPrice(productId) {
 

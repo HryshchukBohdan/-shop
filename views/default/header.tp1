@@ -18,7 +18,7 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<center><a href="index.html" class="logo">
+								<center><a href="/" class="logo">
 									<span class="symbol"><img src="{{ templateWebPath }}images/logo.svg" alt="" /></span><span class="title">Bodiava</span>
 								</a></center>
 
