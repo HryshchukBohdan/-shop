@@ -13,28 +13,25 @@ class ProductsModel extends model
         return $this->get($insId, 'ins_id');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function getProductById($productId) {
+    public function getProductById($productId) {
 
         $productId = intval($productId);
 
         return $this->get($productId);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function getProducts() {
 

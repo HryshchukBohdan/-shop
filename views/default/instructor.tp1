@@ -1,39 +1,21 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<header>
-								<center><h1><a href="#">{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</a><br /></h1></center>		
-							</header>
-							
-	
-								<img src="../library/images/instructors/{{ instructors.image }}" width="90%" align="center">
-<h2>{{ instructors.descript }}</h2>
-{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}
-
+							<center><img src="../library/images/instructors/{{ instructors.image }}" width="90%">
+							<h1><a href="#">{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</a><br /></h1></center>
+							<h2>{{ instructors.descript }}</h2>
+					<table border="0">
 {% for prod in products %}
-
-<h2><a href="/?controller=product&id={{ prod.id }}">{{ prod.name }}</a></h2>
-	
-
-
-
-									
-
-									<span class="image">
-										<img src="{{ templateWebPath }}images/instructors/{{ ins.image }}" alt="" />
-									
-
-									</span>
-									<a href="/instructor/{{ ins.id }}">
-										<h2>{{ ins.second_name }} {{ ins.name }} {{ ins.thee_name }}</h2>
-										<!--<div class="content">
-											<p>{{ ins.name_p }}</p>
-										</div>-->
-									</a>
-								
+						<tr>
+							<td>
+								<h2><a href="/product/{{ prod.id }}">    {{ prod.name }}</a></h2>
+							</td>
+							<td>
+								<h2>{{ prod.price }}</h2>
+							</td>
+						</tr>				
 {% endfor %}
+					</table>
 							
 						</div>
 					</div>
-
-

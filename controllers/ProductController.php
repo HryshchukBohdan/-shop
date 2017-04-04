@@ -1,37 +1,24 @@
 <?php // Контролер продуктов(преподов)
 namespace controllers;
-// подключаем модели
-use models\CategoriesModel;
-use models\ProductsModel;
 
-	//include_once '/models/CategoriesModel.php';
-	//include_once '/models/ProductsModel.php';
+use models\ProductsModel;
 
 class ProductController extends controller {
 
-    public function indexAction($twig) {
+    public function indexAction($twig, $id) {
 
-        $productId = isset($_GET['id']) ? $_GET['id'] : null;
-
-        $categories = new CategoriesModel();
         $products = new ProductsModel();
 
-        if (! $productId) {
-
-            exit();
-        }
-
-        $TwigProduct = $products->getProductById($productId);
-        $TwigCategories = $categories->getAllMainCatsWithChildren();
+        $TwigProduct = $products->getProductById($id);
         $TwigCartP = null;
 
-        if (in_array($productId, $_SESSION['cart'])) {
+        if (in_array($id, $_SESSION['cart'])) {
 
             $TwigCartP = 1;
         }
 
-        $key = ['templateWebPath', 'pageTitle', 'categories', 'products', 'cart'];
-        $array = ['tmp/templates/default/', '', $TwigCategories, $TwigProduct, $TwigCartP];
+        $key = ['templateWebPath', 'pageTitle', 'products', 'cart'];
+        $array = ['../library/', 'Product', $TwigProduct, $TwigCartP];
 
         $this->array_build($key, $array);
 

@@ -1,3 +1,26 @@
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<center><img src="../library/images/instructors/{{ instructors.image }}" width="90%">
+							<h1><a href="#">{{ instructors.name }} {{ instructors.second_name }} {{ instructors.thee_name }}</a><br /></h1></center>
+							<h2>{{ instructors.descript }}</h2>
+					<table border="0">
+{% for prod in products %}
+						<tr>
+							<td>
+								<h2><a href="/product/{{ prod.id }}">    {{ prod.name }}</a></h2>
+							</td>
+							<td>
+								<h2>{{ prod.price }}</h2>
+							</td>
+						</tr>				
+{% endfor %}
+					</table>
+							
+						</div>
+					</div>
+
+
 <img src="../library/images/products/{{ products.image }}" width="575">
 
 <h3>{{ products.name }}</h3>

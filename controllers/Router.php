@@ -13,7 +13,8 @@ class router
             "/" => ['IndexController', 'IndexAction'],
             "/univ/(\d+)" => ['CategoriesController', 'univAction'],
             "/faculty/(\d+)" => ['CategoriesController', 'facultyAction'],
-            "/instructor/(\d+)" => ['InstructorController', 'IndexAction']
+            "/instructor/(\d+)" => ['InstructorController', 'IndexAction'],
+            "/product/(\d+)" => ['ProductController', 'IndexAction']
             // "/ab" => ['controller' => 'Cart', 'action' => 'index'],
         ];
             $is404 = true;
