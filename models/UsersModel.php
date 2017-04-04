@@ -4,6 +4,38 @@ use config\Db;
 
 include_once '/config/db.php';
 
+class UsersModel extends model {
+
+    static public $table = "users";
+
+    public function loginUser($email, $pwd) {
+        var_dump($email);
+
+        $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));
+        $pwd = md5($pwd.sol);
+
+        $query = "SELECT *
+                FROM " . self::$table .
+                " WHERE email = '" . $email . "' and pwd = '" . $pwd . "' limit 1";
+
+        var_dump($query);
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        $data = createTwigArray($result);
+
+        if (isset($data[0])) {
+            $data['success'] = 1;
+        } else {
+            $data['success'] = 0;
+        }
+
+        return $data;
+    }
+
+
+}
+
 function registerNewUsers($email, $pwdMD5, $name, $phone, $adress) {
 
     $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));

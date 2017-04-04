@@ -2,15 +2,70 @@
 namespace controllers;
 // подключаем модели
 use models\CategoriesModel;
+use models\UsersModel;
 
 
 
 	//include_once '/models/CategoriesModel.php';
 	include_once '/models/UsersModel.php';
-    include_once '/models/OrdersModel.php';
+    //include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 
 class UserController extends controller {
+
+    public function authAction($twig) {
+
+        $key = ['templateWebPath', 'pageTitle'];
+        $array = ['../library/', 'Страница пользователя'];
+
+        $this->array_build($key, $array);
+        $this->render('login', $twig);
+    }
+
+    public function loginAction() {
+
+        $user = new UsersModel();
+
+        $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+        $email = trim($email);
+
+        $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
+        $pwd = trim($pwd);
+
+        $userData = $user->loginUser($email, $pwd);
+
+        if ($userData['success']) {
+
+            $userData = $userData[0];
+
+            $_SESSION['user'] = $userData;
+            $_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
+
+            $resData = $_SESSION['user'];
+            $resData['success'] = 1;
+
+        } else {
+
+            $resData['success'] = 0;
+            $resData['message'] = 'Неверный логин или пароль';
+        }
+
+        echo json_encode($resData);
+    }
+
+
+
+    /*
+
+
+
+
+
+
+
+
+
+
 
     public function indexAction($twig) {
 
@@ -148,32 +203,5 @@ class UserController extends controller {
         redirect('/');
     }
 
-    public function loginAction() {
-
-        $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-        $email = trim($email);
-
-        $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
-        $pwd = trim($pwd);
-
-        $userData = loginUser($email, $pwd);
-
-        if ($userData['success']) {
-
-            $userData = $userData[0];
-
-            $_SESSION['user'] = $userData;
-            $_SESSION['user']['displayName'] = $userData['name'] ? $userData['name'] : $userData['email'];
-
-            $resData = $_SESSION['user'];
-            $resData['success'] = 1;
-
-        } else {
-
-            $resData['success'] = 0;
-            $resData['message'] = 'Неверный логин или пароль';
-        }
-
-        echo json_encode($resData);
-    }
+    */
 }

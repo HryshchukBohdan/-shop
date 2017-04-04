@@ -1,13 +1,24 @@
 				<!-- Menu -->
 					<nav id="menu">
-						<h2>Menu</h2>
+						<h2>Menu 
+{% if arrayUser is not null %} 
+						<a href="/?controller=user" id="userLink">{{ arrayUser.displayName }}</a><br />
+						<a href="/?controller=user&action=logout" onclick="logout();">Выход</a>
+{% else %}
+<a href="/auth"><font size="1">Login/Check in</font></a>
+
+
+{% endif %}	
+						</h2>
+				
 						<ul>
 							<li><a href="/">Home</a></li>
-							<li><a href="generic.html">щжыва</a></li>
-							<li><a href="generic.html">Tывп</a></li>
-							<li><a href="generic.html">Conыывпапвы</a></li>
-							<li><a href="elements.html">Eыпыв</a></li>
-									
+							<li><a href="#">Search</a></li>
+							<li><a href="#">About</a></li>
+							<li><a href="#">Contact</a></li>
+							<!--<li><a href="#">Login/Check in</a></li>-->
+							<li><a href="#">Cart</a></li>
+									 
 						</ul>
 					</nav>
 
@@ -17,23 +28,6 @@
 
 
 <!--<div id="leftColomn">
-
-	<div id="leftManu">
-		<div class="manuCaption"> Menu: </div>
-			{% for cat in categories %}
-			
-				<a href="/?controller=categories&id={{ cat.id }}">{{ cat.name }}</a><br />
-
-			{% if cat.children is not null %}
-
-				{% for child in cat.children %}
-					--<a href="/?controller=categories&id={{ child.id }}">{{ child.name }}</a><br />
-				{% endfor %}
-
-			{% endif %}
-
-			{% endfor %}
-	</div>
 
 {% if arrayUser is not null %}
 

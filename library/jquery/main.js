@@ -1,3 +1,16 @@
+function getData(obj_form) {
+
+    var hData = {};
+    $('input, textarea, select', obj_form).each(function() {
+        if (this.name && this.name!='') {
+            hData[this.name] = this.value;
+            console.log('hData[' + this.name + '] = ' + hData[this.name]);
+        }
+    });
+
+    return hData;
+}
+
 function addToCart(productId) {
 
 	console.log("js - addToCart()");
@@ -37,6 +50,40 @@ function removeFromCart(productId) {
 	})
 }
 
+function login() {
+
+    var postData = getData('#loginBox');
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/user/login",
+        data: postData,
+        dataType: 'json',
+        success: function(data) {
+            if (data['success']) {
+
+                $('#registerBox').hide();
+                $('#loginBox').hide();
+
+                $('#userLink').attr('href', '/?controller=user');
+                $('#userLink').html(data['displayName']);
+                $('#userBox').show();
+
+                $('#phone').val(data['phone']);
+                $('#adress').val(data['adress']);
+                $('#name').val(data['name']);
+
+                $('#btnSaveOrder').show();
+
+            } else {
+                alert(data['message']);
+            }
+        }
+    })
+}
+
+
 
 
 
@@ -53,18 +100,7 @@ function conversionPrice(productId) {
 	$('#prodRealPrice_' + productId).html(prodRealPrice);
 }
 
-function getData(obj_form) {
 
-	var hData = {};
-	$('input, textarea, select', obj_form).each(function() {
-		if (this.name && this.name!='') {
-			hData[this.name] = this.value;
-			console.log('hData[' + this.name + '] = ' + hData[this.name]);
-		}
-	});
-
-	return hData;
-}
 
 function registerNewUser() {
 	
@@ -98,38 +134,7 @@ function registerNewUser() {
 	})
 }
 
-function login() {
 
-    var postData = getData('#loginBox');
-
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/?controller=user&action=login",
-        data: postData,
-        dataType: 'json',
-        success: function(data) {
-            if (data['success']) {
-
-                $('#registerBox').hide();
-                $('#loginBox').hide();
-
-                $('#userLink').attr('href', '/?controller=user');
-                $('#userLink').html(data['displayName']);
-                $('#userBox').show();
-
-                $('#phone').val(data['phone']);
-                $('#adress').val(data['adress']);
-                $('#name').val(data['name']);
-
-                $('#btnSaveOrder').show();
-
-            } else {
-                alert(data['message']);
-            }
-        }
-    })
-}
 
 function showRegisterBox() {
 
