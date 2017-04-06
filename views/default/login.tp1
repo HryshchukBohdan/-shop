@@ -8,7 +8,7 @@
   </form>
 
 
-  <form style="float: right; display: inline-block; width: 40%; margin-right: 5%;">
+  <form id="registerBox" style="float: right; display: inline-block; width: 40%; margin-right: 5%;">
    		<input type="text" id="email" name="email" value="" placeholder="" /><br />
 		<input type="password" id="pwd1" name="pwd1" value="" placeholder=""/><br />
 		<input type="password" id="pwd2" name="pwd2" value="" placeholder=""/><br />

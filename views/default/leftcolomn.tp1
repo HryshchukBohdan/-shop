@@ -2,14 +2,14 @@
 					<nav id="menu">
 						<h2>Menu 
 {% if arrayUser is not null %} 
-						<a href="/?controller=user" id="userLink">{{ arrayUser.displayName }}</a><br />
-						<a href="/?controller=user&action=logout" onclick="logout();">Выход</a>
+						<a href="/?controller=user" id="userLink" style="float: right;">{{ arrayUser.displayName }}</a>
+						<a href="/?controller=user&action=logout" id="userLink" onclick="logout();" style="float: right; margin: 10px 0 0 155px; font-size: x-small;">Выход</a>
 {% else %}
-<a href="/auth"><font size="1">Login/Check in</font></a>
+<a id="registerBox" href="/auth" style="float: right;"><font size="1" >Login/Check in</font></a>
 
 
 {% endif %}	
-						</h2>
+			</h2>			
 				
 						<ul>
 							<li><a href="/">Home</a></li>

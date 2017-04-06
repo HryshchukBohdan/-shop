@@ -66,9 +66,9 @@ function login() {
                 $('#registerBox').hide();
                 $('#loginBox').hide();
 
-                $('#userLink').attr('href', '/?controller=user');
+                $('#userLink').attr('href', '/user');
                 $('#userLink').html(data['displayName']);
-                $('#userBox').show();
+                $('#userLink').show();
 
                 $('#phone').val(data['phone']);
                 $('#adress').val(data['adress']);

@@ -9,7 +9,7 @@ class UsersModel extends model {
     static public $table = "users";
 
     public function loginUser($email, $pwd) {
-        var_dump($email);
+        //var_dump($email);
 
         $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));
         $pwd = md5($pwd.sol);
@@ -18,7 +18,7 @@ class UsersModel extends model {
                 FROM " . self::$table .
                 " WHERE email = '" . $email . "' and pwd = '" . $pwd . "' limit 1";
 
-        var_dump($query);
+        //var_dump($query);
 
         $result = mysqli_query(Db::getConnect(), $query);
 
@@ -32,9 +32,45 @@ class UsersModel extends model {
 
         return $data;
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function registerNewUsers($email, $pwdMD5, $name, $phone, $adress) {
 

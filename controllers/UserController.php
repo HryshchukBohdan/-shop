@@ -49,6 +49,7 @@ class UserController extends controller {
             $resData['success'] = 0;
             $resData['message'] = 'Неверный логин или пароль';
         }
+        //echo 2;
 
         echo json_encode($resData);
     }
