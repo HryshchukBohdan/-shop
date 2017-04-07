@@ -7,7 +7,6 @@ function getData(obj_form) {
             console.log('hData[' + this.name + '] = ' + hData[this.name]);
         }
     });
-
     return hData;
 }
 
@@ -23,7 +22,6 @@ function addToCart(productId) {
 				if (data['success']) {
 					debugger;
 					$('#cart_product').html(data['n_product']);
-
 					$('#addCart_'+ productId).hide();
 					$('#removeCart_'+ productId).show();
 				}
@@ -42,7 +40,6 @@ function removeFromCart(productId) {
 		success: function(data) {
 			if (data['success']) {
 				$('#cart_product').html(data['n_product']);
-
 				$('#addCart_'+ productId).show();
 				$('#removeCart_'+ productId).hide();
 			}
@@ -63,12 +60,13 @@ function login() {
         success: function(data) {
             if (data['success']) {
 
-                $('#registerBox').hide();
-                $('#loginBox').hide();
+                //$('#registerBox').hide();
+                //$('#loginBox').hide();
+                //$('#Check_in').hide();
 
-                $('#userLink').attr('href', '/user');
-                $('#userLink').html(data['displayName']);
-                $('#userLink').show();
+                //$('#userLink').attr('href', '/user');
+                //$('#userLink').html(data['displayName']);
+                //$('#userLink').show();
 
                 $('#phone').val(data['phone']);
                 $('#adress').val(data['adress']);
@@ -76,6 +74,8 @@ function login() {
 
                 $('#btnSaveOrder').show();
 
+                alert('Welcome ' + data['displayName']);
+                window.location.href = "http://shop/"
             } else {
                 alert(data['message']);
             }
