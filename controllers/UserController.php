@@ -69,7 +69,6 @@ class UserController extends controller {
         }
 
         $user = new UsersModel();
-        var_dump($_SESSION['user']['name']);
 
         // Получения списка заказов пользователя
         $TwigUserOrders = $user->getCurUserOrders();

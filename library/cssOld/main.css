@@ -7,16 +7,9 @@ body {
 	display: none;
 }
 
-#header {
-	height: 70px;
-	text-align: center;
+.imput {
+	align-content: center;
 }
-
-#leftColomn {
-	width: 200px;
-	float: left;
-}
-
 #leftMenu, #loginBox, #registerBox {
 	padding-bottom: 20px;
 }

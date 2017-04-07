@@ -1,41 +1,41 @@
 <center><h1>Ваши регистрационие данные</h1></center>
 
-<center><table border="0" id="userDataForm">
+<center><table border="1" id="userDataForm" style="display: inline-block; width: 100%; margin-left: 15%; text-align: center;">
 	<tr>
 		<td>Логин (email)</td>
 		<td><center>{{ arrayUser.email }}</center></td>
 	</tr>
 	<tr>
 		<td>Имя</td>
-		<td><input type="text" id="newName" value="{{ arrayUser.name }}" /></td>
+		<td><input type="text" id="newName" value="{{ arrayUser.name }}" style="text-align: center;"/></td>
 	</tr>
 	<tr>
 		<td>Телефон</td>
-		<td><input type="text" id="newPhone" value="{{ arrayUser.phone }}" /></td>
+		<td><input type="text" id="newPhone" value="{{ arrayUser.phone }}" style="text-align: center;"/></td>
 	</tr>
 	<tr>
 		<td>Адрес</td>
-		<td><textarea id="newAdress" />{{ arrayUser.adress }}</textarea></td>
+		<td><textarea id="newAdress" style="text-align: center;"/>{{ arrayUser.adress }}</textarea></td>
 	</tr>
 	<tr>
 		<td>Новый пароль</td>
-		<td><input type="password" id="newPwd1" value="" /></td>
+		<td><input type="password" id="newPwd1" value="" style="text-align: center;"/></td>
 	</tr>
 	<tr>
 		<td>Повтор пароля</td>
-		<td><input type="password" id="newPwd2" value="" /></td>
+		<td><input type="password" id="newPwd2" value="" style="text-align: center;"/></td>
 	</tr>
 	<tr>
 		<td>Для того что б сохранить данные введите текущий пароль</td>
-		<td><input type="password" id="curPwd" value="" /></td>
+		<td><input type="password" id="curPwd" value="" style="text-align: center;"/></td>
 	</tr>
 	<tr>
 		<td>&nbsp</td>
 		<td><input type="button" value="Сохранить изменения" onclick="updateUserData();" /></td>
 	</tr>
-</table></center>
+</table>
 
-<h2>Заказы:</h2>
+<h2 style="margin-top: 2em;">Заказы:</h2></center>
 
 {% if userOrders is null %}
 
@@ -43,7 +43,7 @@
 
 {% else %}
 
-	<table border="1" cellpadding="1" cellspacing="1">
+	<table border="1" cellpadding="1" cellspacing="1" style="display: inline-block; width: 90%; margin-left: 5%; text-align: center;">
 		<tr>
 			<th>№</th>
 			<th>Действия</th>
@@ -63,7 +63,7 @@
 			<th>{{ order.status }}</th>
 			<th>{{ order.data_created }}</th>
 			<th>{{ order.data_payment }}&nbsp;</th>
-			<th>{{ order.comment }}</th>
+			<th>{{ order.comment|raw }}</th>
 		</tr>
 
 		<tr class="hideme" id="purchasesForOrderId_{{ order.id }}">
@@ -71,7 +71,7 @@
 
 			{% if order.children is not null %}
 
-			<table border="1" cellpadding="1" cellspacing="1" width="100%">
+			<table width="100%">
 				<tr>
 					<th>№</th>
 					<th>ID</th>

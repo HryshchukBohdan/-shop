@@ -33,8 +33,4 @@
 
 					</header>
 
-	<div id="header">
-		
-	</div>
-
 {% include 'leftcolomn.tp1' %}
