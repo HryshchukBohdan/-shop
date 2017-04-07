@@ -1,8 +1,12 @@
 <?php // Контролер пользователей
 namespace controllers;
 // подключаем модели
-use models\CategoriesModel;
+//use models\CategoriesModel;
+use function models\getOrders;
+use function models\getProductsForOrder;
 use models\UsersModel;
+use models\OrdersModel;
+
 
 
 
@@ -14,6 +18,10 @@ use models\UsersModel;
 class UserController extends controller {
 
     public function authAction($twig) {
+
+        if (isset($_SESSION['user'])) {
+            redirect('/');
+        }
 
         $key = ['templateWebPath', 'pageTitle'];
         $array = ['../library/', 'Страница пользователя'];
@@ -54,42 +62,29 @@ class UserController extends controller {
         echo json_encode($resData);
     }
 
-
-
-    /*
-
-
-
-
-
-
-
-
-
-
-
     public function indexAction($twig) {
-
-        $categories = new CategoriesModel();
-
+;
         if (! isset($_SESSION['user'])) {
-
             redirect('/');
         }
 
-        // Получение списка категорий для меню
-        $TwigCategories = $categories->getAllMainCatsWithChildren();
+        $user = new UsersModel();
+        var_dump($_SESSION['user']['name']);
 
         // Получения списка заказов пользователя
-        $TwigUserOrders = getCurUserOrders();
+        $TwigUserOrders = $user->getCurUserOrders();
 
-        $key = ['templateWebPath', 'pageTitle', 'categories', 'userOrders'];
-        $array = ['tmp/templates/default/', 'Страница пользователя', $TwigCategories, $TwigUserOrders];
+        $key = ['templateWebPath', 'pageTitle', 'userOrders'];
+        $array = ['../library/', '', $TwigUserOrders];
+        $array[1] = $_SESSION['user']['name'];
 
         $this->array_build($key, $array);
         $this->render('user', $twig);
     }
 
+
+
+    /*
     public function updateAction() {
 
         if (! isset($_SESSION['user'])) {

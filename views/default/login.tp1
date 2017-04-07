@@ -1,16 +1,18 @@
 <center><h1>Log in or register</h1></center>
 
-
-  <form id="loginBox" style="display: inline-block; width: 40%; margin-left: 5%;">  
-	<input type="text" name="email" id="loginEmail" value="" placeholder="dvgfdgfd" /><br />
-	<input type="password" name="pwd" id="loginPwd" value="" placeholder="gggg" /><br />
-	<center><input style="margin: 0 auto;" type="button" onclick="login();" value="Войти"/><br /></center>  
+  <form id="loginBox" style="display: inline-block; width: 40%; margin-left: 5%; margin-top: 25px;">  
+	<input type="text" name="email" id="loginEmail" value="" placeholder="email" style="text-align: center;" /><br />
+	<input type="password" name="pwd" id="loginPwd" value="" placeholder="password" style="text-align: center;"/><br />
+	<center>
+		<input style="margin: 0 auto;" type="button" onclick="login();" value="Войти"/><br />
+	</center>  
   </form>
 
-
   <form id="registerBox" style="float: right; display: inline-block; width: 40%; margin-right: 5%;">
-   		<input type="text" id="email" name="email" value="" placeholder="" /><br />
-		<input type="password" id="pwd1" name="pwd1" value="" placeholder=""/><br />
-		<input type="password" id="pwd2" name="pwd2" value="" placeholder=""/><br />
-		<center><input type="button" style="text-align: center;" onclick="registerNewUser()" value="Зарегистрируваться"/></center>
+   		<input type="text" id="email" name="email" value="" placeholder="email" style="text-align: center;"/><br />
+		<input type="password" id="pwd1" name="pwd1" value="" placeholder="password" style="text-align: center;"/><br />
+		<input type="password" id="pwd2" name="pwd2" value="" placeholder="repeat password" style="text-align: center;"/><br />
+		<center>
+			<input type="button" style="text-align: center;" onclick="registerNewUser()" value="Зарегистрируваться"/>
+		</center>
   </form>

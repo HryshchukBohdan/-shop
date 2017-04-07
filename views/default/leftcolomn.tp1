@@ -3,21 +3,20 @@
 						<h2>Menu 
 
 {% if arrayUser is not null %} 
-						<a href="/?controller=user" id="userLink" style="float: right;">{{ arrayUser.displayName }}</a>
-						<a href="/?controller=user&action=logout" onclick="logout();" style="float: right; margin: 10px 0 0 155px; font-size: x-small;">Выход</a>
+						<a href="/user" id="userLink" style="float: right;">{{ arrayUser.displayName }}</a>
+						<a href="/user/logout" onclick="logout();" style="float: right; margin: 10px 0 0 155px; font-size: x-small;">Выход</a>
 {% else %}
 						<a id="Check_in" href="/auth" style="float: right;"><font size="1" >Login/Check in</font></a>
 {% endif %}	
-			</h2>						
-						<ul>
-							<li><a href="/">Home</a></li>
-							<li><a href="#">Search</a></li>
-							<li><a href="#">About</a></li>
-							<li><a href="#">Contact</a></li>
-							<!--<li><a href="#">Login/Check in</a></li>-->
-							<li><a href="#">Cart</a></li>
-									 
-						</ul>
+						</h2>						
+							<ul>
+								<li><a href="/">Home</a></li>
+								<li><a href="#">Search</a></li>
+								<li><a href="#">About</a></li>
+								<li><a href="#">Contact</a></li>
+								<!--<li><a href="#">Login/Check in</a></li>-->
+								<li><a href="#">Cart</a></li>
+							</ul>
 					</nav>
 
 
@@ -26,7 +25,6 @@
 
 
 <!--
-
 	<div class="manuCaption">Корзинка с грибочками</div>
 	<a href="/?controller=cart" title="Перейти в корзину">В корзине</a>
 	<span id="cart_product">

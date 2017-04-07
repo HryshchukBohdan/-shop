@@ -8,6 +8,36 @@ class OrdersModel extends model {
 
     static public $table = "orders";
 
+    public function getOrdersWithProductsByUser($userId) {
+
+        $userId = intval($userId);
+
+        $query = "SELECT *
+                FROM orders
+                WHERE user_id = '" . $userId . "'
+                ORDER BY id DESC";
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        if (!$result)
+            die(mysqli_error(Db::getConnect()));
+
+        $TwigArray = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            $TwigChildren = getPurchaseForOrder($row['id']);
+
+            if ($TwigChildren) {
+
+                $row['children'] = $TwigChildren;
+                $TwigArray[] = $row;
+            }
+        }
+
+        return $TwigArray;
+    }
+
     function NewOrderLim() {
 
         return $this->get(null, 'id', "DESC", 1);
@@ -49,35 +79,7 @@ function makeNewOrder($name, $phone, $adress) {
     return false;
 }
 
-function getOrdersWithProductsByUser($userId) {
 
-    $userId = intval($userId);
-
-    $query = "SELECT *
-                FROM orders
-                WHERE user_id = '" . $userId . "'
-                ORDER BY id DESC";
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    if (!$result)
-        die(mysqli_error(Db::getConnect()));
-
-    $TwigArray = array();
-
-    while ($row = mysqli_fetch_assoc($result)) {
-
-        $TwigChildren = getPurchaseForOrder($row['id']);
-
-        if ($TwigChildren) {
-
-            $row['children'] = $TwigChildren;
-            $TwigArray[] = $row;
-        }
-    }
-
-    return $TwigArray;
-}
 
 function getOrders() {
 

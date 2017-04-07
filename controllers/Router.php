@@ -18,7 +18,8 @@ class router
             "/cart/addtocart/(\d+)" => ['CartController', 'addtocartAction'],
             "/cart/removefromcart/(\d+)" => ['CartController', 'removefromcartAction'],
             "/auth" => ['UserController', 'authAction'],
-            "/user/login" => ['UserController', 'loginAction']
+            "/user/login" => ['UserController', 'loginAction'],
+            "/user" => ['UserController', 'indexAction'],
 
 
 

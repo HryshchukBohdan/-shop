@@ -32,6 +32,16 @@ class UsersModel extends model {
 
         return $data;
     }
+
+    public function getCurUserOrders() {
+
+        $order = new OrdersModel();
+
+        $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        $TwigArray = $order->getOrdersWithProductsByUser($userId);
+
+        return $TwigArray;
+    }
 }
 
 
@@ -207,10 +217,3 @@ function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5) {
     return $result;
 }
 
-function getCurUserOrders() {
-
-    $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-    $TwigArray = getOrdersWithProductsByUser($userId);
-
-    return $TwigArray;
-}
