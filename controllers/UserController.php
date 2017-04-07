@@ -36,14 +36,12 @@ class UserController extends controller
 
         $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
         $email = trim($email);
-
         $pwd = isset($_REQUEST['pwd']) ? $_REQUEST['pwd'] : null;
         $pwd = trim($pwd);
 
         $userData = $user->loginUser($email, $pwd);
 
         if ($userData['success']) {
-
             $userData = $userData[0];
 
             $_SESSION['user'] = $userData;
@@ -51,14 +49,10 @@ class UserController extends controller
 
             $resData = $_SESSION['user'];
             $resData['success'] = 1;
-
         } else {
-
             $resData['success'] = 0;
             $resData['message'] = 'Неверный логин или пароль';
         }
-        //echo 2;
-
         echo json_encode($resData);
     }
 
@@ -69,7 +63,6 @@ class UserController extends controller
         }
 
         $user = new UsersModel();
-
         // Получения списка заказов пользователя
         $TwigUserOrders = $user->getCurUserOrders();
 
@@ -133,12 +126,19 @@ class UserController extends controller
         echo json_encode($resData);
     }
 
+    public function logoutAction() {
+
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+            unset($_SESSION['cart']);
+        }
+        redirect('/');
+    }
+
 
 
 
     /*
-
-
     function RegisterAction() {
 
         $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
@@ -186,16 +186,5 @@ class UserController extends controller
 
         echo json_encode($resData);
     }
-
-    public function logoutAction() {
-
-        if (isset($_SESSION['user'])) {
-            unset($_SESSION['user']);
-            unset($_SESSION['cart']);
-        }
-
-        redirect('/');
-    }
-
     */
 }

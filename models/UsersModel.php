@@ -9,7 +9,6 @@ class UsersModel extends model {
     static public $table = "users";
 
     public function loginUser($email, $pwd) {
-        //var_dump($email);
 
         $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $email));
         $pwd = md5($pwd.sol);
@@ -18,10 +17,7 @@ class UsersModel extends model {
                 FROM " . self::$table .
                 " WHERE email = '" . $email . "' and pwd = '" . $pwd . "' limit 1";
 
-        //var_dump($query);
-
         $result = mysqli_query(Db::getConnect(), $query);
-
         $data = createTwigArray($result);
 
         if (isset($data[0])) {
@@ -29,7 +25,6 @@ class UsersModel extends model {
         } else {
             $data['success'] = 0;
         }
-
         return $data;
     }
 
@@ -57,7 +52,6 @@ class UsersModel extends model {
         if ($pwd1 && ($pwd1 == $pwd2)) {
             $newPwd = md5($pwd1.sol);
         }
-
         $query = 'UPDATE users SET ';
 
         if ($newPwd) {
@@ -73,7 +67,6 @@ class UsersModel extends model {
             LIMIT 1";
 
         $result = mysqli_query(Db::getConnect(), $query);
-
         return $result;
     }
 }

@@ -122,9 +122,7 @@ function updateUserData() {
 
                 $('#userLink').html(data['userName']);
                 alert(data['message']);
-
             } else {
-
                 alert(data['message']);
             }
         }

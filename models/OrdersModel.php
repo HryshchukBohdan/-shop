@@ -29,17 +29,20 @@ class OrdersModel extends model {
             $TwigChildren = getPurchaseForOrder($row['id']);
 
             if ($TwigChildren) {
-
                 $row['children'] = $TwigChildren;
                 $TwigArray[] = $row;
             }
         }
-
         return $TwigArray;
     }
 
-    function NewOrderLim() {
 
+
+
+
+
+
+    function NewOrderLim() {
         return $this->get(null, 'id', "DESC", 1);
     }
 }
