@@ -2,8 +2,7 @@
 namespace controllers;
 // подключаем модели
 //use models\CategoriesModel;
-use function models\getOrders;
-use function models\getProductsForOrder;
+
 use models\UsersModel;
 use models\OrdersModel;
 
@@ -15,10 +14,11 @@ use models\OrdersModel;
     //include_once '/models/OrdersModel.php';
     include_once '/models/PurchaseModel.php';
 
-class UserController extends controller {
+class UserController extends controller
+{
 
-    public function authAction($twig) {
-
+    public function authAction($twig)
+    {
         if (isset($_SESSION['user'])) {
             redirect('/');
         }
@@ -30,8 +30,8 @@ class UserController extends controller {
         $this->render('login', $twig);
     }
 
-    public function loginAction() {
-
+    public function loginAction()
+    {
         $user = new UsersModel();
 
         $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
@@ -62,9 +62,9 @@ class UserController extends controller {
         echo json_encode($resData);
     }
 
-    public function indexAction($twig) {
-;
-        if (! isset($_SESSION['user'])) {
+    public function indexAction($twig)
+    {
+        if (!isset($_SESSION['user'])) {
             redirect('/');
         }
 
@@ -81,28 +81,25 @@ class UserController extends controller {
         $this->render('user', $twig);
     }
 
-
-
-    /*
-    public function updateAction() {
-
-        if (! isset($_SESSION['user'])) {
-
+    public function updateAction()
+    {
+        if (!isset($_SESSION['user'])) {
             redirect('/');
         }
 
+        $user = new UsersModel();
         $resData = array();
 
-        $name   = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
-        $phone  = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
+        $name = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
+        $phone = isset($_REQUEST['phone']) ? $_REQUEST['phone'] : null;
         $adress = isset($_REQUEST['adress']) ? $_REQUEST['adress'] : null;
-        $pwd1   = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
-        $pwd2   = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
+        $pwd1 = isset($_REQUEST['pwd1']) ? $_REQUEST['pwd1'] : null;
+        $pwd2 = isset($_REQUEST['pwd2']) ? $_REQUEST['pwd2'] : null;
         $curPwd = isset($_REQUEST['curPwd']) ? $_REQUEST['curPwd'] : null;
 
-        $curPwdMD5 = md5($curPwd.sol);
+        $curPwdMD5 = md5($curPwd . sol);
 
-        if (! $curPwdMD5 || ($_SESSION['user']['pwd'] != $curPwdMD5)) {
+        if (!$curPwdMD5 || ($_SESSION['user']['pwd'] != $curPwdMD5)) {
 
             $resData['success'] = 0;
             $resData['message'] = 'Текущий пароль неверен';
@@ -110,11 +107,9 @@ class UserController extends controller {
             echo json_encode($resData);
             return false;
         }
-
-        $res = updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5);
+        $res = $user->updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5);
 
         if ($res) {
-
             $resData['success'] = 1;
             $resData['message'] = 'Данные сохранены';
             $resData['name'] = $name;
@@ -126,19 +121,23 @@ class UserController extends controller {
             $newPwd = $_SESSION['user']['pwd'];
 
             if ($pwd1 && ($pwd1 == $pwd2)) {
-                $newPwd = md5(trim($pwd1.sol));
+                $newPwd = md5(trim($pwd1 . sol));
             }
-
             $_SESSION['user']['pwd'] = $newPwd;
             $_SESSION['user']['displayName'] = $name ? $name : $_SESSION['user']['email'];
 
         } else {
-
             $resData['success'] = 0;
             $resData['message'] = 'Ошибка сохранения данных';
-
-        } echo json_encode($resData);
+        }
+        echo json_encode($resData);
     }
+
+
+
+
+    /*
+
 
     function RegisterAction() {
 

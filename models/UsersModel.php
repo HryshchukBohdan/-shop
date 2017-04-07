@@ -42,6 +42,40 @@ class UsersModel extends model {
 
         return $TwigArray;
     }
+
+    public function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5) {
+
+        $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $_SESSION['user']['email']));
+        $name = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $name));
+        $phone = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $phone));
+        $adress = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $adress));
+        $pwd1 = trim($pwd1);
+        $pwd2 = trim($pwd2);
+
+        $newPwd = null;
+
+        if ($pwd1 && ($pwd1 == $pwd2)) {
+            $newPwd = md5($pwd1.sol);
+        }
+
+        $query = 'UPDATE users SET ';
+
+        if ($newPwd) {
+            $query .= "pwd = '" . $newPwd . "', ";
+        }
+
+        $query .= " name = '$name', 
+                phone = '$phone', 
+                adress = '$adress' 
+            WHERE 
+                email = '$email' and 
+                pwd = '$curPwdMD5' 
+            LIMIT 1";
+
+        $result = mysqli_query(Db::getConnect(), $query);
+
+        return $result;
+    }
 }
 
 
@@ -183,37 +217,5 @@ function loginUser($email, $pwd) {
     return $data;
 }
 
-function updateUserData($name, $phone, $adress, $pwd1, $pwd2, $curPwdMD5) {
 
-    $email = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $_SESSION['user']['email']));
-    $name = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $name));
-    $phone = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $phone));
-    $adress = htmlspecialchars(mysqli_real_escape_string(Db::getConnect(), $adress));
-    $pwd1 = trim($pwd1);
-    $pwd2 = trim($pwd2);
-
-    $newPwd = null;
-
-    if ($pwd1 && ($pwd1 == $pwd2)) {
-        $newPwd = md5($pwd1.sol);
-    }
-
-    $query = 'UPDATE users SET ';
-
-    if ($newPwd) {
-        $query .= "pwd = '" . $newPwd . "', ";
-    }
-
-    $query .= " name = '$name', 
-                phone = '$phone', 
-                adress = '$adress' 
-            WHERE 
-                email = '$email' and 
-                pwd = '$curPwdMD5' 
-            LIMIT 1";
-
-    $result = mysqli_query(Db::getConnect(), $query);
-
-    return $result;
-}
 

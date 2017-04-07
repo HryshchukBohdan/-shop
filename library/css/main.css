@@ -2166,6 +2166,7 @@
 		padding: 0;
 		text-decoration: none;
 		align-content: center;
+		width: 100%;
 	}
 
 		input[type="text"]:invalid,

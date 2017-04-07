@@ -20,6 +20,7 @@ class router
             "/auth" => ['UserController', 'authAction'],
             "/user/login" => ['UserController', 'loginAction'],
             "/user" => ['UserController', 'indexAction'],
+            "/user/update" => ['UserController', 'updateAction'],
 
 
 
